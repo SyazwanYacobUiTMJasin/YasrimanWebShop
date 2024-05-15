@@ -1,0 +1,284 @@
+@import url("https://fonts.googleapis.com/css2?family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inria Sans", sans-serif;
+  transition: all 0.3s;
+  overflow-x: hidden;
+  /* overflow-y: hidden; */
+}
+
+body {
+  background-color: #f5efe6;
+  max-width: 100vw;
+  max-height: 100vh;
+}
+
+/* START NAVBAR */
+
+.navbarbg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e8dfca;
+  color: #1a4d2e;
+  font-weight: 700;
+  flex-direction: column;
+  padding: 20px 0;
+  gap: 30px;
+  min-height: 25vh;
+  position: fixed;
+  width: 100vw;
+}
+
+.navbarbg a{
+  text-decoration: none;
+  color: #1a4d2e;
+}
+.navbarbg h2 {
+  font-size: 30px;
+}
+
+.navbarbg div a, #hero a  {
+  text-decoration: none;
+  color: inherit;
+  font-weight: 400;
+}
+
+.navbarbg .loginicon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.navbarbg .logintext {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 90vw;
+}
+
+.navbarbg .logintext a {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  width: fit-content;
+  gap: 10px;
+  flex-direction: row-reverse;
+}
+
+.logintext .searchdiv {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.logintext img, .searchinvdiv img {
+  max-width: 20px;
+}
+
+.logintext input[type="text"], .searchinvdiv input[type="text"]{
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid #1a4d2e;
+  outline: none;
+  padding: 5px;
+}
+
+.navbarbg .navlinks {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80vw;
+  gap: 160px;
+}
+
+.navlinks .active{
+  border-bottom: 1px solid #1a4d2e;
+}
+
+.navlinks a:hover {
+  border-bottom: 1px solid #1a4d2e;
+  transition: border-bottom 0.3s ease-in-out;
+}
+
+input[type="text"]:focus {
+    border-bottom: 2px solid #d5c7b2;
+    transition: border-bottom 0.3s; 
+}
+
+/* END NAVBAR */
+
+.header-container {
+  width: 100%; /* Full width of the viewport */
+  display: flex;
+  justify-content: space-between; /* Aligns h1 to the left and button to the right */
+  padding: 0 20px; /* Padding on both sides of the container */
+  /* margin-top: 25vh; */
+  padding: 30px 20px;
+    width: 100%;
+
+}
+
+h1 {
+  margin: 0; /* Removes default margin */
+  color: #1a4d2e; /* Dark grey color for the text */
+  font-size: 24px; /* Sets the size of the font */
+}
+
+button {
+  padding: 10px 20px; /* Padding inside the button */
+  background-color: #29844d; /* Blue background color */
+  color: white; /* Text color */
+  border: none; /* No border */
+  border-radius: 5px; /* Rounded corners */
+  font-size: 16px; /* Font size for the text inside the button */
+  cursor: pointer; /* Changes the mouse cursor to a pointer when hovered */
+}
+
+button:hover {
+  background-color: #d5c7b2; /* Darker blue when hovered */
+  color: #1a4d2e;
+}
+
+.searchinvdiv {
+  display: flex; /* Use flexbox to align children */
+  justify-content: center; /* Center children horizontally */
+  align-items: center; /* Center children vertically */
+  height: 100px; /* Set a height for the div */
+  width: 60vw; /* Make the div take full width of its container */margin: 0 auto;
+}
+
+.searchinvdiv input[type="text"]{
+  width: 100%;
+  
+}
+
+.table-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 80%;
+  /* box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); */
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #d5c7b24f;
+}
+
+.edit-btn, .delete-btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.edit-btn {
+  background-color: #1a4d2e;
+  color: white;
+}
+
+.delete-btn {
+  background-color: #7a2f2a;
+  color: white;
+}
+
+.edit-modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.edit-modal-content {
+  background-color: #fefefe;
+  margin: 0 auto;
+  margin-top: 10%;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 30%;
+}
+
+.modal-input {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.modal-button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.modal-button.cancel {
+  background-color: #f44336;
+}
+
+.table-container table tr img{
+  width: 60px;
+  height: auto;
+}
+
+#main{
+  width: 100%;
+}
+
+#hero {
+  display: flex;
+  height: 75vh;
+  margin-top: 25vh;
+}
+
+#sidebar {
+  
+  width: 221px;
+  background-color: #1a4d2e;
+  color: white;
+  padding: 20px;
+}
+
+#sidebar ul{
+  display: flex;
+  gap: 30px;
+  flex-direction: column;
+  padding-left: 10px;
+}
+
+#sidebar ul li{
+  border-bottom: 1px solid rgba(255, 255, 255, 0.241);
+  padding: 4px 5px;
+}
+
+#sidebar b{
+  font-weight: 600;
+  font-size: 20px;
+}

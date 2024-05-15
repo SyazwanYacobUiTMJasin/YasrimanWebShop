@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yasriman | Sign In</title>
+    <link rel="stylesheet" href="./css/signin.css" />
+  </head>
+  <body>
+    <div class="all">
+      <div class="formcontainer"> 
+        <div class="formcontent">
+          <h1>SIGN IN</h1>
+          <form action=" " method="post">
+            <div class="secondline">
+                <input type="email" id="email" name="email" placeholder="Email" autocomplete="off" required><br />
+                <div class="passwordgroup">
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Password"
+                        autocomplete="off"
+          required
+          /><br />
+                    <img class="eyeToggle" src="./images/eyeslash.svg" draggable="false" alt="Show Password" onclick="togglePasswordVisibility('password')">
+                </div>
+            </div>
+            <div class="signintext">
+                <p>Do not have an account yet?</p>
+                <a href="./signup.html">Sign Up</a>
+            </div>
+            <div class="buttons">
+                <input type="submit" value="Sign In" />
+            </div>
+            <a href="/" class="returnhome">Return Home</a>
+            </form>
+        </div>
+        <div class="imagedisplay">
+            <img src="./images/signinimage.jpg" alt="image" draggable="false"/>
+          </div>
+      </div>
+    </div>
+    <script src="./js/singin.js"></script>
+</body>
+</html>

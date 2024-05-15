@@ -1,5 +1,9 @@
 package com.heroku.java;
 
+import org.jscience.physics.amount.Amount;
+import org.jscience.physics.model.RelativisticModel;
+import javax.measure.unit.SI;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -21,7 +25,7 @@ public class GettingStartedApplication {
         this.dataSource = dataSource;
     }
 
-    @GetMapping("/")
+    @GetMapping("/index.html")
     public String index() {
         return "index";
     }
@@ -46,6 +50,30 @@ public class GettingStartedApplication {
             model.put("message", t.getMessage());
             return "error";
         }
+    }
+
+    // @GetMapping("/convert")
+    // String convert(Map<String, Object> model) {
+    //     RelativisticModel.select();
+    //     var energy = Amount.valueOf("12 GeV");
+
+    //     model.put("result", "E=mc^2: " + energy + " = " + energy.to(SI.KILOGRAM));
+    //     return "convert";
+    // }
+
+    @GetMapping("/signup.html")
+    public String signup(Map<String, Object> model) {
+        return "signup"; 
+    }
+
+    @GetMapping("/product.html")
+    public String product(Map<String, Object> model) {
+        return "product"; 
+    }
+
+    @GetMapping("/viewcart.html")
+    public String viewcart(Map<String, Object> model) {
+        return "viewcart"; 
     }
 
     public static void main(String[] args) {

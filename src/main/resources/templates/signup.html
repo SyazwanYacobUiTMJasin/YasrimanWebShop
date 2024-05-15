@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yasriman | Sign Up</title>
+    <link rel="stylesheet" href="./css/signup.css" />
+  </head>
+  <body>
+    <div class="all">
+      <div class="formcontainer">
+        <div class="imagedisplay">
+          <img src="./images/signupimage.png" alt="image" draggable="false" />
+        </div>
+        <div class="formcontent">
+          <h1>SIGN UP</h1>
+          <form action=" " method="post">
+            <div class="firstline">
+              <input
+                type="text"
+                id="firstname"
+                name="firstname"
+                placeholder="First Name"
+                autocomplete="off"
+          required
+          /><br />
+              <input
+                type="text"
+                id="lastname"
+                name="lastname"
+                placeholder="Last Name"
+                autocomplete="off"
+          required
+          /><br />
+            </div>
+            <div class="secondline">
+              <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="Username"
+                autocomplete="off"
+          required
+          /><br />
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Email"
+                autocomplete="off"
+          required
+          /><br />
+              <div class="passwordgroup">
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Password"
+                    autocomplete="off"
+          required
+          /><br />
+                <img class="eyeToggle" src="./images/eyeslash.svg" draggable="false" alt="Show Password" onclick="togglePasswordVisibility('password')">
+            </div>
+            <div class="passwordgroup">
+                <input
+                    type="password"
+                    id="confirmpassword"
+                    name="confirmpassword"
+                    placeholder="Confirm Password"
+                    autocomplete="off"
+          required
+          /><br />
+                <img class="eyeToggle" src="./images/eyeslash.svg" draggable="false" alt="Show Password" onclick="togglePasswordVisibility('confirmpassword')">
+            </div>
+            
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                placeholder="Phone Number"
+                autocomplete="off"
+          required
+          /><br />
+            </div>
+            <div class="signintext">
+              <p>Already have an account?</p>
+              <a href="./signin.html">Sign In</a>
+            </div>
+            <div class="buttons">
+              <input type="submit" value="Sign Up" />
+            </div>
+            <a href="/" class="returnhome">Return Home</a>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script src="./js/signup.js"></script>
+  </body>
+</html>

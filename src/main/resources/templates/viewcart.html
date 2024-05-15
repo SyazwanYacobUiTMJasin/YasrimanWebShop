@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Yasriman | Cart</title>
+  <link rel="stylesheet" href="./css/viewcart.css">
+</head>
+
+<body>
+  <div class="navbarbg">
+    <h2>YASRIMAN</h2>
+    <div class="logintext">
+      <div class="searchdiv">
+        <img src="./images/icons8-search.svg" alt="" />
+        <input
+          type="text"
+          placeholder="Search"
+          name="search"
+          autocomplete="off"
+        />
+      </div>
+      <a href="./signup.html">Sign In/Sign Up
+        <div class="loginicon">
+          <img
+            loading="lazy"
+            src="https://cdn.builder.io/api/v1/image/assets/TEMP/fee6b20cb0abd925cc4a3bda7cf3fa3366c37bcc07b2da638108c5651aca2ad0?apiKey=8730b69884724863a1e8089b99726052&"
+            class="img"
+          />
+        </div>
+      </a>
+    </div>
+    <div class="navlinks">
+      <a href="/">HOME</a>
+      <a href="./product.html">PRODUCTS</a>
+      <!-- <a href="./information.html">INFORMATION</a> -->
+      <!-- <a href="./faq.html">FAQ</a> -->
+      <a href="./viewcart.html" class="active">CART</a>
+    </div>
+  </div>
+
+  <main>
+    <h2>MY CART</h2>
+    <div class="basket">
+
+      <div class="basket-labels">
+        <ul>
+          <li class="item item-heading">Item</li>
+          <li class="price">Price</li>
+          <li class="quantity">Quantity</li>
+          <li class="subtotal">Subtotal</li>
+        </ul>
+      </div>
+      <div class="basket-product">
+        <div class="item">
+          <div class="product-image">
+            <img src="./images/p1.jpg" alt="Placeholder Image 2" class="product-frame" width="120" height="auto">
+          </div>
+          <div class="product-details">
+            <h1>Caladium Plant</h1>
+          </div>
+        </div>
+        <div class="price">26.00</div>
+        <div class="quantity">
+          <input type="number" value="4" min="1" class="quantity-field">
+        </div>
+        <div class="subtotal">104.00</div>
+        <div class="remove">
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="basket-product">
+        <div class="item">
+          <div class="product-image">
+            <img src="phoebe.jpeg" alt="Placeholder Image 2" class="product-frame" width="120" height="166">
+          </div>
+          <div class="product-details">
+            <h1>Phoebe plant</h1>
+          </div>
+        </div>
+        <div class="price">26.00</div>
+        <div class="quantity">
+          <input type="number" value="1" min="1" class="quantity-field">
+        </div>
+        <div class="subtotal">26.00</div>
+        <div class="remove">
+          <button>Remove</button>
+        </div>
+      </div>
+    </div>
+    <aside>
+      <div class="summary">
+        <div class="summary-total-items"><span class="total-items"></span> Items in your Bag</div>
+        <div class="summary-subtotal">
+          <div class="subtotal-title">Subtotal</div>
+          <div class="subtotal-value final-value" id="basket-subtotal">130.00</div>
+          <div class="summary-promo hide">
+            <div class="promo-title">Promotion</div>
+            <div class="promo-value final-value" id="basket-promo"></div>
+          </div>
+        </div>
+        <div class="summary-delivery">
+          <select name="delivery-collection" class="summary-delivery-selection">
+            <option value="0" selected="selected">Select Collection or Delivery</option>
+            <option value="collection">Cash On Delivery</option>
+            <option value="first-class">Poslaju</option>
+            <option value="second-class">JNT</option>
+            <option value="signed-for">Ninja Van</option>
+          </select>
+        </div>
+        <div class="summary-total">
+          <div class="total-title">Total</div>
+          <div class="total-value final-value" id="basket-total">130.00</div>
+        </div>
+        <div class="summary-checkout">
+          <button class="checkout-cta">Go to Secure Checkout</button>
+        </div>
+      </div>
+    </aside>
+  </main>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="./js/viewcart.js"></script>
+</body>
+
+</html>
