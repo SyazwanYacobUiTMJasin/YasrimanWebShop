@@ -8,7 +8,7 @@
   font-family: "Inria Sans", sans-serif;
   transition: all 0.3s;
   overflow-x: hidden;
-  overflow-y: hidden;
+  /* overflow-y: hidden; */
 }
 
 body {
@@ -29,7 +29,7 @@ body {
   flex-direction: column;
   padding: 20px 0;
   gap: 30px;
-  min-height: 25vh;
+  height: 25vh;
   position: fixed;
   width: 100vw;
   overflow: hidden;
@@ -123,7 +123,7 @@ input[type="text"]:focus {
 
 #sidebar {
     
-    width: 222px;
+    min-width: 222px;
     background-color: #1a4d2e;
     color: white;
     padding: 20px;
@@ -166,7 +166,7 @@ input[type="text"]:focus {
 
 .main{
   width: 100%;
-  height: 65vh;
+  height: fit-content;
   padding: 30px 20px;
 }
 
@@ -186,6 +186,50 @@ input[type="text"]:focus {
 }
 
 .grid-contentwimg img{
-  width: 120px;
+  width: 70px;
   height: auto;
+}
+
+@media (width < 830px) {
+  * {
+    font-size: 95%;
+  }
+
+  #main{
+    grid-template-columns: repeat(1, 1fr);
+    height: fit-content;
+    overflow-y: visible;
+  }
+
+  .main
+  {
+    height:70vh;
+  }
+
+  h1
+  {
+    font-size: 20px;
+  }
+}
+
+
+@media (width < 600px) {
+  #sidebar  {
+    min-width: 100px;
+    padding: 20px 10px;
+    height: 100%;
+  }
+
+  #sidebar ul
+  {
+    padding: 0;
+  }
+}
+
+@media (width < 400px)
+{
+  #main
+  {
+    padding: 20px 0;
+  }
 }

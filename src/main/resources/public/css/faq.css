@@ -29,7 +29,7 @@ body {
   flex-direction: column;
   padding: 20px 0;
   gap: 30px;
-  min-height: 25vh;
+  height: 25vh;
   position: fixed;
   width: 100vw;
 }

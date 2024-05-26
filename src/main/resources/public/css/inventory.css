@@ -29,7 +29,7 @@ body {
   flex-direction: column;
   padding: 20px 0;
   gap: 30px;
-  min-height: 25vh;
+  height: 25vh;
   position: fixed;
   width: 100vw;
 }
@@ -121,7 +121,6 @@ input[type="text"]:focus {
   padding: 0 20px; /* Padding on both sides of the container */
   /* margin-top: 25vh; */
   padding: 30px 20px;
-    width: 100%;
 
 }
 
@@ -163,11 +162,13 @@ button:hover {
   display: flex;
   justify-content: center;
   margin-top: 30px;
+  overflow-x: auto;
+  width: 100%;  
 }
 
 table {
   border-collapse: collapse;
-  width: 80%;
+  width: 100%;
   /* box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); */
 }
 
@@ -249,7 +250,9 @@ th {
 }
 
 #main{
-  width: 100%;
+  width: 75%;
+  margin-left: auto;
+  overflow:visible ;
 }
 
 #hero {
@@ -260,7 +263,7 @@ th {
 
 #sidebar {
   
-  width: 221px;
+  min-width: 222px;
   background-color: #1a4d2e;
   color: white;
   padding: 20px;
@@ -281,4 +284,80 @@ th {
 #sidebar b{
   font-weight: 600;
   font-size: 20px;
+}
+
+@media (width < 830px) {
+  * {
+    font-size: 95%;
+  }
+
+  .edit-btn, .delete-btn
+  {
+    transform: scale(0.7);
+  }
+
+  .edit-modal-content
+  {
+    width: 70%;
+  }
+}
+
+
+@media (width < 660px) {
+  #sidebar  {
+    min-width: 100px;
+    padding: 20px 10px;
+    height: 100%;
+    /* display: none; */
+  }
+
+  #sidebar ul
+  {
+    padding: 0;
+  }
+
+  h1, .header-container button
+  {
+    transform: scale(0.9);
+  }
+
+  .table-container
+  {
+    width: fit-content; 
+    overflow: auto;
+  }
+
+  table
+  {
+    width: 400px;
+    padding: 0 0px;
+    min-width: 400px;
+    overflow: auto;
+  }
+
+  #main
+  {
+    overflow-x: auto;
+    /* width: 1200px; */
+  }
+
+  .searchinvdiv
+  {
+    width: 100%;
+  }
+  .header-container
+  {
+    display: flex;
+    justify-content: space-between;
+    width: 400px;
+    margin: auto;
+  }
+}
+
+@media (width < 400px)
+{
+  h1
+  {
+    font-size: 20px;
+  }
 }

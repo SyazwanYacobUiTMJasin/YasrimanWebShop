@@ -112,8 +112,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  width: 60vw;
-  height: 40vw;
+  width: 1000px;
+  height: 650px;
   color: #1a4d2e;
   background-color: #fff;
 }
@@ -128,8 +128,8 @@ body {
 }
 
 .imagedisplay img {
-    width: auto; 
-    height: 100%;   
+  width: auto;
+  height: 100%;
 }
 
 .formcontent {
@@ -151,7 +151,6 @@ input[type="tel"] {
   padding: 5px;
   width: 95%;
   transition: border-bottom 0.3s;
-
 }
 
 .formcontent .firstline {
@@ -171,14 +170,14 @@ input[type="tel"] {
   width: 100%;
 }
 
-.formcontent form .buttons input{
-   background-color: #1a4d2e;
-   color: #f5efe6;
-   padding: 10px 40px;
-   cursor: pointer;
-   margin-top: 20px;
-   outline: none;
-     border: none;
+.formcontent form .buttons input {
+  background-color: #1a4d2e;
+  color: #f5efe6;
+  padding: 10px 40px;
+  cursor: pointer;
+  margin-top: 20px;
+  outline: none;
+  border: none;
 }
 
 form {
@@ -189,7 +188,7 @@ form {
   gap: 10px;
 }
 
-form a { 
+form a {
   text-decoration: none;
   color: inherit;
   font-weight: 400;
@@ -204,17 +203,17 @@ form .returnhome {
   border-bottom: 2px solid #1a4d2e;
 }
 
-.signintext{
-    display: flex;
-    align-items: center;
-    gap: 30px;
+.signintext {
+  display: flex;
+  align-items: center;
+  gap: 30px;
 }
 
-.signintext a{
+.signintext a {
   /* display: flex;
   border-bottom: 2px solid #1a4d2e;
   gap: 30px; */
-  font-size: 13px; 
+  font-size: 13px;
   border: 1px solid #1a4d2e;
   background-color: #d5c7b2;
   color: #1a4d2e;
@@ -225,21 +224,22 @@ form .returnhome {
   order: none;
 }
 
-form .signintext, form .buttons, form .returnhome{
-    font-size: 14px;
+form .signintext,
+form .buttons,
+form .returnhome {
+  font-size: 14px;
 }
 
-h1{
-    margin-bottom: 20px;
-} 
+h1 {
+  margin-bottom: 20px;
+}
 
 input[type="text"]:focus,
 input[type="email"]:focus,
 input[type="password"]:focus,
 input[type="tel"]:focus {
-    border-bottom: 2px solid #d5c7b2;
+  border-bottom: 2px solid #d5c7b2;
   transition: border-bottom 0.3s;
-
 }
 
 .passwordgroup {
@@ -248,7 +248,46 @@ input[type="tel"]:focus {
   width: 100%;
   margin-bottom: 25px;
 }
- 
+
 .passwordgroup img {
-  width: 15px;   
+  width: 15px;
+}
+
+@media (width <1024px) {
+  * {
+    font-size: 98%;
+  }
+
+  .formcontainer {
+    flex-direction: column;
+    width: fit-content;
+    padding: 20px 0;
+    gap: 10px;
+    /* height: fit-content; */
+  }
+
+  .imagedisplay {
+    height: 70px;
+    width: 80%;
+  }
+  .imagedisplay img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-position: 0% 58%;
+  }
+  h1 {
+    font-size: 30px;
+  }
+  .formcontent
+  {
+    width: 80%;
+  } 
+}
+
+@media (width < 500px) {
+  .formcontainer
+  {
+    transform: scale(0.8);
+  }
 }

@@ -94,10 +94,11 @@ main .hide {
 }
 
 main {
+  /* display: flex; */
   clear: both;
   font-size: 0.75rem;
   margin: 0 auto;
-  overflow: hidden;
+  overflow-x: hidden;
   padding: 1rem 0;
   width: 960px;
 }
@@ -271,7 +272,7 @@ aside {
   border-bottom: 1px solid #ccc;
   clear: both;
   margin: 1rem 0;
-  overflow: hidden;
+  overflow-x: hidden;
   padding: 0.5rem 0;
 }
 
@@ -353,7 +354,7 @@ aside {
   font-family: "Inria Sans", sans-serif;
   transition: all 0.3s;
   overflow-x: hidden;
-  overflow-y: hidden;
+  /* overflow-y: hidden; */
 }
 
 body {
@@ -374,7 +375,7 @@ body {
   flex-direction: column;
   padding: 20px 0;
   gap: 30px;
-  min-height: 25vh;
+  height: 25vh;
 }
 
 .navbarbg h2 {
@@ -440,4 +441,137 @@ body {
 .navlinks a:hover {
   border-bottom: 2px solid #000;
   transition: all 0.3s ease-in-out;
+}
+
+.navbarbg * {
+  overflow: hidden;
+}
+
+
+@media (width < 1020px) {
+  main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: fit-content;
+    width: fit-content;
+  }
+  
+  .summary
+  {
+    position: inherit;
+  }
+  
+  aside{
+    width: fit-content;
+  }
+}
+
+@media (width < 888px)
+{
+  * {
+    font-size: 95%;
+  }
+  
+  /* NAVBAR */
+  
+  .navbarbg {
+    min-height: fit-content;
+    z-index: 99;
+  }
+  
+  .navbarbg h2 {
+    font-size: 15px;
+    width: 100vw;
+    margin-right: auto;
+    margin-left: 20vw;
+  }
+  .logintext {
+    transform: scale(0.9);
+    gap: 30px;
+  }
+  .navbarbg .navlinks {
+    display: flex;
+    gap: 40px;
+  }
+  
+  .footer {
+    padding: 10px 20px;
+  }
+  
+  .footer .box-container .box h3, .footer .box-container .box a{
+    font-size: 14px;
+  }
+  
+  /* END NAVBAR */
+  .basket{
+    transform: scale(0.8);
+    width: 100%;
+  }
+  
+  .basket li{
+    font-size: 14px;
+  }
+  
+  .price, .subtotal{
+    font-size: 12px;
+  }
+
+  aside
+  {
+    padding-bottom: 30px;
+  }
+}
+
+
+@media (width < 600px) {
+  * {
+    font-size: 95%;
+  }
+
+  /* NAVBAR */
+
+  .navbarbg {
+    min-height: fit-content;
+    z-index: 99;
+  }
+
+  .navbarbg h2 {
+    font-size: 15px;
+    width: 100vw;
+    margin-right: auto;
+    margin-left: 20vw;
+  }
+  .logintext {
+    transform: scale(0.9);
+    gap: 30px;
+  }
+  .navbarbg .navlinks {
+    display: flex;
+    gap: 40px;
+  }
+
+  .footer {
+    padding: 10px 20px;
+  }
+
+  .footer .box-container .box h3, .footer .box-container .box a{
+    font-size: 14px;
+  }
+
+  /* END NAVBAR */
+
+  .basket{
+    transform: scale(0.8);
+    /* width: 400px; */
+    padding: 0;
+  }
+
+  main{
+    padding: 0;
+    margin: 0;
+    width: fit-content;
+    padding-top: 30px;
+  }
 }

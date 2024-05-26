@@ -29,7 +29,7 @@ body {
   flex-direction: column;
   padding: 20px 0;
   gap: 30px;
-  min-height: 25vh;
+  height: 25vh;
   position: fixed;
   width: 100vw;
 }
@@ -247,7 +247,7 @@ tbody tr td input[type="checkbox"]
 
 #sidebar {
   
-  width: 222px;
+  min-width: 222px;
   background-color: #1a4d2e;
   color: white;
   padding: 20px;
@@ -268,4 +268,68 @@ tbody tr td input[type="checkbox"]
 #sidebar b{
   font-weight: 600;
   font-size: 20px;
+}
+
+@media (width < 979px) {
+  * {
+    font-size: 95%;
+  }
+
+  .hero
+  {
+    flex-direction: column;
+  }
+
+  .table-container
+  {
+    width: 100%;
+  }
+
+  table
+  {
+    transform: scale(0.9);
+
+  }
+}
+
+
+@media (width < 600px) {
+  #sidebar  {
+    min-width: 100px;
+    padding: 20px 10px;
+    height: 100%;
+  }
+
+  #sidebar ul
+  {
+    padding: 0;
+  }
+
+  .table-container
+  {
+    width: fit-content; 
+    overflow: auto;
+  }
+
+  table
+  {
+    width: 400px;
+    padding: 0 0px;
+    min-width: 400px;
+    overflow: auto;
+  }
+
+  .hero
+  {
+    overflow-x: auto;
+    /* width: 1200px; */
+  }
+}
+
+@media (width < 400px)
+{
+  #main
+  {
+    padding: 20px 0;
+  }
 }
