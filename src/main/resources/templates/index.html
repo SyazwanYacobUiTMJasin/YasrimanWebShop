@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yasriman | Home</title>
+    <link rel="stylesheet" href="./css/styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" />
+    <link rel="icon" href="https://i.ibb.co/F7PH3zS/logo.jpg" type="image/png">
+</head>
+<body>
+    <div class="navbarbg">
+        <a th:href="@{/}">
+            <h2>YASRIMAN</h2>
+        </a>
+        <div class="logintext">
+            <div class="searchdiv">
+                <img src="https://svgshare.com/i/177L.svg" alt="" draggable="false" />
+                <input type="text" placeholder="Search" name="search" autocomplete="off" id="searchInput" />
+            </div>
+            <div th:if="${session.accountusername != null}">
+                <a th:href="@{/viewcustomeraccount(uid=${session.loggedinaccountid},from=index)}">
+                    <span th:text="${session.accountusername}"></span>
+                    <div class="loginicon">
+                        <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/fee6b20cb0abd925cc4a3bda7cf3fa3366c37bcc07b2da638108c5651aca2ad0?apiKey=8730b69884724863a1e8089b99726052&" class="img" draggable="false" />
+                    </div>
+                </a>
+            </div>
+            <div th:unless="${session.accountusername != null}">
+                <a th:href="@{signup}">
+                    Sign In/Sign Up
+                    <div class="loginicon">
+                        <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/fee6b20cb0abd925cc4a3bda7cf3fa3366c37bcc07b2da638108c5651aca2ad0?apiKey=8730b69884724863a1e8089b99726052&" class="img" draggable="false" />
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div th:if="${session.accountrole == 'Staff'}">
+            <a th:href="@{/staffdashboard}">DASHBOARD</a>
+        </div>
+    
+    <div class="navlinks">
+        <a href="/" class="active">HOME</a>
+        <a href="products">PRODUCTS</a>
+        <a href="cart">CART</a>
+    </div>
+  </div>
+    <div class="hero">
+        <div class="maincontent">
+            <div class="homepageimage">
+                <img src="https://i.ibb.co/MPr8bQG/homepageplantrender.png" alt="plants.png" draggable="false"/>
+            </div>
+            <div class="maintitle"> 
+                <h1>YASRIMAN PLANTS AND TOOLS SHOP</h1>
+                <h2>
+                    Cultivating Green Dreams:<br />Your Destination for Flourishing
+                    Gardens and Bountiful Harvests
+                </h2>
+                <div class="buttongroup">
+                    <a href="products" class="shopnowbutton">
+                        SHOP NOW
+                        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/f1f9cbc178d135220ccf74206dc3dc5a7daee51912974fb9e463c502ab2aeccf?apiKey=8730b69884724863a1e8089b99726052&" alt="arrow icon" draggable="false" />
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="footer">
+        <div class="box-container">
+            <table>
+                <tr>
+                    <td>
+                        <div class="box">
+                            <h3>Quick links</h3>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="box">
+                            <a href="/">
+                                <i class="fas fa-arrow-right"></i> Home
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="box">
+                            <a href="products">
+                                <i class="fas fa-arrow-right"></i> Products
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="box">
+                            <a href="cart">
+                                <i class="fas fa-arrow-right"></i> Cart
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="box">
+                            <a href="signupform">
+                                <i class="fas fa-arrow-right"></i> Sign In/Sign Up
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <td>
+                        <div class="box">
+                            <h3>Follow us</h3>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="box">
+                            <a href="https://www.facebook.com/" target="_blank">
+                                <i class="fab fa-facebook-f"></i> Facebook
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="box">
+                            <a href="https://twitter.com/" target="_blank">
+                                <i class="fab fa-twitter"></i> Twitter
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="box">
+                            <a href="https://www.instagram.com/" target="_blank">
+                                <i class="fab fa-instagram"></i> Instagram
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="box">
+                            <a href="https://www.linkedin.com/" target="_blank">
+                                <i class="fab fa-linkedin"></i> Linkedin
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="box">
+                            <a href="https://www.pinterest.com/business/hub/" target="_blank">
+                                <i class="fab fa-pinterest"></i> Pinterest
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </section>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        document.getElementById('searchInput').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                const query = event.target.value;
+                localStorage.setItem('searchQuery', query);
+                window.location.href = 'product.html';
+            }
+        });
+        /*]]>*/
+    </script>
+</body>
+</html>

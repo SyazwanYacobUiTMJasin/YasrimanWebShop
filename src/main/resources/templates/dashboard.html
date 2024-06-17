@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yasriman | Dashboard</title>
+    <link rel="icon" href="https://i.ibb.co/F7PH3zS/logo.jpg" type="image/png">
+    <link rel="stylesheet" href="./css/dashboard.css">
+</head>
+<body th:if="${session.accountrole == 'Staff'}">
+    <div class="navbarbg">
+        <a href="/"><h2>YASRIMAN</h2></a>
+        <div class="navlinks">
+            <a href="/">HOME</a>
+        </div>
+    </div>
+    <div id="hero">
+        <div id="sidebar">
+            <b>NAV LINKS</b>
+            <!-- Sidebar Navigation Links -->
+            <ul>
+                <br>
+                <li><a th:href="@{/staffdashboard}">Dashboard</a></li>
+                <li><a th:href="@{/listallaccounts}">Accounts</a></li>
+                <li><a href="./inventory.html">Inventory</a></li>
+                <li><a href="./order.html">Orders</a></li>
+                <!-- Add more navigation links as needed -->
+            </ul>
+        </div>
+
+        <div class="main">
+            <h1>Dashboard</h1>
+            <div id="main">
+                <!-- Grid Items -->
+                <div class="grid-item">
+                    <h3 class="grid-title">Today's Profit</h3>
+                    <div class="grid-content">
+                        <p>RM178.34</p>
+                    </div>
+                </div>
+                <div class="grid-item">
+                    <h3 class="grid-title">Most Sold Plant</h3>
+                    <div class="grid-contentwimg">
+                        <div class="details">
+                            <p>Plant Name: Caladium Plant</p>
+                            <p>Quantity Sold: 14</p>
+                        </div>
+                        <img src="./images/p1.jpg" alt="">
+                    </div>
+                </div>
+                <div class="grid-item">
+                    <h3 class="grid-title">Most Sold Tool</h3>
+                    <div class="grid-contentwimg">
+                        <div class="details">
+                            <p>Tools Name: Sarung Tangan</p>
+                            <p>Quantity Sold: 23</p>
+                        </div>
+                        <img src="./images/sarung.jpeg" alt="">
+                    </div>
+                </div>
+                <div class="grid-item">
+                    <h3 class="grid-title">Monthly Total Orders</h3>
+                    <div class="grid-content">
+                        <p>81 Total Orders</p>
+                        <p>+12 From Previous Month</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

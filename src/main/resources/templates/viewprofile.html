@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yasriman | Profile</title>
+    <link rel="icon" href="https://i.ibb.co/F7PH3zS/logo.jpg" type="image/png">
+    <link rel="stylesheet" href="./css/viewprofile.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" /> 
+</head>
+<body>
+    <div class="navbarbg">
+        <a href="/">
+            <h2>YASRIMAN</h2>
+        </a>
+        
+        <div class="navlinks">
+            <a href="/">HOME</a>
+        </div>
+    </div>
+    <div class="hero">
+        <h1>View Profile</h1>
+        <div class="formdiv">
+            <form id="profile-form" action="#" method="POST" enctype="multipart/form-data">
+                <label for="profilepic">Profile Picture:</label>
+                <img th:src="@{'/account/' + ${accounts.id} + '/picture'}" alt="profile picture" name="profilepic" draggable="false"/>
+    
+                <label for="username">Username:</label>
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="Your Username"
+                    th:value="${accounts.username}"
+                    readonly
+                    autocomplete="off"
+                />
+                <div class="maingroup">
+                    <div class="fnlname group">
+                        <label for="firstname">First Name:</label>
+                        <input
+                            type="text"
+                            id="firstname"
+                            name="firstname"
+                            placeholder="Your First Name"
+                            th:value="${accounts.firstname}"
+                            readonly
+                            autocomplete="off"
+                        />
+                        <label for="phone">Phone Number:</label>
+                        <input
+                            type="tel"
+                            id="phone"
+                            name="phone"
+                            placeholder="Your Phone Number"
+                            th:value="${accounts.phonenum}"
+                            readonly
+                            autocomplete="off"
+                        />
+                    </div>
+                    <div class="phonenumngender group">
+                        <label for="lastname">Last Name:</label>
+                        <input
+                            type="text"
+                            id="lastname"
+                            name="lastname"
+                            placeholder="Your Last Name"
+                            th:value="${accounts.lastname}"
+                            readonly
+                            autocomplete="off"
+                        />
+    
+                        <label for="street">Street:</label>
+                        <input
+                            type="text"
+                            id="street"
+                            name="street"
+                            placeholder="Street Name"
+                            th:value="${accounts.street}"
+                            readonly
+                            autocomplete="off"
+                        />
+                    </div>
+                </div>
+                <div class="statecitypostal group1">
+                    <label for="state">State:</label>
+                    <input
+                        type="text"
+                        id="state"
+                        name="state"
+                        placeholder="State Name"
+                        th:value="${accounts.state}"
+                        readonly
+                        autocomplete="off"
+                    />
+    
+                    <label for="city">City:</label>
+                    <input
+                        type="text"
+                        id="city"
+                        name="city"
+                        placeholder="City Name"
+                        th:value="${accounts.city}"
+                        readonly
+                        autocomplete="off"
+                    />
+    
+                    <label for="postalcode">Postal Code:</label>
+                    <input
+                        type="text"
+                        id="postalcode"
+                        name="postalcode"
+                        placeholder="Postal Code"
+                        th:value="${accounts.postalcode}"
+                        readonly
+                        autocomplete="off"
+                    />
+                </div>
+            </form>
+        </div>
+        <a th:href="@{editcustomeraccount(uid=${accounts.id})}">
+            <button type="button" class="submitbutton">Edit Profile</button>
+        </a>
+    </div>
+    
+    <script>
+        // Disable the select element for gender
+        document.getElementById("gender").disabled = true;
+    </script>
+</body>
+</html>

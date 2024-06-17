@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yasriman | View Account Details</title>
+    <link rel="icon" href="https://i.ibb.co/F7PH3zS/logo.jpg" type="image/png">
+    <link rel="stylesheet" href="./css/accounts.css">
+</head>
+<body>
+    <div class="navbarbg">
+        <a href="/"><h2>YASRIMAN</h2></a>
+        <div class="navlinks">
+            <a href="/">HOME</a>
+        </div>
+    </div>
+    <div id="hero">
+        <div id="sidebar">
+            <b>NAV LINKS</b>
+            <ul>
+                <br>
+                <li><a th:href="@{/staffdashboard}">Dashboard</a></li>
+                <li><a th:href="@{/listallaccounts}">Accounts</a></li>
+                <li><a href="./inventory.html">Inventory</a></li>
+                <li><a href="./order.html">Orders</a></li>
+                <!-- Add more navigation links as needed -->
+            </ul>
+        </div>
+
+        <div class="main">
+            <div class="topbar">
+                <h1 th:text="${accounts.username}">'s account</h1>
+                <a class="btn btn-info edit-btn" th:href="@{/listallaccounts}">Back</a>
+            </div>
+            <form action="#" class="formcontent">
+                <table border="1">
+                    <tr>
+                        <th colspan="2">Account Details</th>
+                    </tr>
+                    <tr>
+                        <td>ID:</td>
+                        <td><input type="text" name="id" th:value="${accounts.id}" readonly /></td>
+                    </tr>
+                    <tr>
+                        <td>Role:</td>
+                        <td><input type="text" name="role" th:value="${accounts.role}" readonly /></td>
+                    </tr>
+                    <tr>
+                        <td>Username:</td>
+                        <td><input type="text" name="username" th:value="${accounts.username}" readonly /></td>
+                    </tr>
+                    <tr>
+                        <td>Password:</td>
+                        <td><input type="password" name="password" th:value="${accounts.password}" readonly /></td>
+                    </tr>
+                    <tr>
+                        <td>Email:</td>
+                        <td><input type="email" name="email" th:value="${accounts.email}" readonly /></td>
+                    </tr>
+                    <tr>
+                        <td>First Name:</td>
+                        <td><input type="text" name="firstname" th:value="${accounts.firstname}" readonly /></td>
+                    </tr>
+                    <tr>
+                        <td>Last Name:</td>
+                        <td><input type="text" name="lastname" th:value="${accounts.lastname}" readonly /></td>
+                    </tr>
+                    <tr>
+                        <td>Phone Number:</td>
+                        <td><input type="tel" name="phonenum" th:value="${accounts.phonenum}" readonly /></td>
+                    </tr>
+                    <tr>
+                        <td>Street:</td>
+                        <td><input type="text" name="street" th:value="${accounts.street}" readonly /></td>
+                    </tr>
+                    <tr>
+                        <td>State:</td>
+                        <td><input type="text" name="state" th:value="${accounts.state}" readonly /></td>
+                    </tr>
+                    <tr>
+                        <td>City:</td>
+                        <td><input type="text" name="city" th:value="${accounts.city}" readonly /></td>
+                    </tr>
+                    <tr>
+                        <td>Postal Code:</td>
+                        <td><input type="text" name="postalcode" th:value="${accounts.postalcode}" readonly /></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
