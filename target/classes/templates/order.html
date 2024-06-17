@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yasriman | Order Management</title>
+    <link rel="stylesheet" href="./css/order.css" />
+    <link rel="icon" href="./images/logo.jpeg" type="image/png">
+  </head>
+  <body>
+    <div class="navbarbg">
+      <a href="./index.html"><h2>YASRIMAN</h2></a>
+      <!-- <div class="logintext">
+          <div class="searchdiv">
+            <img src="./images/icons8-search.svg" alt="" draggable="false" />
+            <input
+              type="text"
+              placeholder="Search"
+              name="search"
+              autocomplete="off"
+            />
+          </div>
+          <a href="./signup.html"
+            >Sign In/Sign Up
+            <div class="loginicon">
+              <img
+                loading="lazy"
+                src="https://cdn.builder.io/api/v1/image/assets/TEMP/fee6b20cb0abd925cc4a3bda7cf3fa3366c37bcc07b2da638108c5651aca2ad0?apiKey=8730b69884724863a1e8089b99726052&"
+                class="img" draggable="false"
+              />
+            </div>
+          </a>
+        </div>
+        <div class="navlinks">
+            <a href="./index.html">HOME</a>
+            <a href="./product.html">PRODUCTS</a>
+            <a href="./information.html">INFORMATION</a>
+            <a href="./faq.html">FAQ</a>
+            <a href="./viewcart.html">CART</a>
+    </div> -->
+    </div>
+    <div id="hero">
+      <div id="sidebar">
+        <b>NAV LINKS</b>
+
+        <!-- Sidebar Navigation Links -->
+        <ul>
+          <br />
+          <li><a href="./dashboard.html">Dashboard</a></li>
+          <li><a href="./accounts.html">Accounts</a></li>
+          <li><a href="./inventory.html">Inventory</a></li>
+          <li><a href="./order.html">Orders</a></li>
+          <!-- Add more navigation links as needed -->
+        </ul>
+      </div>
+      <div class="hero">
+        <h1>Order Management</h1>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Shipped</th>
+                <th>ID</th>
+                <th>Date</th>
+                <th>Customer</th>
+                <th>Status</th>
+                <th>Items</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="custom-checkbox">
+                    <input
+                      type="checkbox"
+                      onchange="updateStatus(this, 'status1')"
+                    />
+                  </div>
+                </td>
+                <td>1001</td>
+                <td>11/1/2024</td>
+                <td>Kuroo</td>
+                <td id="status1">Process</td>
+                <td><button onclick="showDetails()">1</button></td>
+                <td>RM 35.00</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="custom-checkbox">
+                    <input
+                      type="checkbox"
+                      onchange="updateStatus(this, 'status3')"
+                    />
+                  </div>
+                </td>
+                <td>1001</td>
+                <td>11/1/2024</td>
+                <td>Syahmi</td>
+                <td id="status3">Process</td>
+                <td><button onclick="showDetails()">3</button></td>
+                <td>RM 35.00</td>
+              </tr>
+
+              <tr>
+                <td>
+                  <div class="custom-checkbox">
+                    <input
+                      type="checkbox"
+                      checked
+                      onchange="updateStatus(this, 'status2')"
+                    />
+                  </div>
+                </td>
+                <td>1002</td>
+                <td>6/1/2024</td>
+                <td>Wan</td>
+                <td id="status2">Shipped</td>
+                <td><button onclick="showDetails()">2</button></td>
+                <td>RM 70.00</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="custom-checkbox">
+                    <input
+                      type="checkbox"
+                      checked
+                      onchange="updateStatus(this, 'status4')"
+                    />
+                  </div>
+                </td>
+                <td>1002</td>
+                <td>6/1/2024</td>
+                <td>Taqie</td>
+                <td id="status4">Shipped</td>
+                <td><button onclick="showDetails()">4</button></td>
+                <td>RM 70.00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div id="editModal" class="edit-modal">
+          <div class="edit-modal-content">
+            <span
+              onclick="closeEditModal()"
+              style="cursor: pointer; float: right"
+              >&times;</span
+            >
+            <h2>Order Details</h2>
+            <br /><br />
+            <div class="modal-row">
+              <div class="modal-column">
+                <p>
+                  <strong>ID:</strong>
+                  <input
+                    type="text"
+                    value="1001"
+                    class="modal-input"
+                    readonly
+                  />
+                </p>
+                <p>
+                  <strong>Customer:</strong>
+                  <input
+                    type="text"
+                    value="Kuroo"
+                    class="modal-input"
+                    readonly
+                  />
+                </p>
+                <p>
+                  <strong
+                    >Caladium Plant
+                    <input type="text" value="1" class="modal-input" readonly
+                  /></strong>
+                </p>
+                <p>
+                  <strong>Subtotal:</strong>
+                  <input
+                    type="text"
+                    value="RM25.00"
+                    class="modal-input"
+                    readonly
+                  />
+                </p>
+              </div>
+              <div class="modal-column">
+                <br /><br /><br /><img
+                  src="./images/p1.jpg"
+                  alt="Caladium Plant"
+                  style="width: 100px"
+                /><br />
+                <p>
+                  <strong>Shipping Fee:</strong>
+                  <input
+                    type="text"
+                    value="RM10.00"
+                    class="modal-input"
+                    readonly
+                  />
+                </p>
+                <p>
+                  <strong>Address:</strong>
+                  <input
+                    type="text"
+                    value="No. 2, Jalan Muhibbah 2, 77300, Merlimau, Malacca"
+                    class="modal-input"
+                    readonly
+                  />
+                </p>
+                <p>
+                  <strong>Total:</strong>
+                  <input
+                    type="text"
+                    value="RM35.00"
+                    class="modal-input"
+                    readonly
+                  />
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="./js/order.js"></script>
+  </body>
+</html>

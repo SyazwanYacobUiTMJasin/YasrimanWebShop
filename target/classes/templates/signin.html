@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yasriman | Sign In</title>
+    <link rel="icon" href="https://i.ibb.co/F7PH3zS/logo.jpg" type="image/png">
+    <link rel="stylesheet" href="./css/signin.css" />
+</head>
+<body>
+    <div class="all">
+        <div class="formcontainer">
+            <div class="formcontent">
+                <h1>SIGN IN</h1>
+                <p th:if="${session.signinerror != null}" style="color: red; font-weight: 500;" th:text="${session.signinerror}"></p>
+                <form th:action="@{/signin}" method="post" onsubmit="return validateForm()">
+                    <div class="secondline">
+                        <input type="email" id="email" name="email" placeholder="Email" autocomplete="off" required /><br />
+                        <div class="passwordgroup">
+                            <input type="password" id="password" name="password" placeholder="Password" autocomplete="off" required /><br />
+                            <img class="eyeToggle" src="https://svgshare.com/i/176H.svg" draggable="false" alt="Show Password" onclick="togglePasswordVisibility('password')" />
+                        </div>
+                    </div>
+                    <div class="signintext">
+                        <p>Do not have an account yet?</p>
+                        <a th:href="@{/signup}">Sign Up</a>
+                    </div>
+                    <div class="buttons">
+                        <input type="submit" value="Sign In" />
+                    </div>
+                    <a th:href="@{/}" class="returnhome">Return Home</a>
+                </form>
+            </div>
+            <div class="imagedisplay">
+                <img src="https://i.ibb.co/C0qZ4hh/signinimage.jpg" alt="image" draggable="false" />
+            </div>
+        </div>
+    </div>
+    <script src="./js/signin.js"></script>
+</body>
+</html>

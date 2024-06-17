@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yasriman | Sign Up</title>
+    <link rel="icon" href="https://i.ibb.co/F7PH3zS/logo.jpg" type="image/png">
+    <link rel="stylesheet" href="./css/signup.css" />
+</head>
+<body>
+    <div class="all">
+        <div class="formcontainer">
+            <div class="imagedisplay">
+                <img src="https://i.ibb.co/PZ8VYLY/signupimage.png" alt="image" draggable="false" />
+            </div>
+            <div class="formcontent">
+                <h1>SIGN UP</h1>
+                <form th:action="@{/signup}" method="post" onsubmit="return validateForm()">
+                    <div class="firstline">
+                        <input type="text" id="firstname" name="firstname" placeholder="First Name" autocomplete="off" required />
+                        <br />
+                        <input type="text" id="lastname" name="lastname" placeholder="Last Name" autocomplete="off" required />
+                        <br />
+                    </div>
+                    <div class="secondline">
+                        <input type="text" id="username" name="username" placeholder="Username" autocomplete="off" required />
+                        <br />
+                        <p th:if="${session.emailerror != null}" style="color: red; font-weight: 500;" th:text="${session.emailerror}"></p>
+                        <input type="email" id="email" name="email" placeholder="Email" autocomplete="off" required />
+                        <br />
+                        <div class="passwordgroup">
+                            <input type="password" id="password" name="password" placeholder="Password" autocomplete="off" required />
+                            <br />
+                            <img class="eyeToggle" src="https://svgshare.com/i/176H.svg" draggable="false" alt="Show Password" onclick="togglePasswordVisibility('password')" />
+                        </div>
+                        <div class="passwordgroup">
+                            <input type="password" id="confirmpassword" name="confirmpassword" placeholder="Confirm Password" autocomplete="off" required />
+                            <br />
+                            <img class="eyeToggle" src="https://svgshare.com/i/176H.svg" draggable="false" alt="Show Password" onclick="togglePasswordVisibility('confirmpassword')" />
+                        </div>
+                        <input type="tel" id="phone" name="phone" placeholder="Phone Number" autocomplete="off" value="+60" required />
+                        <br />
+                    </div>
+                    <div class="signintext">
+                        <p>Already have an account?</p>
+                        <a th:href="@{/signin}">Sign In</a>
+                    </div>
+                    <div class="buttons">
+                        <input type="submit" value="Sign Up" />
+                    </div>
+                    <a th:href="@{/}" class="returnhome">Return Home</a>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="./js/signup.js"></script>
+</body>
+</html>

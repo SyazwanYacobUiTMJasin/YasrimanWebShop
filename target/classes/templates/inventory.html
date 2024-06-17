@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/inventory.css" />
+    <title>Yasriman | Inventory</title>
+    <link rel="icon" href="./images/logo.jpeg" type="image/png">
+  </head>
+  <body>
+    <div class="navbarbg">
+      <a href="./index.html"><h2>YASRIMAN</h2></a>
+      <!-- <div class="logintext">
+      <div class="searchdiv">
+        <img src="./images/icons8-search.svg" alt="" draggable="false" />
+        <input
+          type="text"
+          placeholder="Search"
+          name="search"
+          autocomplete="off"
+        />
+      </div>
+      <a href="./signup.html"
+        >Sign In/Sign Up
+        <div class="loginicon">
+          <img
+            loading="lazy"
+            src="https://cdn.builder.io/api/v1/image/assets/TEMP/fee6b20cb0abd925cc4a3bda7cf3fa3366c37bcc07b2da638108c5651aca2ad0?apiKey=8730b69884724863a1e8089b99726052&"
+            class="img" draggable="false"
+          />
+        </div>
+      </a>
+    </div>
+    <div class="navlinks">
+        <a href="./index.html">HOME</a>
+        <a href="./product.html">PRODUCTS</a>
+        <a href="./information.html">INFORMATION</a>
+        <a href="./faq.html"  >FAQ</a>
+        <a href="./viewcart.html">CART</a>
+</div> -->
+    </div>
+
+    <div id="hero">
+      
+      <div id="sidebar">
+        <b>NAV LINKS</b>
+        <!-- Sidebar Navigation Links -->
+        <ul>
+          <br />
+          <li><a href="./dashboard.html">Dashboard</a></li>
+          <li><a href="./accounts.html">Accounts</a></li>
+          <li><a href="./inventory.html">Inventory</a></li>
+          <li><a href="./order.html">Orders</a></li>
+          <!-- Add more navigation links as needed -->
+        </ul>
+      </div>
+      <div id="main">
+        <div class="header-container">
+          <h1>Inventory Management</h1>
+          <button onclick="createNewModal()">Create New</button>
+        </div>
+
+        <!-- Create New Modal -->
+        <div id="createNewModal" class="edit-modal">
+          <div class="edit-modal-content">
+            <h2>Create New Item</h2>
+            <label for="newTypeSelect">Type:</label>
+            <select id="newTypeSelect" class="modal-input">
+              <option value="plant">Plant</option>
+              <option value="tools">Tools</option>
+            </select>
+            <label for="newImageInput">Image:</label>
+            <input type="file" id="newImageInput" class="modal-input" />
+            <label for="newNameInput">Name:</label>
+            <input type="text" id="newNameInput" class="modal-input" />
+            <label for="newStockInput">Stock Left:</label>
+            <input type="number" id="newStockInput" class="modal-input" />
+            <button class="modal-button" onclick="confirmNew()">Confirm</button>
+            <button class="modal-button cancel" onclick="closeNewModal()">
+              Cancel
+            </button>
+          </div>
+        </div>
+
+        <div class="searchinvdiv">
+          <img src="./images/icons8-search.svg" alt="Search Icon" />
+          <input
+            type="text"
+            placeholder="Search"
+            name="search"
+            autocomplete="off"
+          />
+        </div>
+
+        <div class="table-container">
+          <table>
+            <tr>
+              <th>ID</th>
+              <th>Type</th>
+              <th>Image</th>
+              <th>Name</th>
+              <th>Stock Left</th>
+              <th>Edit Item</th>
+              <th>Delete Item</th>
+            </tr>
+            <tr>
+              <td>101</td>
+              <td>Plant</td>
+              <td><img src="images/p1.jpg" alt="Caladium Plant" /></td>
+              <td>Caladium Plant</td>
+              <td>32</td>
+              <td>
+                <button class="edit-btn" onclick="openEditModal(this)">
+                  Edit
+                </button>
+              </td>
+              <td>
+                <button class="delete-btn" onclick="deleteRow(this)">
+                  Delete
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>102</td>
+              <td>Plant</td>
+              <td><img src="images/p2.jpg" alt="Hosta Leaf" /></td>
+              <td>Hosta Leaf</td>
+              <td>54</td>
+              <td>
+                <button class="edit-btn" onclick="openEditModal(this)">
+                  Edit
+                </button>
+              </td>
+              <td>
+                <button class="delete-btn" onclick="deleteRow(this)">
+                  Delete
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>201</td>
+              <td>Plant</td>
+              <td><img src="images/p3.jpg" alt="Caladium Plant" /></td>
+              <td>Caladium Plant</td>
+              <td>33</td>
+              <td>
+                <button class="edit-btn" onclick="openEditModal(this)">
+                  Edit
+                </button>
+              </td>
+              <td>
+                <button class="delete-btn" onclick="deleteRow(this)">
+                  Delete
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>302</td>
+              <td>Tools</td>
+              <td><img src="images/sarung.jpeg" alt="Anvil Pruners" /></td>
+              <td>Anvil Pruners</td>
+              <td>21</td>
+              <td>
+                <button class="edit-btn" onclick="openEditModal(this)">
+                  Edit
+                </button>
+              </td>
+              <td>
+                <button class="delete-btn" onclick="deleteRow(this)">
+                  Delete
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>303</td>
+              <td>Tools</td>
+              <td><img src="images/baja.jpg" alt="Shovel" /></td>
+              <td>Shovel</td>
+              <td>18</td>
+              <td>
+                <button class="edit-btn" onclick="openEditModal(this)">
+                  Edit
+                </button>
+              </td>
+              <td>
+                <button class="delete-btn" onclick="deleteRow(this)">
+                  Delete
+                </button>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div id="editModal" class="edit-modal">
+          <div class="edit-modal-content">
+            <h2>Edit Item</h2>
+            <label for="idInput">ID:</label>
+            <input type="text" id="idInput" class="modal-input" readonly />
+            <label for="typeSelect">Type:</label>
+            <select id="typeSelect" class="modal-input">
+              <option value="plant">Plant</option>
+              <option value="tools">Tools</option>
+            </select>
+            <label for="imageInput">Image:</label>
+            <input type="file" id="imageInput" class="modal-input" />
+            <label for="nameInput">Name:</label>
+            <input type="text" id="nameInput" class="modal-input" />
+            <label for="stockInput">Stock Left:</label>
+            <input type="number" id="stockInput" class="modal-input" />
+            <button class="modal-button" onclick="confirmEdit()">
+              Confirm
+            </button>
+            <button class="modal-button cancel" onclick="closeEditModal()">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="./js/inventory.js"></script>
+  </body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Yasriman | Update Account Details</title>
+    <link rel="icon" href="https://i.ibb.co/F7PH3zS/logo.jpg" type="image/png">
+    <link rel="stylesheet" href="./css/accounts.css">
+</head>
+<body>
+    <div class="navbarbg">
+        <a href="/"><h2>YASRIMAN</h2></a>
+        <div class="navlinks">
+            <a href="/">HOME</a>
+        </div> 
+    </div>
+    <div id="hero">
+        <div id="sidebar">
+            <b>NAV LINKS</b>
+            <ul>
+                <br>
+                <li><a th:href="@{/staffdashboard}">Dashboard</a></li>
+                <li><a th:href="@{/listallaccounts}">Accounts</a></li>
+                <li><a href="./inventory.html">Inventory</a></li>
+                <li><a href="./order.html">Orders</a></li>
+            </ul>
+        </div>
+        <div class="main">
+            <div class="topbar">
+                <h1 th:text="'Update ' + ${accounts.username} + '\'s Account'"></h1>
+                <a class="btn btn-info edit-btn" th:href="@{/listallaccounts}">Back</a>
+            </div>
+            <form th:action="@{updatecustomeraccount(uid=${accounts.id})}" method="post" class="formcontent">
+                <table border="1">
+                    <tr>
+                        <th colspan="2">Update Account Details</th>
+                    </tr>
+                    <tr>
+                        <td>ID:</td>
+                        <td><input type="text" name="id" th:value="${accounts.id}" size="50" readonly></td>
+                    </tr>
+                    <tr>
+                        <td>Role:</td>
+                        <td>
+                            <select name="role">
+                                <!-- Display the current role as the selected option -->
+                                <option th:value="${accounts.role}" th:selected="true" th:text="${accounts.role}"></option>
+                                <!-- List other roles as options -->
+                                <option th:if="${accounts.role ne 'Customer'}" th:value="Customer">Customer</option>
+                                <option th:if="${accounts.role ne 'Staff'}" th:value="Staff">Staff</option>
+                            </select>                            
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Username:</td>
+                        <td><input type="text" name="username" th:value="${accounts.username}" size="50"></td>
+                    </tr>
+                    <tr>
+                        <td>First Name:</td>
+                        <td><input type="text" name="firstname" th:value="${accounts.firstname}" size="50"></td>
+                    </tr>
+                    <tr>
+                        <td>Last Name:</td>
+                        <td><input type="text" name="lastname" th:value="${accounts.lastname}" size="50"></td>
+                    </tr>
+                    <tr>
+                        <td>Email:</td>
+                        <td><input type="email" name="email" th:value="${accounts.email}" size="50"></td>
+                    </tr>
+                    <tr>
+                        <td>Password:</td>
+                        <td><input type="password" name="password" th:value="${accounts.password}" size="50"></td>
+                    </tr>
+                    <tr>
+                        <td>Phone Number:</td>
+                        <td><input type="text" name="phonenum" th:value="${accounts.phonenum}" size="50"></td>
+                    </tr>
+                    <tr>
+                        <td>Street:</td>
+                        <td><input type="text" name="street" th:value="${accounts.street}" size="50"></td>
+                    </tr>
+                    <tr>
+                        <td>State:</td>
+                        <td><input type="text" name="state" th:value="${accounts.state}" size="50"></td>
+                    </tr>
+                    <tr>
+                        <td>City:</td>
+                        <td><input type="text" name="city" th:value="${accounts.city}" size="50"></td>
+                    </tr>
+                    <tr>
+                        <td>Postal Code:</td>
+                        <td><input type="text" name="postalcode" th:value="${accounts.postalcode}" size="50"></td>
+                    </tr>
+                </table>
+                <br>
+                <div class="buttons">
+                    <a class="btn btn-info edit-btn" th:href="@{/listallaccounts}">Cancel</a>
+                    <input class="btn btn-info update-btn" type="submit" value="Submit">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
