@@ -6,8 +6,16 @@
     <title>Yasriman | Dashboard</title>
     <link rel="icon" href="https://i.ibb.co/F7PH3zS/logo.jpg" type="image/png">
     <link rel="stylesheet" href="./css/accounts.css">
+    <link rel="stylesheet" href="./css/animation.css">
+    <link rel="stylesheet" href="./css/loading.css">
+
 </head>
 <body>
+    <div id="loading-screen">
+        <video id="loading-video" autoplay loop muted>
+          <source src="./video/loadingscreen.mp4" type="video/mp4">
+        </video>
+      </div>
     <div class="navbarbg">
         <a href="/"><h2>YASRIMAN</h2></a>
         <div class="navlinks">
@@ -32,7 +40,7 @@
             </ul>
         </div>
 
-        <div class="main">
+        <div class="main fade-in-up delay-1">
             <h1>Accounts</h1>
             <span class="notespan">scroll right for more action</span>
             <div class="tablediv">
@@ -47,7 +55,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="account : ${accounts}">
+                        <tr th:each="account : ${accounts}" class="fade-in-up delay-1">
                             <td th:text="${account.id}"></td>
                             <td th:text="${account.role}"></td>
                             <td th:text="${account.firstname}"></td>
@@ -60,5 +68,6 @@
             </div>
         </div>
     </div> 
+    <script src="./js/loading.js"></script>
 </body>
 </html>

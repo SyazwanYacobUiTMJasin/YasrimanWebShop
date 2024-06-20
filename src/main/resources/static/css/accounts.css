@@ -38,9 +38,12 @@ body {
 .navbarbg a{
   text-decoration: none;
   color: #1a4d2e;
+  overflow: hidden;
+  height: fit-content;
 }
-.navbarbg h2 {
+.navbarbg a h2 {
   font-size: 30px;
+  overflow: hidden;
 }
 
 .navbarbg div a, #sidebar a {

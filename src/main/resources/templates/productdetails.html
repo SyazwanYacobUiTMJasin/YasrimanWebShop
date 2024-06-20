@@ -10,9 +10,17 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
     />
     <link rel="icon" href="./images/logo.jpeg" type="image/png">
+    <link rel="stylesheet" href="./css/animation.css">
+    <link rel="stylesheet" href="./css/loading.css">
+
   </head>
 
   <body>
+    <div id="loading-screen">
+      <video id="loading-video" autoplay loop muted>
+        <source src="./video/loadingscreen.mp4" type="video/mp4">
+      </video>
+    </div>
     <div class="navbarbg">
       <a href="./index.html">
         <h2>YASRIMAN</h2>
@@ -47,7 +55,7 @@
       <a href="./viewcart.html">CART</a>
     </div>
     </div>
-    <div class="hero">
+    <div class="hero fade-in-up delay-1">
       <div class="product-container">
         <h1>Caladium Plant</h1>
         <div class="groupallitems">
@@ -99,5 +107,7 @@
     </div>
 
     <script src="./js/productdetails.js"></script>
+  <script src="./js/loading.js"></script>
+
   </body>
 </html>

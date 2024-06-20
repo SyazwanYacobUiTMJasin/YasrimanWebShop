@@ -6,11 +6,19 @@
     <title>Yasriman | Sign In</title>
     <link rel="icon" href="https://i.ibb.co/F7PH3zS/logo.jpg" type="image/png">
     <link rel="stylesheet" href="./css/signin.css" />
+    <link rel="stylesheet" href="./css/animation.css">
+    <link rel="stylesheet" href="./css/loading.css">
+
 </head>
 <body>
+    <div id="loading-screen">
+        <video id="loading-video" autoplay loop muted>
+          <source src="./video/loadingscreen.mp4" type="video/mp4">
+        </video>
+      </div>
     <div class="all">
-        <div class="formcontainer">
-            <div class="formcontent">
+        <div class="formcontainer fade-in-up delay-1">
+            <div class="formcontent fade-in-up delay-1">
                 <h1>SIGN IN</h1>
                 <p th:if="${session.signinerror != null}" style="color: red; font-weight: 500;" th:text="${session.signinerror}"></p>
                 <form th:action="@{/signin}" method="post" onsubmit="return validateForm()">
@@ -37,5 +45,7 @@
         </div>
     </div>
     <script src="./js/signin.js"></script>
+    <script src="./js/loading.js"></script>
+
 </body>
 </html>

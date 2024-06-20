@@ -7,13 +7,20 @@
     <link rel="stylesheet" href="./css/styles.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" />
     <link rel="icon" href="https://i.ibb.co/F7PH3zS/logo.jpg" type="image/png">
+    <link rel="stylesheet" href="./css/animation.css">
+    <link rel="stylesheet" href="./css/loading.css">
 </head>
 <body>
+    <div id="loading-screen">
+        <video id="loading-video" autoplay loop muted>
+          <source src="./video/loadingscreen.mp4" type="video/mp4">
+        </video>
+      </div>
     <div class="navbarbg">
         <a th:href="@{/}">
-            <h2>YASRIMAN</h2>
+            <h2 class="fade-in-up delay-1">YASRIMAN</h2>
         </a>
-        <div class="logintext">
+        <div class="logintext fade-in-up delay-2">
             <div class="searchdiv">
                 <img src="https://svgshare.com/i/177L.svg" alt="" draggable="false" />
                 <input type="text" placeholder="Search" name="search" autocomplete="off" id="searchInput" />
@@ -35,22 +42,22 @@
                 </a>
             </div>
         </div>
-        <div th:if="${session.accountrole == 'Staff'}">
+        <div th:if="${session.accountrole == 'Staff'}" class="fade-in-up delay-3">
             <a th:href="@{/staffdashboard}">DASHBOARD</a>
         </div>
     
-    <div class="navlinks">
+    <div class="navlinks fade-in-up delay-3">
         <a href="/" class="active">HOME</a>
         <a href="products">PRODUCTS</a>
         <a href="cart">CART</a>
     </div>
   </div>
-    <div class="hero">
+    <div class="hero ">
         <div class="maincontent">
-            <div class="homepageimage">
+            <div class="homepageimage fade-in-up delay-4">
                 <img src="https://i.ibb.co/MPr8bQG/homepageplantrender.png" alt="plants.png" draggable="false"/>
             </div>
-            <div class="maintitle"> 
+            <div class="maintitle fade-in-up delay-4"> 
                 <h1>YASRIMAN PLANTS AND TOOLS SHOP</h1>
                 <h2>
                     Cultivating Green Dreams:<br />Your Destination for Flourishing
@@ -65,7 +72,7 @@
             </div>
         </div>
     </div>
-    <section class="footer">
+    <section class="footer fade-in-up delay-1">
         <div class="box-container">
             <table>
                 <tr>
@@ -169,6 +176,7 @@
         </div>
     </section>
 
+    <script src="./js/loading.js"></script>
     <script th:inline="javascript">
         /*<![CDATA[*/
         document.getElementById('searchInput').addEventListener('keydown', function(event) {

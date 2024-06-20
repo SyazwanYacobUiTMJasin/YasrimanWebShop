@@ -15,6 +15,7 @@ body {
   background-color: #f5efe6;
   max-width: 100vw;
   max-height: 100vh;
+  scroll-behavior: smooth;
 }
 
 /* START NAVBAR */
@@ -32,6 +33,7 @@ body {
   min-height: 25vh;
   position: fixed;
   width: 100vw;
+  z-index: 999;
 }
 
 .navbarbg a {
@@ -125,6 +127,7 @@ input[type="text"]:focus {
   padding: 20px;
   margin-top: 25vh;
   overflow-y: hidden;
+  z-index: 1;
 }
 
 .maincontent {
@@ -133,6 +136,7 @@ input[type="text"]:focus {
   justify-content: center;
   width: 80vw;
   gap: 5vw;
+  overflow-y: hidden;
 }
 
 .maintitle {
@@ -141,6 +145,7 @@ input[type="text"]:focus {
   justify-content: center;
   flex-direction: column;
   gap: 10vh;
+  overflow-y: hidden;
 }
 
 .maintitle h2 {
@@ -347,4 +352,3 @@ input[type="submit"]:hover {
     font-size: 14px;
   }
 }
-

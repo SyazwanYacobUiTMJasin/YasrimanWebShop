@@ -10,8 +10,16 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
     />
     <link rel="icon" href="./images/logo.jpeg" type="image/png">
+    <link rel="stylesheet" href="./css/animation.css">
+    <link rel="stylesheet" href="./css/loading.css">
+
   </head>
   <body>
+    <div id="loading-screen">
+      <video id="loading-video" autoplay loop muted>
+        <source src="./video/loadingscreen.mp4" type="video/mp4">
+      </video>
+    </div>
     <div class="navbarbg">
       <a href="/"><h2>YASRIMAN</h2></a>
       <div class="logintext">
@@ -63,8 +71,8 @@
 
     <div class="gridallprod">
       <h1>All Product</h1>
-      <div class="grid-container">
-        <div class="grid-item">
+      <div class="grid-container fade-in-up delay-1">
+        <div class="grid-item fade-in-up delay-1">
           <a
             href="products/productdetails"
             style="text-decoration: none; color: inherit"
@@ -246,6 +254,7 @@
     </section>
     
     <script src="./js/product.js"></script>
+  <script src="./js/loading.js"></script>
     
   </body>
 </html>

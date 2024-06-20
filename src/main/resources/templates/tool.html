@@ -10,8 +10,16 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
     />
     <link rel="icon" href="../images/logo.jpeg" type="image/png">
+    <link rel="stylesheet" href="./css/animation.css">
+    <link rel="stylesheet" href="./css/loading.css">
+
   </head>
   <body>
+    <div id="loading-screen">
+      <video id="loading-video" autoplay loop muted>
+        <source src="./video/loadingscreen.mp4" type="video/mp4">
+      </video>
+    </div>
     <div class="navbarbg">
       <a href="/"><h2>YASRIMAN</h2></a>
       <div class="logintext">
@@ -59,10 +67,10 @@
       </ul>
     </div>
 
-    <div class="gridallprod">
+    <div class="gridallprod fade-in-up delay-1">
       <h1>Tools and Equipment</h1>
       <div class="grid-container">
-        <div class="grid-item">
+        <div class="grid-item fade-in-up delay-1">
           <img src="./images/baja.jpg" alt="Baja Organik (1kg)" />
           <h3>Baja Organik (1kg)</h3>
           <p class="price">RM15.60</p>
@@ -209,5 +217,7 @@
       </div>
     </section>
     <script src="./js/product.js"></script>
+  <script src="./js/loading.js"></script>
+
   </body>
 </html>

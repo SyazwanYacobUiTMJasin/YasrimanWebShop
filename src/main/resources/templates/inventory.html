@@ -6,8 +6,16 @@
     <link rel="stylesheet" href="./css/inventory.css" />
     <title>Yasriman | Inventory</title>
     <link rel="icon" href="./images/logo.jpeg" type="image/png">
+    <link rel="stylesheet" href="./css/animation.css">
+    <link rel="stylesheet" href="./css/loading.css">
+
   </head>
   <body>
+    <div id="loading-screen">
+      <video id="loading-video" autoplay loop muted>
+        <source src="./video/loadingscreen.mp4" type="video/mp4">
+      </video>
+    </div>
     <div class="navbarbg">
       <a href="./index.html"><h2>YASRIMAN</h2></a>
       <!-- <div class="logintext">
@@ -61,7 +69,7 @@
         </div>
 
         <!-- Create New Modal -->
-        <div id="createNewModal" class="edit-modal">
+        <div id="createNewModal" class="edit-modal fade-in-up delay-1">
           <div class="edit-modal-content">
             <h2>Create New Item</h2>
             <label for="newTypeSelect">Type:</label>
@@ -94,7 +102,7 @@
 
         <div class="table-container">
           <table>
-            <tr>
+            <tr class=" fade-in-up delay-1">
               <th>ID</th>
               <th>Type</th>
               <th>Image</th>
@@ -103,7 +111,7 @@
               <th>Edit Item</th>
               <th>Delete Item</th>
             </tr>
-            <tr>
+            <tr class=" fade-in-up delay-2">
               <td>101</td>
               <td>Plant</td>
               <td><img src="images/p1.jpg" alt="Caladium Plant" /></td>
@@ -191,7 +199,7 @@
           </table>
         </div>
 
-        <div id="editModal" class="edit-modal">
+        <div id="editModal" class="edit-modal fade-in-up delay-1">
           <div class="edit-modal-content">
             <h2>Edit Item</h2>
             <label for="idInput">ID:</label>
@@ -218,5 +226,7 @@
       </div>
     </div>
     <script src="./js/inventory.js"></script>
+  <script src="./js/loading.js"></script>
+
   </body>
 </html>

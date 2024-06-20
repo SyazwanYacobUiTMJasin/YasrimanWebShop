@@ -8,9 +8,16 @@
   <title>Yasriman | Cart</title>
   <link rel="stylesheet" href="./css/viewcart.css">
     <link rel="icon" href="./images/logo.jpeg" type="image/png">
+    <link rel="stylesheet" href="./css/animation.css">
+    <link rel="stylesheet" href="./css/loading.css">
   </head>
 
 <body>
+  <div id="loading-screen">
+    <video id="loading-video" autoplay loop muted>
+      <source src="./video/loadingscreen.mp4" type="video/mp4">
+    </video>
+  </div>
   <div class="navbarbg">
     <a href="/"><h2>YASRIMAN</h2></a>
     <div class="logintext">
@@ -49,7 +56,7 @@
 
   <main>
     <h2>MY CART</h2>
-    <div class="basketmain">
+    <div class="basketmain fade-in-up delay-1">
     <div class="basket">
       <div class="basket-labels">
         <ul>
@@ -93,6 +100,8 @@
   </main>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="./js/viewcart.js"></script>
+<script src="./js/loading.js"></script>
+
 </body>
 
 </html>

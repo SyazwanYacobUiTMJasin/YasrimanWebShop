@@ -103,12 +103,14 @@ main {
   overflow-x: hidden;
   padding: 1rem 0;
   width: 960px;
+  margin-top: 30vh;
 }
 
 main .basketmain 
 {
   display: flex;
-  width: fit-content;
+  /* width: fit-content; */
+  height: 100vh;
 
 }
 
@@ -389,6 +391,8 @@ body {
   padding: 20px 0;
   gap: 30px;
   min-height: 25vh;
+  position: fixed;
+  width: 100vw;
 }
 
 .navbarbg a {

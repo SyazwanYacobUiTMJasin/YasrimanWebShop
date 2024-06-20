@@ -6,8 +6,16 @@
     <title>Yasriman | View Account Details</title>
     <link rel="icon" href="https://i.ibb.co/F7PH3zS/logo.jpg" type="image/png">
     <link rel="stylesheet" href="./css/accounts.css">
+    <link rel="stylesheet" href="./css/animation.css">
+    <link rel="stylesheet" href="./css/loading.css">
+
 </head>
 <body>
+    <div id="loading-screen">
+        <video id="loading-video" autoplay loop muted>
+          <source src="./video/loadingscreen.mp4" type="video/mp4">
+        </video>
+      </div>
     <div class="navbarbg">
         <a href="/"><h2>YASRIMAN</h2></a>
         <div class="navlinks">
@@ -27,7 +35,7 @@
             </ul>
         </div>
 
-        <div class="main">
+        <div class="main fade-in-up delay-1">
             <div class="topbar">
                 <h1 th:text="${accounts.username}">'s account</h1>
                 <a class="btn btn-info edit-btn" th:href="@{/listallaccounts}">Back</a>
@@ -89,5 +97,7 @@
             </form>
         </div>
     </div>
+    <script src="./js/loading.js"></script>
+
 </body>
 </html>

@@ -1,5 +1,7 @@
 com\masbro\yasriman\model\accounts.class
+com\masbro\yasriman\model\staff.class
 com\masbro\yasriman\dao\AccountDAO.class
 com\masbro\yasriman\YasrimanApplication.class
 com\masbro\yasriman\connection\ConnectionManager.class
 com\masbro\yasriman\controller\AccountController.class
+com\masbro\yasriman\model\customer.class

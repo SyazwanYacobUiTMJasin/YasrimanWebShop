@@ -1,0 +1,42 @@
+@keyframes fadeInUp {
+  0% {
+      opacity: 0;
+      transform: translateY(20px);
+  }
+  100% {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  opacity: 0; /* Initial state to ensure animation triggers */
+  transform: translateY(20px); /* Initial position for the animation */
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+/* Utility class for adding animation delay */
+.fade-in-up.delay-1 {
+  transition-delay: 0.5s;
+}
+.fade-in-up.delay-2 {
+  transition-delay: 1s;
+}
+.fade-in-up.delay-3 {
+  transition-delay: 1.5s;
+}
+.fade-in-up.delay-4 {
+  transition-delay: 2s;
+}
+.fade-in-up.delay-5 {
+  transition-delay: 2.5s;
+}
+.fade-in-up.delay-6 {
+  transition-delay: 3s;
+}
+
+/* Trigger animation when the element is visible */
+.fade-in-up.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
