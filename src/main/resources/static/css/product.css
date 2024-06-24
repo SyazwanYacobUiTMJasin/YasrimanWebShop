@@ -216,8 +216,8 @@ input[type="text"]:focus {
 }
 
 .grid-item img {
-  width: 100%;
-  max-width: 200px; /* Adjust as needed */
+ /*  width: 100%;  Adjust as needed */
+  max-width: 200px; 
 }
 
 .grid-item h3 {

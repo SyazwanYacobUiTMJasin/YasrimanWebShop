@@ -104,18 +104,19 @@ main {
   padding: 1rem 0;
   width: 960px;
   margin-top: 30vh;
+  margin-bottom: 50px;
 }
 
 main .basketmain 
 {
-  display: flex;
+  /*display: flex; */
   /* width: fit-content; */
-  height: 100vh;
+  height: fit-content;
 
 }
 
 .basket,
-aside {
+.aside {
   padding: 0 1rem;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -258,17 +259,17 @@ li.subtotal:before {
   width: 3.75rem;
 }
 
-aside {
-  float: right;
+.aside { 
   position: relative;
   width: 30%;
+  margin: auto;
 }
 
 .summary {
   background-color: #eee;
   border: 1px solid #aaa;
   padding: 1rem;
-  position: fixed;
+  position: relative;
   width: 250px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -474,7 +475,10 @@ main h2{
   margin: auto;
 }
 
-
+#checkoutForm
+{
+	height: fit-content;
+}
 @media (width < 1020px) {
   main{
     display: flex;
@@ -490,7 +494,7 @@ main h2{
     position: inherit;
   }
   
-  aside{
+  .aside{
     width: fit-content;
   }
 }
@@ -534,6 +538,7 @@ main h2{
   /* END NAVBAR */
   .basket{
     /* transform: scale(0.8); */
+    position:relative;
     width: 300px;
     margin: auto;
   }
@@ -552,7 +557,7 @@ main h2{
     overflow: visible;
   }
 
-  aside
+  .aside
   {
     padding: 30px 0;
     width: 100%;

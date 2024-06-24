@@ -178,7 +178,7 @@ body {
   margin-top: 20px;
 }
 
-.pay-now {
+.pay-now, .submitbtn {
   background-color: #1a4d2e;
   color: #fff;
   padding: 10px 20px;
@@ -197,7 +197,7 @@ body {
   color: #ffffff;
 }
 
-.pay-now:hover {
+.pay-now:hover, .submitbtn:hover{
   background-color: #d5c7b2;
   color: #1a4d2e;
 }
@@ -375,7 +375,7 @@ input[type="text"]:focus {
   padding: 20px;
   /* max-width: 90%; */
   /* max-height: 90%; */
-  height: fit-content;
+  max-height: 700px;
   width: 600px;
   overflow: hidden;
 }
@@ -508,6 +508,35 @@ span{
 .formcontainer
 {
   width: 70%;
+}
+
+.qrimg
+{
+	height: 400px;
+	width: auto;
+	display: flex;
+}
+
+.qrimg img
+{
+	height: 100%;
+	width: auto;
+	margin: auto;
+	
+}
+
+.textcontainer
+{
+	height: fit-content;
+	text-align:center;
+	display:flex;
+	flex-direction:column;
+	align-items:center;
+}
+
+.textcontainer h6
+{
+	font-size: 20px;
 }
 @media (width <1000px)
 {

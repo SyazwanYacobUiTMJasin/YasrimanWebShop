@@ -211,7 +211,9 @@ form.formcontent
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	padding-bottom: 0px;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	overflow-y: hidden;
 }
 
 h1{
@@ -271,6 +273,10 @@ table {
     background-color: #1a4d2e;
     color: white;
   }
+  
+  .notespan{
+  display: none;
+  }
 
 @media (width < 830px) {
   * {
@@ -280,7 +286,7 @@ table {
   #main{
     grid-template-columns: repeat(1, 1fr);
     height: fit-content;
-    overflow-y: visible;
+    overflow-y: auto;
   }
 
   .main
@@ -305,6 +311,24 @@ table {
   #sidebar ul
   {
     padding: 0;
+  }
+}
+
+@media (width < 430px)
+{
+  .notespan
+  {
+  	display: block;
+  }
+  
+  .main
+  {
+  	width: 73vw;
+  }
+  
+  .tablediv
+  {
+  	overflow: auto
   }
 }
 

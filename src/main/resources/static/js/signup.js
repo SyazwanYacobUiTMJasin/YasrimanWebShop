@@ -9,9 +9,9 @@ function validateForm() {
     
     // Regular expressions for validation
     const nameRegex = /^[a-zA-Z]{3,10}$/;
-    const usernameRegex = /^[a-zA-Z0-9_]{3,}$/;
+    const usernameRegex = /^[a-zA-Z0-9_]{3,30}$/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
+    const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,255}$/;
     const malaysiaPhoneRegex = /^\+60\d{9,10}$/;
   
     if (!nameRegex.test(firstName)) {
@@ -25,7 +25,7 @@ function validateForm() {
     }
   
     if (!usernameRegex.test(username)) {
-      alert("Username must be at least 3 characters long and can only contain letters, numbers, and underscore.");
+      alert("Username must be between 3 and 30 characters long and can only contain letters, numbers, and underscore.");
       return false;
     }
   
@@ -35,7 +35,7 @@ function validateForm() {
     }
   
     if (!passwordRegex.test(password)) {
-      alert("Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number.");
+      alert("Password must be between 8 and 255 characters long and contain at least one uppercase letter, one lowercase letter, and one number.");
       return false;
     }
   

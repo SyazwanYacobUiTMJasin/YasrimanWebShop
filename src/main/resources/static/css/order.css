@@ -42,10 +42,16 @@ body {
   font-size: 30px;
 }
 
-.navbarbg div a, #hero a {
-  text-decoration: none;
-  color: inherit;
+.navbarbg div a{
+  text-decoration: none; 
   font-weight: 400;
+}
+
+#hero #sidebar ul li a
+{
+	text-decoration: none; 
+  font-weight: 400;
+	color: white;
 }
 
 .navbarbg .loginicon {
@@ -118,7 +124,7 @@ input[type="text"]:focus {
     margin: 0;
     /* margin-top: 23vh; */
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: start;
     align-items: start;
     gap: 20px;
@@ -135,7 +141,7 @@ input[type="text"]:focus {
 
 .table-container {
     
-    width: 80%;
+    width: 100%;
     margin: 0 auto;
     overflow: hidden;
     /* box-shadow: 0 0 10px rgba(0,0,0,0.5); */
@@ -163,7 +169,7 @@ input[type="text"]:focus {
   }
   
   button {
-    background-color: green;
+    background-color: #1a4d2e;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -270,6 +276,102 @@ tbody tr td input[type="checkbox"]
   font-size: 20px;
 }
 
+table tr th
+{
+	text-align:center;
+}
+
+table {
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+    width: 100%;
+    max-height: 40vh;
+    overflow:auto;
+    /* box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); */
+  }
+
+  th, td {
+    padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  th {
+    background-color: #d5c7b24f;
+  }
+  
+.edit-btn, .update-btn {
+  
+  text-decoration: none; 
+  font-weight: 400;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .buttons
+  {
+  	display:flex;
+  	width: 100%;
+  	justify-content: center;
+  	align-items: center;
+  	gap: 30px;
+  }
+  
+  .hero .edit-btn {
+    background-color: #d5c7b2;
+    color: #1a4d2e;
+  }
+  
+  .update-btn { 
+    background-color: #1a4d2e;
+    color: white;
+    font-weight: 400;
+  }
+  
+  a.btn.btn-primary.update-btn
+  {
+  color:white;
+  }
+
+tr.space
+{
+	height: 10px;
+}
+
+.formcontent input[type="text"],
+.formcontent input[type="date"],
+.formcontent input[readonly] {
+    background-color: transparent;
+    border: none;
+    text-align: center;
+    outline: none;
+    width: 100%;
+}
+
+.formcontent select:focus {
+    border-bottom: 2px solid #d5c7b2;
+    transition: border-bottom 0.3s;
+}
+
+.formcontent select {
+    background-color: #d5c7b2;
+    border: 1px solid #1a4d2e;
+    outline: none;
+    padding: 5px;
+    transition: border-bottom 0.3s;
+    width: 70%;
+}
+
+.topbar{
+	width: 100%;
+	display:flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+
 @media (width < 979px) {
   * {
     font-size: 95%;
@@ -307,7 +409,7 @@ tbody tr td input[type="checkbox"]
 
   .table-container
   {
-    width: fit-content; 
+    
     overflow: auto;
   }
 

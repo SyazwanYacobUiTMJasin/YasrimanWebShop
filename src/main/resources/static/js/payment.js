@@ -1,3 +1,27 @@
+
+document.addEventListener('DOMContentLoaded', function () {
+              // Retrieve cart data from local storage
+              let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+              // Initialize variables for subtotal and total
+              let subtotal = 0;
+              let shippingFee = 15.0; // Assuming a fixed shipping fee
+
+              // Calculate the subtotal
+              cart.forEach(item => {
+                  subtotal += item.price * item.quantity;
+              });
+
+              // Calculate the total
+              let total = subtotal + shippingFee;
+
+              // Display the values in the respective elements
+              document.getElementById('subtotal').textContent = subtotal.toFixed(2);
+              document.getElementById('shipping').textContent = shippingFee.toFixed(2);
+              document.getElementById('total').textContent = total.toFixed(2);
+          });
+          
+          
 var popupContainer = document.getElementById("popupContainer");
 
       function showDetails() {
@@ -14,67 +38,50 @@ var popupContainer = document.getElementById("popupContainer");
         }
       }
       
+document.addEventListener('DOMContentLoaded', function () {
+        const payNowBtn = document.getElementById('payNowBtn');
+        const paymentForm = document.getElementById('paymentForm');
+		const errorMessage = document.getElementById('error-message');
+		
+        payNowBtn.addEventListener('click', function () {
+          let allValid = true;
+          let allTextValid = true;
+          const textinputs = paymentForm.querySelectorAll('input[type="text"]');
+          const fileinputs = paymentForm.querySelectorAll('input[type="file"]');
+          
+          textinputs.forEach(textinputs => {
+            if (!textinputs.value) {
+              textinputs.style.border = '2px solid red';
+              allValid = false;
+              allTextValid = false;
+            } else {
+              
+              textinputs.style.border = ''; 
+              
+            }
+          });
+          
+			fileinputs.forEach(fileinputs => {
+            if (!fileinputs.value) {
+              fileinputs.style.border = '2px solid red';
+              allValid = false;
+            } else {
+              fileinputs.style.border = '';
+            }
+          });
+          
+          if (!allTextValid) {
+             errorMessage.style.display = 'block'; 
+          }else if (allTextValid) {
+			errorMessage.style.display = 'none';
+            showDetails();
+          }
+          
+          if (allValid) { 
+            paymentForm.submit();
+          }
+        });
+      });
 
-document.getElementById('paymentForm').addEventListener('submit', function(event) {
-    var fname = document.getElementById('fname');
-    var lname = document.getElementById('lname');
-    var address = document.getElementById('address');
-    var postcode = document.getElementById('postcode');
-    var city = document.getElementById('city');
-    var state = document.getElementById('state');
-    
-    var isValid = true;
-    
-    if (fname.value.trim() === '') {
-        fname.style.borderColor = 'red';
-        isValid = false;
-    } else {
-        fname.style.borderColor = '';
-    }
-    
-    if (lname.value.trim() === '') {
-        lname.style.borderColor = 'red';
-        isValid = false;
-    } else {
-        lname.style.borderColor = '';
-    }
-    
-    if (address.value.trim() === '') {
-        address.style.borderColor = 'red';
-        isValid = false;
-    } else {
-        address.style.borderColor = '';
-    }
-    
-    if (postcode.value.trim() === '') {
-        postcode.style.borderColor = 'red';
-        isValid = false;
-    } else {
-        postcode.style.borderColor = '';
-    }
-    
-    if (city.value.trim() === '') {
-        city.style.borderColor = 'red';
-        isValid = false;
-    } else {
-        city.style.borderColor = '';
-    }
-    
-    if (state.value.trim() === '') {
-        state.style.borderColor = 'red';
-        isValid = false;
-    } else {
-        state.style.borderColor = '';
-    }
-    
-    if (!isValid) {
-        event.preventDefault(); // Prevent form submission if any field is empty
-    }
-  });
-  
-  $(function() {
-      $('[data-toggle="tooltip"]').tooltip()
-    })
-
-
+      
     

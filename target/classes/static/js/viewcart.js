@@ -1,131 +1,98 @@
-// viewcart.js
 document.addEventListener('DOMContentLoaded', function () {
-  const cartItemsContainer = document.getElementById('cartItems');
-  const cartTotal = document.getElementById('basket-total');
-  const cartSubtotal = document.getElementById('basket-subtotal');
-  const totalItems = document.querySelector('.total-items');
-  const deliverySelection = document.querySelector('.summary-delivery-selection');
-  const shippingFeeText = document.querySelector('.shippingfee');
+    const cartItemsContainer = document.getElementById('cartItems');
+    const cartDataInput = document.getElementById('cartData');
+    const checkoutForm = document.getElementById('checkoutForm');
+    
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    console.log('Cart data:', cart);
 
-  let cart = JSON.parse(localStorage.getItem('cart')) || [];
-  let shippingFee = 0;
+    function renderCart() {
+        cartItemsContainer.innerHTML = '';
+        let subtotal = 0;
+        let totalItemCount = 0;
 
-  function renderCart() {
-      cartItemsContainer.innerHTML = '';
-      let subtotal = 0;
-      let totalItemCount = 0;
+        cart.forEach(item => {
+            const itemTotal = item.price * item.quantity;
+            subtotal += itemTotal;
+            totalItemCount += item.quantity;
 
-      cart.forEach(item => {
-          const itemTotal = item.price * item.quantity;
-          subtotal += itemTotal;
-          totalItemCount += item.quantity;
+            const productElement = document.createElement('div');
+            productElement.classList.add('basket-product');
+            productElement.innerHTML = `
+                <div class="item">
+                    <div class="product-image">
+                        <img src="${item.imgSrc}" alt="${item.title}" class="product-frame" width="120" height="auto">
+                    </div>
+                    <div class="product-details">
+                        <h1>${item.title}</h1>
+                    </div>
+                </div>
+                <div class="price">${item.price.toFixed(2)}</div>
+                <div class="quantity">
+                    <input type="number" value="${item.quantity}" min="1" class="quantity-field">
+                </div>
+                <div class="subtotal">${itemTotal.toFixed(2)}</div>
+                <div class="remove">
+                    <button>Remove</button>
+                </div>
+            `;
 
-          const productElement = document.createElement('div');
-          productElement.classList.add('basket-product');
-          productElement.innerHTML = `
-              <div class="item">
-                  <div class="product-image">
-                      <img src="${item.imgSrc}" alt="${item.title}" class="product-frame" width="120" height="auto">
-                  </div>
-                  <div class="product-details">
-                      <h1>${item.title}</h1>
-                  </div>
-              </div>
-              <div class="price">${item.price.toFixed(2)}</div>
-              <div class="quantity">
-                  <input type="number" value="${item.quantity}" min="1" class="quantity-field">
-              </div>
-              <div class="subtotal">${itemTotal.toFixed(2)}</div>
-              <div class="remove">
-                  <button>Remove</button>
-              </div>
-          `;
+            const quantityField = productElement.querySelector('.quantity-field');
+            quantityField.addEventListener('change', function () {
+                updateQuantity(item, quantityField.value);
+            });
 
-          const quantityField = productElement.querySelector('.quantity-field');
-          quantityField.addEventListener('change', function () {
-              updateQuantity(item, quantityField.value);
-          });
+            const removeButton = productElement.querySelector('.remove button');
+            removeButton.addEventListener('click', function () {
+                removeItem(item);
+            });
 
-          const removeButton = productElement.querySelector('.remove button');
-          removeButton.addEventListener('click', function () {
-              removeItem(item);
-          });
+            cartItemsContainer.appendChild(productElement);
+        });
 
-          cartItemsContainer.appendChild(productElement);
-      });
+        updateTotals(subtotal);
+        cartDataInput.value = JSON.stringify(cart);
+    }
 
-      updateTotals(subtotal);
-      totalItems.textContent = totalItemCount;
-  }
+    function updateTotals(subtotal) {
+        const total = subtotal + shippingFee;
+        document.getElementById('basket-subtotal').textContent = subtotal.toFixed(2);
+        document.getElementById('basket-total').textContent = total.toFixed(2);
+        document.querySelector('.total-items').textContent = cart.length;
+    }
 
-  function updateTotals(subtotal) {
-      const total = subtotal + shippingFee;
-      cartSubtotal.textContent = `${subtotal.toFixed(2)}`;
-      cartTotal.textContent = `${total.toFixed(2)}`;
-  }
+    function updateQuantity(item, newQuantity) {
+        item.quantity = parseInt(newQuantity, 10);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        renderCart();
+    }
 
-  function updateQuantity(item, newQuantity) {
-      item.quantity = parseInt(newQuantity, 10);
-      localStorage.setItem('cart', JSON.stringify(cart));
-      renderCart();
-  }
+    function removeItem(item) {
+        cart = cart.filter(cartItem => cartItem.title !== item.title);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        renderCart();
+    }
 
-  function removeItem(item) {
-      cart = cart.filter(cartItem => cartItem.title !== item.title);
-      localStorage.setItem('cart', JSON.stringify(cart));
-      renderCart();
-  }
+    let shippingFee = 15.0;
 
-  function updateShippingFee() {
-      const selectedOption = deliverySelection.value;
-      switch (selectedOption) {
-          case 'cod':
-              shippingFee = 0;
-              shippingFeeText.textContent = 'Shipping Fee: RM0.00';
-              break;
-          case 'poslaju':
-              shippingFee = 15.0;
-              shippingFeeText.textContent = 'Shipping Fee: RM15.00';
-              break;
-          case 'jnt':
-              shippingFee = 10.0;
-              shippingFeeText.textContent = 'Shipping Fee: RM10.00';
-              break;
-          case 'ninjavan':
-              shippingFee = 12.0;
-              shippingFeeText.textContent = 'Shipping Fee: RM12.00';
-              break;
-          default:
-              shippingFee = 0;
-              shippingFeeText.textContent = 'Shipping Fee: RM0.00';
-              break;
-      }
-      renderCart();
-  }
+    checkoutForm.addEventListener('submit', function (event) {
+        if (!validateForm()) {
+            event.preventDefault();
+        } else {
+            cartDataInput.value = JSON.stringify(cart);
+        }
+    });
 
-  deliverySelection.addEventListener('change', updateShippingFee);
-
-  renderCart();
+    renderCart();
 });
 
-function goToPaymentPage() {
-    const total = parseFloat(document.getElementById('basket-subtotal').textContent);
-    const deliverySelection = document.querySelector('.summary-delivery-selection');
-    const selectedOption = deliverySelection.value;
+function validateForm() {
+    const total = parseFloat(document.getElementById('basket-subtotal').textContent); 
 
     if (total === 0) {
         alert("Your cart cannot be empty.");
-    } else if (selectedOption === "0") {
-        alert("Please select a delivery option.");
+        return false;
     } else {
-        const basketSubtotal = document.getElementById('basket-subtotal').textContent;
-        const basketTotal = document.getElementById('basket-total').textContent;
-        const shippingFee = document.querySelector('.shippingfee').textContent.replace('Shipping Fee: RM', '');
-
-        localStorage.setItem('subtotal', basketSubtotal);
-        localStorage.setItem('total', basketTotal);
-        localStorage.setItem('shipping', shippingFee);
-
-        window.location.href = 'payment.html';
+        return true;
     }
-  }
+}

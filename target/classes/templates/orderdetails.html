@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yasriman | Order Management</title>
+    <link rel="stylesheet" th:href="@{/css/order.css}"> 
+    <link rel="stylesheet" th:href="@{/css/animation.css}">
+    <link rel="stylesheet" th:href="@{/css/loading.css}">
+    <link rel="icon" th:href="@{/images/logo.jpeg}" type="image/png">
+</head>
+<body>
+<div id="loading-screen">
+    <video id="loading-video" autoplay loop muted>
+        <source th:src="@{/video/loadingscreen.mp4}" type="video/mp4">
+    </video>
+</div>
+<div class="navbarbg">
+    <a th:href="@{/index}"><h2>YASRIMAN</h2></a>
+    <div class="navlinks">
+        <a th:href="@{/index}">HOME</a>
+    </div>
+</div>
+<div id="hero">
+    <div id="sidebar">
+        <b>NAV LINKS</b>
+        <ul>
+            <br>
+            <li><a th:href="@{/staffdashboard}">Dashboard</a></li>
+            <li><a th:href="@{/listallaccounts}">Accounts</a></li>
+            <li><a href="./inventory.html">Inventory</a></li> <!-- Check if this link should be updated -->
+            <li><a th:href="@{/order?action=view}">Orders</a></li>
+            <!-- Add more navigation links as needed -->
+        </ul>
+    </div>
+    <div class="hero fade-in-up delay-1">
+        <div class="topbar">
+            <h1>Order Details</h1>
+            <a class="btn btn-info edit-btn" th:href="@{/order?action=view}">Back</a>
+        </div>
+        <div class="table-container">
+            <table border="1">
+                <tr>
+                    <th>Order Details</th>  
+                </tr>
+                <tr>
+                    <td><b>Order ID: </b><span th:text="${order.orderId}"></span><br/>
+                    <b>Account ID: </b><span th:text="${order.accountId}"></span><br/>
+                    <b>Account Username: </b><span th:text="${order.accountUsername}"></span><br/>
+                    <b>Inventory ID: </b><span th:text="${order.inventoryId}"></span><br/>
+                    <b>Inventory Name: </b><span th:text="${order.inventoryName}"></span><br/>
+                    <b>Inventory Image: </b><span th:if="${order.inventoryImage != null}">
+                        <img th:src="'data:image/jpeg;base64,' + ${order.inventoryImage}" alt="Inventory Image" style="width:50px;height:50px;"/><br/>
+                    </span>
+                    <b>Order Date: </b><span th:text="${order.orderDate}"></span><br/>
+                    <b>Order Status: </b><span th:text="${order.orderStatus}"></span><br/>
+                    <b>Order Total Price: </b>RM <span th:text="${#numbers.formatDecimal(order.orderTotalPrice, 2, 2)}"></span><br/>
+                    <b>Payment Status: </b><span th:text="${order.paymentStatus}"></span><br/>
+                    <b>Payment Proof: </b><span th:if="${order.paymentProof != null}">
+                        <img th:src="'data:image/jpeg;base64,' + ${order.paymentProof}" alt="Payment Proof" style="width:50px;height:50px;"/><br/>
+                    </span></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<script th:src="@{/js/loading.js}"></script>
+</body>
+</html>

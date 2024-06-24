@@ -1,107 +1,99 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:c="http://java.sun.com/jsp/jstl/core">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Yasriman | Cart</title>
-  <link rel="stylesheet" href="./css/viewcart.css">
-    <link rel="icon" href="./images/logo.jpeg" type="image/png">
-    <link rel="stylesheet" href="./css/animation.css">
-    <link rel="stylesheet" href="./css/loading.css">
-  </head>
-
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Yasriman | Cart</title>
+    <link rel="icon" th:href="@{/images/logo.jpg}" type="image/png">
+    <link rel="stylesheet" th:href="@{/css/viewcart.css}">
+    <link rel="stylesheet" th:href="@{/css/animation.css}">
+    <link rel="stylesheet" th:href="@{/css/loading.css}">
+</head>
 <body>
-  <div id="loading-screen">
+<div id="loading-screen">
     <video id="loading-video" autoplay loop muted>
-      <source src="./video/loadingscreen.mp4" type="video/mp4">
+        <source th:src="@{/video/loadingscreen.mp4}" type="video/mp4">
     </video>
-  </div>
-  <div class="navbarbg">
-    <a href="/"><h2>YASRIMAN</h2></a>
-    <div class="logintext">
-      <div class="searchdiv">
-          <img src="https://svgshare.com/i/177L.svg" alt="" draggable="false" />
-          <input type="text" placeholder="Search" name="search" autocomplete="off" id="searchInput" />
-      </div>
-      <div th:if="${loggedinaccountusername != null}">
-          <a th:href="@{/viewcustomeraccount(uid=${loggedinaccountid},from=index)}">
-              <span th:text="${loggedinaccountusername}"></span>
-              <div class="loginicon">
-                  <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/fee6b20cb0abd925cc4a3bda7cf3fa3366c37bcc07b2da638108c5651aca2ad0?apiKey=8730b69884724863a1e8089b99726052&" class="img" draggable="false" />
-              </div>
-          </a>
-      </div>
-      <div th:unless="${loggedinaccountusername != null}">
-          <a th:href="@{/signupform}">
-              Sign In/Sign Up
-              <div class="loginicon">
-                  <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/fee6b20cb0abd925cc4a3bda7cf3fa3366c37bcc07b2da638108c5651aca2ad0?apiKey=8730b69884724863a1e8089b99726052&" class="img" draggable="false" />
-              </div>
-          </a>
-      </div>
-  </div>
-  <div th:if="${loggedinaccountrole == 'Staff'}">
-      <a th:href="@{/staffdashboard}">DASHBOARD</a>
-  </div>
-    <div class="navlinks">
-      <a href="/">HOME</a>
-      <a href="products">PRODUCTS</a>
-      <!-- <a href="./information.html">INFORMATION</a> -->
-      <!-- <a href="./faq.html">FAQ</a> -->
-      <a href="cart" class="active">CART</a>
-    </div>
-  </div>
-
-  <main>
-    <h2>MY CART</h2>
-    <div class="basketmain fade-in-up delay-1">
-    <div class="basket">
-      <div class="basket-labels">
-        <ul>
-          <li class="item item-heading">Item</li>
-          <li class="price">Price</li>
-          <li class="quantity">Quantity</li>
-          <li class="subtotal">Subtotal</li>
-        </ul>
-      </div>
-      <div id="cartItems" class="basket-products"></div>
-    
 </div>
-<aside>
-      <div class="summary">
-          <div class="summary-total-items"><span class="total-items"></span> Items in your Bag</div>
-          <div class="summary-subtotal">
-              <div class="subtotal-title">Subtotal</div>
-              <div class="subtotal-value final-value" id="basket-subtotal">0.00</div>
-          </div>
-          <div class="summary-delivery">
-            <select name="delivery-collection" class="summary-delivery-selection">
-              <option value="0" selected="selected">Select Collection or Delivery</option>
-              <option value="cod">Cash On Delivery</option>
-              <option value="poslaju">Poslaju</option>
-              <option value="jnt">JNT</option>
-              <option value="ninjavan">Ninja Van</option>
-            </select>
-          </div>
-          <div class="shippingfee">Shipping Fee: RM0.00</div>
-          <div class="summary-total">
-              <div class="total-title">Total</div>
-              <div class="total-value final-value" id="basket-total">0.00</div>
-          </div>
-          <div class="summary-checkout">
-              <button class="checkout-cta" onclick="goToPaymentPage()">Go to Secure Checkout</button>
-          </div>
-      </div>
-  </aside>
-  </div>
-    
-  </main>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="./js/viewcart.js"></script>
+<div class="navbarbg">
+    <h2>YASRIMAN</h2>
+    <div class="logintext">
+        <div class="searchdiv">
+            <img src="https://svgshare.com/i/177L.svg" alt="" />
+            <input type="text" placeholder="Search" name="search" autocomplete="off" />
+        </div>
+        <!-- Thymeleaf condition to check logged in user -->
+        <div th:if="${loggedinaccountusername != null}">
+            <a th:href="@{/viewcustomeraccount(uid=${loggedinaccountid},from=index)}">
+                <span th:text="${loggedinaccountusername}"></span>
+                <div class="loginicon">
+                    <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/fee6b20cb0abd925cc4a3bda7cf3fa3366c37bcc07b2da638108c5651aca2ad0?apiKey=8730b69884724863a1e8089b99726052" class="img" draggable="false" />
+                </div>
+            </a>
+        </div>
+        <div th:unless="${loggedinaccountusername != null}">
+            <a th:href="@{/signupform}">
+                Sign In/Sign Up
+                <div class="loginicon">
+                    <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/fee6b20cb0abd925cc4a3bda7cf3fa3366c37bcc07b2da638108c5651aca2ad0?apiKey=8730b69884724863a1e8089b99726052" class="img" draggable="false" />
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="fade-in-up delay-3">
+        <!-- Thymeleaf condition to show dashboard link for staff -->
+        <a th:if="${'Staff' eq loggedinaccountrole}" th:href="@{/staffdashboard}">DASHBOARD</a>
+    </div>
+    <div class="navlinks">
+        <a href="./index.jsp">HOME</a>
+        <a th:href="@{/inventory(action=viewallproducts)}">PRODUCTS</a>
+        <a href="./viewcart.jsp" class="active">CART</a>
+    </div>
+</div>
+
+<main class="fade-in-up delay-1">
+    <h2>MY CART</h2>
+    <div class="basketmain">
+        <form id="checkoutForm" th:action="@{/order(action=checksigninstatus, uid=${loggedinaccountid})}" method="post">
+            <div class="aside">
+                <div class="summary">
+                    <div class="summary-total-items"><span class="total-items"></span> Items in your Bag</div>
+                    <div class="summary-subtotal">
+                        <div class="subtotal-title">Subtotal</div>
+                        <div class="subtotal-value final-value" id="basket-subtotal">0.00</div>
+                    </div>
+                    <div class="shippingfee">Shipping Fee: RM15.00</div>
+                    <div class="summary-total">
+                        <div class="total-title">Total</div>
+                        <div class="total-value final-value" id="basket-total">0.00</div>
+                    </div>
+                    <div class="summary-checkout">
+                        <button type="submit" class="checkout-cta">Go to Secure Checkout</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="basket">
+                <div class="basket-labels">
+                    <ul>
+                        <li class="item item-heading">Item</li>
+                        <li class="price">Price</li>
+                        <li class="quantity">Quantity</li>
+                        <li class="subtotal">Subtotal</li>
+                    </ul>
+                </div>
+                <div id="cartItems" class="basket-products"></div>
+            </div>
+
+            <!-- Hidden input for cart data -->
+            <input type="hidden" id="cartData" name="cartData" />
+        </form>
+    </div>
+</main>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="./js/viewcart.js"></script>
 <script src="./js/loading.js"></script>
-
 </body>
-
 </html>

@@ -65,6 +65,41 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // product.js
 document.addEventListener('DOMContentLoaded', function () {
+    const addToCartButtons = document.querySelectorAll('.add-to-cart');
+
+    addToCartButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const productContainer = button.closest('.product-container');
+            const productName = productContainer.querySelector('h1').textContent;
+            const priceElement = productContainer.querySelector('.price');
+            const price = parseFloat(priceElement.value.replace('RM ', ''));
+            const imgSrc = productContainer.querySelector('.product-image img').src;
+
+            addToCart({ productName, price, imgSrc });
+
+            button.textContent = 'Added';
+            setTimeout(() => {
+                button.textContent = 'Add to Cart';
+            }, 1000);
+        });
+    });
+
+    function addToCart(item) {
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const existingItem = cart.find(cartItem => cartItem.productName === item.productName);
+
+        if (existingItem) {
+            existingItem.quantity += 1;
+        } else {
+            item.quantity = 1;
+            cart.push(item);
+        }
+
+        localStorage.setItem('cart', JSON.stringify(cart));
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function () {
     const cartButtons = document.querySelectorAll('.add-to-cart');
 
     cartButtons.forEach(button => {
@@ -73,8 +108,9 @@ document.addEventListener('DOMContentLoaded', function () {
             const title = gridItem.querySelector('h3').textContent;
             const price = parseFloat(gridItem.querySelector('.price').textContent.replace('RM', ''));
             const imgSrc = gridItem.querySelector('img').src;
+            const inventoryID = gridItem.querySelector('.inventoryID').value; // Get inventoryID
 
-            addToCart({ title, price, imgSrc });
+            addToCart({ title, price, imgSrc, inventoryID }); // Include inventoryID in addToCart call
 
             button.textContent = 'Added';
             setTimeout(() => {
@@ -97,4 +133,3 @@ document.addEventListener('DOMContentLoaded', function () {
         localStorage.setItem('cart', JSON.stringify(cart));
     }
 });
-
