@@ -1,100 +1,107 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Yasriman | New Inventory</title>
-<link rel="stylesheet" th:href="@{/css/newinventory.css}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yasriman | New Inventory</title>
+    <link rel="stylesheet" th:href="@{/css/newinventory.css}">
 </head>
-<body>
-<div class="navbarbg">
-<a th:href="@{/index}"><h2>YASRIMAN</h2></a>
-</div>
 
-<div id="hero">
-<div id="sidebar">
-<b>NAV LINKS</b>
-<ul>
-<br />
-<li><a th:href="@{/dashboard}">Dashboard</a></li>
-<li><a th:href="@{/accounts}">Accounts</a></li>
-<li><a th:href="@{/inventory}">Inventory</a></li>
-<li><a th:href="@{/order}">Orders</a></li>
-</ul>
-</div>
-<div id="main">
-<div class="header-container">
-<h1>Create New Inventory</h1>
-<a th:href="@{/inventory}"><button>Back to Inventory</button></a>
-</div>
+<body th:if="${session.accountrole == 'Staff' || session.accountrole == 'Supervisor'}">
+    <div class="navbarbg">
+        <a href="/"><h2>YASRIMAN</h2></a>
+        <div class="navlinks">
+            <a href="/">HOME</a>
+        </div>
+    </div>
+    <div id="hero">
+        <div id="sidebar">
+            <b>NAV LINKS</b>
+            <!-- Sidebar Navigation Links -->
+            <ul>
+                <br>
+                <li><a th:href="@{/staffdashboard}">Dashboard</a></li>
+                <li><a th:href="@{/listallaccounts}">Accounts</a></li>
+                <li><a th:href="@{/inventory}">Inventory</a></li>
+                <li><a th:href="@{/order?action=view}">Orders</a></li>
+                <!-- Add more navigation links as needed -->
+            </ul>
+        </div>
+        <div id="main">
+            <div class="header-container">
+                <h1>Create New Inventory</h1>
+                <a th:href="@{/inventory}"><button>Back to Inventory</button></a>
+            </div>
 
-<div class="edit-container">
-<form th:action="@{/inventory?action=insert}" method="post" enctype="multipart/form-data">
-<table>
-<tr>
-<th>Type</th>
-<td>
-<select name="role" id="role" onchange="toggleRoleFields()">
-<option value="plant">Plant</option>
-<option value="tool">Tool</option>
-</select>
-</td>
-</tr>
-<tr>
-<th>Image</th>
-<td><input type="file" name="image" accept=".png, .jpg, .jpeg, .gif"></td>
-</tr>
-<tr>
-<th>Name</th>
-<td><input type="text" name="name" required></td>
-</tr>
-<tr>
-<th>Price Per Item</th>
-<td><input type="number" name="pricePerItem" step="0.01" required></td>
-</tr>
-<tr>
-<th>Description</th>
-<td><textarea name="desc" rows="4"></textarea></td>
-</tr>
-<tr>
-<th>Status</th>
-<td>
-<select name="status">
-<option value="available">Available</option>
-<option value="unavailable">Unavailable</option>
-</select>
-</td>
-</tr>
-<tr>
-<th>Quantity In</th>
-<td><input type="number" name="quantityIn" value="0" required></td>
-</tr>
-<tr id="plantManualRow" style="display: none;">
-<th>Plant Manual</th>
-<td><input type="text" name="plantManual"></td>
-</tr>
-<tr id="toolCategoryRow" style="display: none;">
-<th>Tool Category</th>
-<td><input type="text" name="toolCategory"></td>
-</tr>
-</table>
-<div class="actions">
-<button type="submit">Save</button>
-</div>
-</form>
-</div>
-</div>
-</div>
+            <div class="edit-container">
+                <form th:action="@{/inventory?action=insert}" method="post" enctype="multipart/form-data">
+                    <table>
+                        <tr>
+                            <th>Type</th>
+                            <td>
+                                <select name="role" id="role" onchange="toggleRoleFields()">
+                                    <option value="plant">Plant</option>
+                                    <option value="tool">Tool</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Image</th>
+                            <td><input type="file" name="image" accept=".png, .jpg, .jpeg, .gif"></td>
+                        </tr>
+                        <tr>
+                            <th>Name</th>
+                            <td><input type="text" name="name" required></td>
+                        </tr>
+                        <tr>
+                            <th>Price Per Item</th>
+                            <td><input type="number" name="pricePerItem" step="0.01" required></td>
+                        </tr>
+                        <tr>
+                            <th>Description</th>
+                            <td><textarea name="desc" rows="4"></textarea></td>
+                        </tr>
+                        <tr>
+                            <th>Status</th>
+                            <td>
+                                <select name="status">
+                                    <option value="available">Available</option>
+                                    <option value="unavailable">Unavailable</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Quantity In</th>
+                            <td><input type="number" name="quantityIn" value="0" required></td>
+                        </tr>
+                        <tr id="plantManualRow" style="display: none;">
+                            <th>Plant Manual</th>
+                            <td><input type="text" name="plantManual"></td>
+                        </tr>
+                        <tr id="toolCategoryRow" style="display: none;">
+                            <th>Tool Category</th>
+                            <td><input type="text" name="toolCategory"></td>
+                        </tr>
+                    </table>
+                    <div class="actions">
+                        <button type="submit">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
-<script>
-function toggleRoleFields() {
-var role = document.getElementById("role").value;
-document.getElementById("plantManualRow").style.display = (role === "plant") ? "" : "none";
-document.getElementById("toolCategoryRow").style.display = (role === "tool") ? "" : "none";
-}
+    <script>
+        function toggleRoleFields() {
+            var role = document.getElementById("role").value;
+            document.getElementById("plantManualRow").style.display = (role === "plant") ? "" : "none";
+            document.getElementById("toolCategoryRow").style.display = (role === "tool") ? "" : "none";
+        }
 
-// Initial call to set visibility
-toggleRoleFields();
-</script>
+        // Initial call to set visibility
+        toggleRoleFields();
+    </script>
 </body>
+
 </html>

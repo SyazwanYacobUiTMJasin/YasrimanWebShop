@@ -1,72 +1,77 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Yasriman | Inventory</title>
-<link rel="stylesheet" th:href="@{/css/inventory.css}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yasriman | Inventory</title>
+  <link rel="stylesheet" th:href="@{/css/inventory.css}">
 </head>
-<body>
-<div class="navbarbg">
-<a th:href="@{/index}"><h2>YASRIMAN</h2></a>
-<div class="navlinks">
-    <a th:href="@{/index}">HOME</a>
-</div>
-</div>
 
+<body th:if="${session.accountrole == 'Staff' || session.accountrole == 'Supervisor'}">
+  <div class="navbarbg">
+    <a href="/"><h2>YASRIMAN</h2></a>
+    <div class="navlinks">
+        <a href="/">HOME</a>
+    </div>
+</div>
 <div id="hero">
-<div id="sidebar">
-<b>NAV LINKS</b>
-<ul>
-<br />
-<li><a th:href="@{/staffdashboard}">Dashboard</a></li>
-<li><a th:href="@{/listallaccounts}">Accounts</a></li>
-<li><a th:href="@{/inventory}">Inventory</a></li>
-<li><a th:href="@{/order?action=view}">Orders</a></li>
-</ul>
-</div>
-<div id="main">
-<div class="header-container">
-<h1>Inventory Management</h1>
-<a th:href="@{/inventory?action=new}"><button>Create New</button></a>
-</div>
+    <div id="sidebar">
+        <b>NAV LINKS</b>
+        <!-- Sidebar Navigation Links -->
+        <ul>
+            <br>
+            <li><a th:href="@{/staffdashboard}">Dashboard</a></li>
+            <li><a th:href="@{/listallaccounts}">Accounts</a></li>
+            <li><a th:href="@{/inventory}">Inventory</a></li>
+            <li><a th:href="@{/order?action=view}">Orders</a></li>
+            <!-- Add more navigation links as needed -->
+        </ul>
+    </div>
+    <div id="main">
+      <div class="header-container">
+        <h1>Inventory Management</h1>
+        <a th:href="@{/inventory?action=new}"><button>Create New</button></a>
+      </div>
 
-<div class="table-container">
-<table>
-<tr>
-<th>ID</th>
-<th>Type</th>
-<th>Image</th>
-<th>Name</th>
-<th>Price Per Item</th>
-<th>Stock Left</th>
-<th>View</th>
-<th>Update</th>
-</tr>
-<th:block th:each="inventory : ${inventoryList}">
-<tr>
-<td th:text="${inventory.inventoryID}"></td>
-<td th:text="${inventory.inventoryRole}"></td>
-<td>
-<div th:if="${inventory.inventoryImage != null}">
-<img th:src="'data:image/jpeg;base64,' + ${inventory.inventoryImageBase64}" th:alt="${inventory.inventoryName}" width="60" height="60">
-</div>
-</td>
+      <div class="table-container">
+        <table>
+          <tr>
+            <th>ID</th>
+            <th>Type</th>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Price Per Item</th>
+            <th>Stock Left</th>
+            <th>View</th>
+            <th>Update</th>
+          </tr>
+          <th:block th:each="inventory : ${inventoryList}">
+            <tr>
+              <td th:text="${inventory.inventoryID}"></td>
+              <td th:text="${inventory.inventoryRole}"></td>
+              <td>
+                <div th:if="${inventory.inventoryImage != null}">
+                  <img th:src="'data:image/jpeg;base64,' + ${inventory.inventoryImageBase64}"
+                    th:alt="${inventory.inventoryName}" width="60" height="60">
+                </div>
+              </td>
 
-<td th:text="${inventory.inventoryName}"></td>
-<td>RM <span th:text="${#numbers.formatDecimal(inventory.inventoryPricePerItem, 2, 2)}"></span></td>
-<td th:text="${inventory.inventoryQuantityExisting}"></td>
-<td>
-<a th:href="@{/inventory?action=view(id=${inventory.inventoryID})}"><button>View</button></a>
-</td>
-<td>
-<a th:href="@{/inventory?action=edit(id=${inventory.inventoryID})}"><button>Edit</button></a>
-</td>
-</tr>
-</th:block>
-</table>
-</div>
-</div>
-</div>
+              <td th:text="${inventory.inventoryName}"></td>
+              <td>RM <span th:text="${#numbers.formatDecimal(inventory.inventoryPricePerItem, 2, 2)}"></span></td>
+              <td th:text="${inventory.inventoryQuantityExisting}"></td>
+              <td>
+                <a th:href="@{/inventory?action=view(id=${inventory.inventoryID})}"><button>View</button></a>
+              </td>
+              <td>
+                <a th:href="@{/inventory?action=edit(id=${inventory.inventoryID})}"><button>Edit</button></a>
+              </td>
+            </tr>
+          </th:block>
+        </table>
+      </div>
+    </div>
+  </div>
 </body>
+
 </html>

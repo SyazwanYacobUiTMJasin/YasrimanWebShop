@@ -9,28 +9,27 @@
     <link rel="stylesheet" th:href="@{/css/loading.css}" />
     <link rel="icon" th:href="@{/images/logo.jpeg}" type="image/png">
 </head>
-<body>
+<body th:if="${session.accountrole == 'Staff' || session.accountrole == 'Supervisor'}">
 <div id="loading-screen">
     <video id="loading-video" autoplay loop muted>
         <source th:src="@{/video/loadingscreen.mp4}" type="video/mp4">
     </video>
 </div>
 <div class="navbarbg">
-    <a th:href="@{/index}">
-        <h2>YASRIMAN</h2>
-    </a>
+    <a href="/"><h2>YASRIMAN</h2></a>
     <div class="navlinks">
-        <a th:href="@{/index}">HOME</a>
+        <a href="/">HOME</a>
     </div>
 </div>
 <div id="hero">
     <div id="sidebar">
         <b>NAV LINKS</b>
+        <!-- Sidebar Navigation Links -->
         <ul>
             <br>
             <li><a th:href="@{/staffdashboard}">Dashboard</a></li>
             <li><a th:href="@{/listallaccounts}">Accounts</a></li>
-            <li><a href="./inventory.html">Inventory</a></li>
+            <li><a th:href="@{/inventory}">Inventory</a></li>
             <li><a th:href="@{/order?action=view}">Orders</a></li>
             <!-- Add more navigation links as needed -->
         </ul>
@@ -41,7 +40,9 @@
             <a class="btn btn-info edit-btn" th:href="@{/order?action=view}">Back</a>
         </div>
         <div class="table-container">
-            <form class="formcontent" th:action="@{/order?action=update&orderid=${order.orderId}}" method="post">
+            <form class="formcontent" th:action="@{/order}" method="post">
+                <input type="hidden" name="action" value="update" />
+                <input type="hidden" name="orderid" th:value="${order.orderId}" />
                 <table border="1">
                     <tr>
                         <th>Order ID</th>
@@ -82,7 +83,7 @@
                                 <option th:value="CANCELLED" th:if="${order.orderStatus != 'CANCELLED'}">CANCELLED</option>
                             </select>
                         </td>
-                        <td><input type="text" name="orderTotalPrice" th:value="'RM ' + ${#numbers.formatDecimal(order.orderTotalPrice, 2, 'NUMBER')}" readonly/></td>
+                        <td><input type="text" name="orderTotalPrice" th:value="'RM ' + ${#numbers.formatDecimal(order.orderTotalPrice, 2, 0)}" readonly/></td>
                     </tr>
                 </table>
                 <br>

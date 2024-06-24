@@ -1,31 +1,35 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yasriman | View Inventory</title>
-    <link rel="stylesheet" th:href="@{${pageContext.request.contextPath}/css/newinventory.css}">
+    <link rel="stylesheet" th:href="@{/css/newinventory.css}">
 </head>
-<body>
-<div class="navbarbg">
-    <a th:href="@{${pageContext.request.contextPath}/index.jsp}"><h2>YASRIMAN</h2></a>
-</div>
-
-<div id="hero">
-    <div id="sidebar">
-        <b>NAV LINKS</b>
-        <ul>
-            <br />
-            <li><a th:href="@{${pageContext.request.contextPath}/dashboard.jsp}">Dashboard</a></li>
-            <li><a th:href="@{${pageContext.request.contextPath}/accounts.jsp}">Accounts</a></li>
-            <li><a th:href="@{${pageContext.request.contextPath}/inventory}">Inventory</a></li>
-            <li><a th:href="@{${pageContext.request.contextPath}/order.jsp}">Orders</a></li>
-        </ul>
+<body th:if="${session.accountrole == 'Staff' || session.accountrole == 'Supervisor'}">
+    <div class="navbarbg">
+        <a href="/"><h2>YASRIMAN</h2></a>
+        <div class="navlinks">
+            <a href="/">HOME</a>
+        </div>
     </div>
+    <div id="hero">
+        <div id="sidebar">
+            <b>NAV LINKS</b>
+            <!-- Sidebar Navigation Links -->
+            <ul>
+                <br>
+                <li><a th:href="@{/staffdashboard}">Dashboard</a></li>
+                <li><a th:href="@{/listallaccounts}">Accounts</a></li>
+                <li><a th:href="@{/inventory}">Inventory</a></li>
+                <li><a th:href="@{/order?action=view}">Orders</a></li>
+                <!-- Add more navigation links as needed -->
+            </ul>
+        </div>
     <div id="main">
         <div class="header-container">
             <h1>View Inventory</h1>
-            <a th:href="@{${pageContext.request.contextPath}/inventory}"><button>Back to Inventory</button></a>
+            <a th:href="@{/inventory}"><button>Back to Inventory</button></a>
         </div>
 
         <div class="edit-container">
@@ -41,9 +45,7 @@
                 <tr>
                     <th>Image</th>
                     <td>
-                        <c:if test="${not empty inventory.inventoryImage}">
-                            <img th:src="'data:image/jpeg;base64,' + ${inventory.inventoryImageBase64}" alt="${inventory.inventoryName}" width="60" height="60">
-                        </c:if>
+                        <img th:src="'data:image/jpeg;base64,' + ${inventory.inventoryImageBase64}" alt="${inventory.inventoryName}" width="60" height="60">
                     </td>
                 </tr>
                 <tr>
@@ -66,20 +68,14 @@
                     <th>Status</th>
                     <td th:text="${inventory.inventoryStatus}"></td>
                 </tr>
-                <c:choose>
-                    <c:when test="${inventory.inventoryRole == 'plant'}">
-                        <tr>
-                            <th>Plant Manual</th>
-                            <td th:text="${inventory.plantManual}"></td>
-                        </tr>
-                    </c:when>
-                    <c:when test="${inventory.inventoryRole == 'tool'}">
-                        <tr>
-                            <th>Tool Category</th>
-                            <td th:text="${inventory.toolCategory}"></td>
-                        </tr>
-                    </c:when>
-                </c:choose>
+                <tr th:if="${inventory.inventoryRole == 'plant'}">
+                    <th>Plant Manual</th>
+                    <td th:text="${inventory.plantManual}"></td>
+                </tr>
+                <tr th:if="${inventory.inventoryRole == 'tool'}">
+                    <th>Tool Category</th>
+                    <td th:text="${inventory.toolCategory}"></td>
+                </tr>
                 <tr>
                     <th>Last Changed By</th>
                     <td th:text="${inventory.accountUsername}"></td>

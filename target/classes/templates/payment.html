@@ -24,6 +24,7 @@
                     <div class="delivery-info">
                         <h2>Billing Address</h2>
                         <br />
+                        <input type="hidden" name="uid" th:value="${accounts.id}" readonly/>
                         <div class="formdiv">
                             <div class="leftdiv">
                                 <div class="fnamediv">
@@ -69,7 +70,7 @@
                         </div>
                     </div>
                     <p id="error-message" style="color: red; display: none;">Please fill in your complete address.</p>
-                    <p>Update your address <a th:href="@{/editcustomeraccountform(uid=${accounts.id})}">here</a></p>
+                    <p>Update your address <a th:href="@{/editcustomeraccount(uid=${accounts.id})}">here</a></p>
                     <div class="buttons">
                         <button type="button" class="cancel" onclick="confirmCancel()">Cancel</button>
                         <button type="button" class="pay-now" id="payNowBtn">Pay Now</button>

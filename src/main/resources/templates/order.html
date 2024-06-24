@@ -9,29 +9,30 @@
     <link rel="stylesheet" th:href="@{/css/loading.css}">
     <link rel="icon" th:href="@{/images/logo.jpeg}" type="image/png">
 </head>
-<body>
+<body th:if="${session.accountrole == 'Staff' || session.accountrole == 'Supervisor'}">
 <div id="loading-screen">
         <video id="loading-video" autoplay loop muted>
           <source th:src="@{/video/loadingscreen.mp4}" type="video/mp4">
         </video>
       </div>
-    <div class="navbarbg">
-        <a th:href="@{/index}"><h2>YASRIMAN</h2></a>
+      <div class="navbarbg">
+        <a href="/"><h2>YASRIMAN</h2></a>
         <div class="navlinks">
-            <a th:href="@{/index}">HOME</a>
-    </div>
+            <a href="/">HOME</a>
+        </div>
     </div>
     <div id="hero">
         <div id="sidebar">
             <b>NAV LINKS</b>
-             <ul>
-            <br>
-            <li><a th:href="@{/staffdashboard}">Dashboard</a></li>
-            <li><a th:href="@{/listallaccounts}">Accounts</a></li>
-            <li><a th:href="@{/inventory}">Inventory</a></li>
-            <li><a th:href="@{/order?action=view}">Orders</a></li>
-            <!-- Add more navigation links as needed -->
-        </ul>
+            <!-- Sidebar Navigation Links -->
+            <ul>
+                <br>
+                <li><a th:href="@{/staffdashboard}">Dashboard</a></li>
+                <li><a th:href="@{/listallaccounts}">Accounts</a></li>
+                <li><a th:href="@{/inventory}">Inventory</a></li>
+                <li><a th:href="@{/order?action=view}">Orders</a></li>
+                <!-- Add more navigation links as needed -->
+            </ul>
         </div>
         <div class="hero fade-in-up delay-1">
             <h1>Order Management</h1>

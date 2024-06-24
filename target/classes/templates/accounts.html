@@ -10,21 +10,17 @@
     <link rel="stylesheet" href="./css/loading.css">
 
 </head>
-<body>
+<body th:if="${session.accountrole == 'Staff' || session.accountrole == 'Supervisor'}">
     <div id="loading-screen">
         <video id="loading-video" autoplay loop muted>
           <source src="./video/loadingscreen.mp4" type="video/mp4">
         </video>
       </div>
-    <div class="navbarbg">
+      <div class="navbarbg">
         <a href="/"><h2>YASRIMAN</h2></a>
         <div class="navlinks">
             <a href="/">HOME</a>
-            <!--<a href="./product.html">PRODUCTS</a>
-            <a href="./information.html">INFORMATION</a>
-            <a href="./faq.html" class="active">FAQ</a>
-            <a href="./viewcart.html">CART</a>-->
-        </div> 
+        </div>
     </div>
     <div id="hero">
         <div id="sidebar">
@@ -34,8 +30,8 @@
                 <br>
                 <li><a th:href="@{/staffdashboard}">Dashboard</a></li>
                 <li><a th:href="@{/listallaccounts}">Accounts</a></li>
-                <li><a href="./inventory.html">Inventory</a></li>
-                <li><a href="./order.html">Orders</a></li>
+                <li><a th:href="@{/inventory}">Inventory</a></li>
+                <li><a th:href="@{/order?action=view}">Orders</a></li>
                 <!-- Add more navigation links as needed -->
             </ul>
         </div>

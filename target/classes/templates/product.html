@@ -23,36 +23,30 @@
             <img src="https://svgshare.com/i/177L.svg" alt="" draggable="false"/>
             <input id="searchInput" type="text" placeholder="Search" name="search" autocomplete="off"/>
         </div>
-        <div th:if="${session.loggedinaccountusername != null}">
+        <div th:if="${session.accountusername != null}">
             <a th:href="@{/viewcustomeraccount(uid=${session.loggedinaccountid},from=index)}">
-                <span th:text="${session.loggedinaccountusername}"></span>
+                <span th:text="${session.accountusername}"></span>
                 <div class="loginicon">
-                    <img loading="lazy"
-                         src="https://cdn.builder.io/api/v1/image/assets/TEMP/fee6b20cb0abd925cc4a3bda7cf3fa3366c37bcc07b2da638108c5651aca2ad0?apiKey=8730b69884724863a1e8089b99726052&amp;"
-                         class="img" draggable="false"/>
+                    <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/fee6b20cb0abd925cc4a3bda7cf3fa3366c37bcc07b2da638108c5651aca2ad0?apiKey=8730b69884724863a1e8089b99726052&" class="img" draggable="false" />
                 </div>
             </a>
         </div>
-        <div th:unless="${session.loggedinaccountusername != null}">
-            <a th:href="@{/signupform}">
+        <div th:unless="${session.accountusername != null}">
+            <a th:href="@{signup}">
                 Sign In/Sign Up
                 <div class="loginicon">
-                    <img loading="lazy"
-                         src="https://cdn.builder.io/api/v1/image/assets/TEMP/fee6b20cb0abd925cc4a3bda7cf3fa3366c37bcc07b2da638108c5651aca2ad0?apiKey=8730b69884724863a1e8089b99726052&amp;"
-                         class="img" draggable="false"/>
+                    <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/fee6b20cb0abd925cc4a3bda7cf3fa3366c37bcc07b2da638108c5651aca2ad0?apiKey=8730b69884724863a1e8089b99726052&" class="img" draggable="false" />
                 </div>
             </a>
         </div>
     </div>
-    <div class="fade-in-up delay-3" th:if="${session.loggedinaccountrole == 'Staff'}">
+    <div th:if="${session.accountrole == 'Staff' || session.accountrole == 'Supervisor'}" class="fade-in-up delay-3">
         <a th:href="@{/staffdashboard}">DASHBOARD</a>
     </div>
     <div class="navlinks">
-        <a href="./index.jsp">HOME</a>
-        <a th:href="@{/inventory?action=viewallproducts}" class="active">PRODUCTS</a>
-        <!-- <a href="./information.html">INFORMATION</a>
-        <a href="./faq.html">FAQ</a> -->
-        <a href="./viewcart.jsp">CART</a>
+        <a href="/"  >HOME</a>
+        <a href="inventory?action=viewallproducts" class="active">PRODUCTS</a>
+        <a href="cart">CART</a>
     </div>
 </div>
 
@@ -72,8 +66,9 @@
 <div class="gridallprod fade-in-up delay-1">
     <h1>All Product</h1>
     <div class="grid-container">
+      <div th:if="${inventoryList != null}">
         <div th:if="${inventoryList.isEmpty()}">
-            <div id="noResults" style="display: none">No items match your search.</div>
+            <div id="noResults">No items currently available right now.</div>
         </div>
         <div th:each="inventory : ${inventoryList}" class="grid-item fade-in-up delay-1">
             <a th:href="@{/inventory?action=viewproductdetails(id=${inventory.inventoryID})}"
@@ -81,11 +76,13 @@
                 <input class="inventoryID" type="hidden" th:value="${inventory.inventoryID}">
                 <img th:src="'data:image/jpeg;base64,' + ${inventory.inventoryImageBase64}" alt="${inventory.inventoryName}" width="auto" height="100">
                 <h3 th:text="${inventory.inventoryName}"></h3>
-                <p class="price">RM <span th:text="${#numbers.formatDecimal(inventory.inventoryPricePerItem, 2, 'NUMBER')}"></span></p>
+                <p class="price">RM <span th:text="${#numbers.formatDecimal(inventory.inventoryPricePerItem, 2, 0)}"></span></p>
             </a>
             <button class="add-to-cart">Add to Cart</button>
         </div>
+      </div>
     </div>
+    <div id="noResults" style="display: none">No items match your search.</div>
 </div>
 
 <section class="footer fade-in-up delay-0">

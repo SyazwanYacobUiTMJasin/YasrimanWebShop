@@ -124,7 +124,7 @@ public class AccountController extends HttpServlet {
         Integer loggedinaccountid = (Integer) session.getAttribute("loggedinaccountid");
         String accountrole = (String) session.getAttribute("accountrole");
 
-        if (loggedinaccountid != null && "Staff".equals(accountrole)) {
+        if ((loggedinaccountid != null && "Staff".equals(accountrole)) || "Supervisor".equals(accountrole)) {
             session.setAttribute("accountrole", "Staff");
             session.setAttribute("loggedinaccountrole", "Staff");
             System.out.println("showDashboard");
@@ -143,7 +143,7 @@ public class AccountController extends HttpServlet {
 
         ModelAndView modelAndView = new ModelAndView();
 
-        if ("Staff".equals(accountrole)) {
+        if ("Staff".equals(accountrole) || "Supervisor".equals(accountrole)) {
             List<accounts> accountsList = AccountDAO.selectAllUsers();
             modelAndView.addObject("accounts", accountsList);
             modelAndView.addObject("loggedinaccountid", loggedinaccountid);
@@ -249,7 +249,7 @@ public class AccountController extends HttpServlet {
             }
         } else if ("dashboard".equals(from)) {
             String accountrole = (String) session.getAttribute("accountrole");
-            if ("Staff".equals(accountrole)) {
+            if ("Staff".equals(accountrole) || "Supervisor".equals(accountrole)) {
                 accounts accounts = AccountDAO.viewCustomerAccount(accountid);
                 modelAndView.addObject("accounts", accounts);
                 modelAndView.setViewName("viewaccounts");
@@ -260,7 +260,7 @@ public class AccountController extends HttpServlet {
             }
         } else if ("dashboardupdate".equals(from)) {
             String accountrole = (String) session.getAttribute("accountrole");
-            if ("Staff".equals(accountrole)) {
+            if ("Staff".equals(accountrole) || "Supervisor".equals(accountrole)) {
                 accounts accounts = AccountDAO.viewCustomerAccount(accountid);
                 modelAndView.addObject("accounts", accounts);
                 modelAndView.setViewName("updateaccounts");

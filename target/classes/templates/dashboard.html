@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="./css/loading.css">
 
 </head>
-<body th:if="${session.accountrole == 'Staff'}">
+<body th:if="${session.accountrole == 'Staff' || session.accountrole == 'Supervisor'}">
     <div id="loading-screen">
         <video id="loading-video" autoplay loop muted>
           <source src="./video/loadingscreen.mp4" type="video/mp4">

@@ -23,39 +23,37 @@
             <img src="https://svgshare.com/i/177L.svg" alt="" />
             <input type="text" placeholder="Search" name="search" autocomplete="off" />
         </div>
-        <!-- Thymeleaf condition to check logged in user -->
-        <div th:if="${loggedinaccountusername != null}">
-            <a th:href="@{/viewcustomeraccount(uid=${loggedinaccountid},from=index)}">
-                <span th:text="${loggedinaccountusername}"></span>
+        <div th:if="${session.accountusername != null}">
+            <a th:href="@{/viewcustomeraccount(uid=${session.loggedinaccountid},from=index)}">
+                <span th:text="${session.accountusername}"></span>
                 <div class="loginicon">
-                    <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/fee6b20cb0abd925cc4a3bda7cf3fa3366c37bcc07b2da638108c5651aca2ad0?apiKey=8730b69884724863a1e8089b99726052" class="img" draggable="false" />
+                    <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/fee6b20cb0abd925cc4a3bda7cf3fa3366c37bcc07b2da638108c5651aca2ad0?apiKey=8730b69884724863a1e8089b99726052&" class="img" draggable="false" />
                 </div>
             </a>
         </div>
-        <div th:unless="${loggedinaccountusername != null}">
-            <a th:href="@{/signupform}">
+        <div th:unless="${session.accountusername != null}">
+            <a th:href="@{signup}">
                 Sign In/Sign Up
                 <div class="loginicon">
-                    <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/fee6b20cb0abd925cc4a3bda7cf3fa3366c37bcc07b2da638108c5651aca2ad0?apiKey=8730b69884724863a1e8089b99726052" class="img" draggable="false" />
+                    <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/fee6b20cb0abd925cc4a3bda7cf3fa3366c37bcc07b2da638108c5651aca2ad0?apiKey=8730b69884724863a1e8089b99726052&" class="img" draggable="false" />
                 </div>
             </a>
         </div>
     </div>
-    <div class="fade-in-up delay-3">
-        <!-- Thymeleaf condition to show dashboard link for staff -->
-        <a th:if="${'Staff' eq loggedinaccountrole}" th:href="@{/staffdashboard}">DASHBOARD</a>
+    <div th:if="${session.accountrole == 'Staff' || session.accountrole == 'Supervisor'}" class="fade-in-up delay-3">
+        <a th:href="@{/staffdashboard}">DASHBOARD</a>
     </div>
     <div class="navlinks">
-        <a href="./index.jsp">HOME</a>
-        <a th:href="@{/inventory(action=viewallproducts)}">PRODUCTS</a>
-        <a href="./viewcart.jsp" class="active">CART</a>
+        <a href="/" >HOME</a>
+        <a href="inventory?action=viewallproducts" >PRODUCTS</a>
+        <a href="cart" class="active">CART</a>
     </div>
 </div>
 
 <main class="fade-in-up delay-1">
     <h2>MY CART</h2>
     <div class="basketmain">
-        <form id="checkoutForm" th:action="@{/order(action=checksigninstatus, uid=${loggedinaccountid})}" method="post">
+        <form id="checkoutForm" th:action="@{/order(action=checksigninstatus, uid=${session.loggedinaccountid})}" method="post">
             <div class="aside">
                 <div class="summary">
                     <div class="summary-total-items"><span class="total-items"></span> Items in your Bag</div>
