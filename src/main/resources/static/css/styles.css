@@ -22,7 +22,7 @@ body {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background-color: #007bff;
+  background-color: #1a4d2e;
   color: white;
   border: none;
   border-radius: 50px;
@@ -35,7 +35,8 @@ body {
 }
 
 #chat-button:hover {
-  background-color: #0056b3;
+  background-color: #d5c7b2;
+  color: #1a4d2e;
   transform: scale(1.05);
 }
 
@@ -56,7 +57,7 @@ body {
 }
 
 #chat-header {
-  background-color: #007bff;
+  background-color: #1a4d2e;
   color: white;
   padding: 10px;
   border-top-left-radius: 10px;
@@ -84,7 +85,7 @@ body {
 
 #chat-input button {
   padding: 10px;
-  background-color: #007bff;
+  background-color: #1a4d2e;
   color: white;
   border: none;
   border-bottom-right-radius: 10px;
@@ -93,7 +94,9 @@ body {
 }
 
 #chat-input button:hover {
-  background-color: #0056b3;
+  background-color: #d5c7b2;
+  color: #1a4d2e;
+
 }
 
 .message {
