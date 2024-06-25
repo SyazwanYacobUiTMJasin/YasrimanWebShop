@@ -175,8 +175,82 @@
             </table>
         </div>
     </section>
+    <div id="chat-button">
+        <a href="#">Chat</a>
+    </div>
+    <div id="chat-window">
+        <div id="chat-header">Chatbot</div>
+        <div id="chat-body"></div>
+        <div id="chat-input">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            <input type="text" id="chat-message" placeholder="Type a message..." />
+            <button id="send-button">Send</button>
+        </div>
+    </div>
 
     <script src="./js/loading.js"></script>
+    <script>
+        document.getElementById('chat-button').addEventListener('click', function() {
+            var chatWindow = document.getElementById('chat-window');
+            if (chatWindow.style.display === 'none' || chatWindow.style.display === '') {
+                chatWindow.style.display = 'flex';
+            } else {
+                chatWindow.style.display = 'none';
+            }
+        });
+
+        document.getElementById('send-button').addEventListener('click', function() {
+            var message = document.getElementById('chat-message').value;
+            if (message.trim() !== '') {
+                appendMessage('user', message);
+                sendMessageToBot(message);
+                document.getElementById('chat-message').value = '';
+            }
+        });
+
+        function appendMessage(sender, message) {
+            var messageElement = document.createElement('div');
+            messageElement.classList.add('message', sender);
+            messageElement.innerText = message;
+            document.getElementById('chat-body').appendChild(messageElement);
+            document.getElementById('chat-body').scrollTop = document.getElementById('chat-body').scrollHeight;
+        }
+        const csrfToken = document.querySelector('input[name="_csrf"]').value;
+
+        fetch('/api/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken
+            },
+            body: JSON.stringify({ message: message })
+        })
+        async function sendMessageToBot(message) {
+            try {
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ message: message })
+                });
+                const data = await response.json();
+
+                console.log('Full response from server:', data);  // Add this line
+
+                if (data && data.response) {
+                    appendMessage('bot', data.response);
+                } else {
+                    appendMessage('bot', 'Error: No valid response from bot.');
+                }
+            } catch (error) {
+                console.error('Error:', error);  // Add this line
+                appendMessage('bot', 'Error: ' + error.message);
+            }
+        }
+
+
+    </script>
     <script th:inline="javascript">
         /*<![CDATA[*/
         document.getElementById('searchInput').addEventListener('keydown', function(event) {
@@ -188,6 +262,7 @@
             }
         });
         /*]]>*/
+        
     </script>
 </body>
 </html>
