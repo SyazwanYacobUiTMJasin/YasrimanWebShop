@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.masbro.yasriman.dao.InventoryDAO;
 import com.masbro.yasriman.dao.OrderDAO;
 import com.masbro.yasriman.model.orders;
 
@@ -19,7 +20,9 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 @Controller
@@ -74,10 +77,29 @@ public class OrderController {
     public String updateOrderStatus(HttpServletRequest request, HttpServletResponse response, Model model) throws ServletException, IOException {
         int orderId = Integer.parseInt(request.getParameter("orderid"));
         String orderStatus = request.getParameter("orderStatus");
+        String paymentStatus = request.getParameter("paymentStatus");
         try {
-            orderDAO.updateOrderStatus(orderId, orderStatus);
+            orderDAO.updateOrderStatus(orderId, orderStatus, paymentStatus);
             orders order = orderDAO.selectOrderById(orderId);
             model.addAttribute("order", order);
+
+            List<orders> inventoryItems = InventoryDAO.getInventoryItemsByOrderId(orderId, order);
+            request.setAttribute("inventoryItems", inventoryItems);
+
+            byte[] pictureBytes = order.getPaymentProof();
+		    String base64EncodedImage = null;
+
+            if (pictureBytes != null && pictureBytes.length > 0) {
+                base64EncodedImage = Base64.getEncoder().encodeToString(pictureBytes);
+            } else {
+                System.out.println("Picture byte array is null or empty");
+                base64EncodedImage = "a"; // or some default placeholder value
+            }
+    
+            request.setAttribute("base64EncodedImage", base64EncodedImage);
+            System.out.println("Order Status: " + order.getOrderStatus());
+            System.out.println("Payment Status: " + order.getPaymentStatus());
+            System.out.println("updateOrderStatus()");
             // request.setAttribute("order", order);
             // request.getRequestDispatcher("orderdetails.jsp").forward(request, response);
             return "orderdetails";
@@ -128,7 +150,7 @@ public class OrderController {
             int inventoryID = cartItem.get("inventoryID").getAsInt();
             int quantity = cartItem.get("quantity").getAsInt();
             int accountID = orderAccountId; // Using the accountId passed to this method
-            LocalDate orderDate = LocalDate.now(); // Assuming current date as order date
+            LocalDateTime orderDate = LocalDateTime.now(); // Assuming current date as order date
             String orderStatus = "PROCESS"; // Initial order status
             double orderTotalPrice = price * quantity;
 

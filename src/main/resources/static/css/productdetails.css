@@ -29,7 +29,7 @@ body {
   flex-direction: column;
   padding: 20px 0;
   gap: 30px;
-  height: 25vh;
+  min-height: 25vh;
   position: fixed;
   width: 100vw;
 }
@@ -38,9 +38,11 @@ body {
   text-decoration: none;
   color: #1a4d2e;
 }
+
 .navbarbg h2 {
   font-size: 30px;
 }
+
 
 .navbarbg div a {
   text-decoration: none;
@@ -98,18 +100,13 @@ body {
   gap: 160px;
 }
 
-.navlinks .active {
-  border-bottom: 1px solid #1a4d2e;
-}
-
 .navlinks a:hover {
-  border-bottom: 1px solid #1a4d2e;
-  transition: border-bottom 0.3s ease-in-out;
+  border-bottom: 2px solid #000;
+  transition: all 0.3s ease-in-out;
 }
 
-input[type="text"]:focus {
-  border-bottom: 2px solid #d5c7b2;
-  transition: border-bottom 0.3s;
+.navbarbg * {
+  overflow: hidden;
 }
 
 /* END NAVBAR */
@@ -151,6 +148,7 @@ input[type="text"]:focus {
   flex: 1 1 auto;
   padding: 10px 0; 
   height: fit-content;;
+  width: 300px;
 }
 
 .characteristics-info {
@@ -158,6 +156,7 @@ input[type="text"]:focus {
   flex-direction: column;
   align-items: start;
   flex: 1 1 auto;
+  padding-left: 20px;
 }
 
 .characteristics-info ul {
@@ -240,7 +239,7 @@ h1 {
 }
 
 a .backbtn {
-  width: 100%;
+  min-width: 100%;
   height: 30px;
   background-color: #1a4d2e;
   border: none;
@@ -248,6 +247,7 @@ a .backbtn {
   transition: all 0.3s ease-in-out;
   border-radius: 5px;
   color: #ffffff;
+  
 }
 
 a .backbtn:hover {
@@ -272,6 +272,11 @@ a .backbtn:hover {
 	width: 100%;
 	height: fit-content;
 	padding: 10px 5px;
+}
+
+.productdescdiv
+{
+	margin-bottom: 50px;
 }
 
 @media (width < 600px)

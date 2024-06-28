@@ -245,6 +245,12 @@ select:focus{
     height: auto;
  }
  
+ .buttons
+ {
+ 	display:flex;
+ 	gap: 30px;
+ }
+ 
  @media(max-width: 1391px)
  {
 	 .hero

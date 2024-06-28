@@ -18,8 +18,11 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.masbro.yasriman.dao.AccountDAO;
+import com.masbro.yasriman.dao.DashboardDAO;
 import com.masbro.yasriman.model.accounts;
+import com.masbro.yasriman.model.orders;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.http.HttpServlet;
@@ -42,6 +45,16 @@ public class AccountController extends HttpServlet {
     public AccountController(AccountDAO accountDAO) {
         this.AccountDAO = accountDAO;
     }
+
+    @GetMapping("/signout")
+    private String signoutCustomerAccount(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		// TODO Auto-generated method stub
+    	HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        return "signin";
+	}
 
     @GetMapping("/signup")
     private String signupform(){
@@ -125,8 +138,8 @@ public class AccountController extends HttpServlet {
         String accountrole = (String) session.getAttribute("accountrole");
 
         if ((loggedinaccountid != null && "Staff".equals(accountrole)) || "Supervisor".equals(accountrole)) {
-            session.setAttribute("accountrole", "Staff");
-            session.setAttribute("loggedinaccountrole", "Staff");
+            List<orders> orderDataList = DashboardDAO.getOrderData();
+            request.setAttribute("orderDataList", orderDataList);
             System.out.println("showDashboard");
             return "dashboard"; 
         } else {
@@ -134,6 +147,7 @@ public class AccountController extends HttpServlet {
             return "redirect:/error"; 
         }
     }
+
 
     @GetMapping("/listallaccounts")
     public ModelAndView listAllAccounts(HttpServletRequest request) throws IOException {
@@ -385,8 +399,9 @@ public class AccountController extends HttpServlet {
         String role = (String) session.getAttribute("accountrole");
         ModelAndView modelAndView = new ModelAndView();
 
-        if ("Staff".equals(role)) {
+        if ("Supervisor".equals(role)) {
             try {
+                int supervisorid = (int) session.getAttribute("loggedinaccountid"); // Get the supervisor ID
                 String accountrole = request.getParameter("role");
                 String accountusername = request.getParameter("username");
                 String accountfirstname = request.getParameter("firstname");
@@ -401,7 +416,10 @@ public class AccountController extends HttpServlet {
 
                 accounts updatedAccount = AccountDAO.updateCustomerAccount(accountid, accountrole, accountusername,
                         accountfirstname, accountlastname, accountemail, accountpassword, accountphonenum,
-                        accountstreet, accountstate, accountcity, accountpostalcode);
+                        accountstreet, accountstate, accountcity, accountpostalcode, supervisorid);
+
+                String supervisorName = AccountDAO.getSupervisorNameById(supervisorid);
+                updatedAccount.setSupervisor(supervisorName);
 
                 modelAndView.addObject("accounts", updatedAccount);
                 modelAndView.setViewName("viewaccounts");

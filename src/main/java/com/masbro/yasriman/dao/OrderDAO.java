@@ -1,10 +1,11 @@
-package com.masbro.yasriman.dao; 
+package com.masbro.yasriman.dao;
 
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,11 +23,30 @@ import com.masbro.yasriman.connection.ConnectionManager;
  */
 @Repository
 public class OrderDAO {
-    private static final String SELECT_ORDER_BY_ID = "SELECT * FROM orders JOIN accounts USING (accountid) JOIN inventory USING (inventoryid) JOIN PAYMENT USING (ORDERID) WHERE orderid=?";
-    private static final String SELECT_ALL_ORDERS = "SELECT * FROM orders JOIN accounts USING (accountid) JOIN PAYMENT USING (ORDERID)";
-    private static final String UPDATE_ORDER_STATUS = "UPDATE orders SET orderstatus=? WHERE orderid=?";
+    private static final String SELECT_ORDER_BY_ID = "SELECT * FROM orders JOIN accounts USING (accountid) JOIN inventory using (INVENTORYID) JOIN PAYMENT USING (ORDERID) WHERE orderid=?";
+    private static final String SELECT_ALL_ORDERS = "SELECT * FROM orders JOIN accounts USING (accountid) JOIN inventory using (INVENTORYID) JOIN PAYMENT USING (ORDERID)";
+    private static final String UPDATE_ORDER_STATUS = "UPDATE orders SET orderstatus = ? WHERE orderid = ?";
+    private static final String UPDATE_PAYMENT_STATUS = "UPDATE payment SET paymentstatus = ? WHERE orderid = ?";
     private static final String INSERT_ORDER_SQL = "INSERT INTO orders (accountID, inventoryID, orderDate, orderStatus, orderTotalPrice, orderQuantity) VALUES (?, ?, ?, ?, ?, ?)";
-
+    private static final String SELECT_ALL_ORDERS_GROUPBY_ORDERID = "SELECT \r\n"
+    		+ "    ORDERS.orderid, \r\n"
+    		+ "    ORDERS.orderdate, \r\n"
+    		+ "    ACCOUNTS.accountusername, \r\n"
+    		+ "    ORDERS.orderstatus, \r\n"
+    		+ "    PAYMENT.paymentstatus, \r\n"
+    		+ "    SUM(ORDERS.ordertotalprice)\r\n"
+    		+ "FROM ORDERS\r\n"
+    		+ "JOIN ACCOUNTS\r\n"
+    		+ "    ON ORDERS.ACCOUNTID = ACCOUNTS.ACCOUNTID\r\n"
+    		+ "JOIN PAYMENT\r\n"
+    		+ "    ON ORDERS.ORDERID = PAYMENT.ORDERID\r\n"
+    		+ "GROUP BY  \r\n"
+    		+ "    ORDERS.orderid, \r\n"
+    		+ "    ORDERS.orderdate, \r\n"
+    		+ "    ACCOUNTS.accountusername, \r\n"
+    		+ "    ORDERS.orderstatus, \r\n"
+    		+ "    PAYMENT.paymentstatus";
+    
     public OrderDAO() {}
 
     public orders selectOrderById(int orderId) throws SQLException {
@@ -36,42 +56,7 @@ public class OrderDAO {
             ps.setInt(1, orderId);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    order = new orders();
-                    int orderid = rs.getInt("orderid");
-                    int accountId = rs.getInt("accountid");
-                    String accountUsername = rs.getString("accountusername");
-                    int inventoryId = rs.getInt("inventoryid");
-                    String inventoryName = rs.getString("inventoryname");
-                    byte[] inventoryImage = rs.getBytes("inventoryimage");
-                    LocalDate orderDate = orders.toLocalDate(rs.getDate("orderdate"));
-                    String orderStatus = rs.getString("orderstatus");
-                    double orderTotalPrice = rs.getDouble("ordertotalprice");
-                    String paymentStatus = rs.getString("paymentstatus"); // Retrieve payment status
-                    byte[] paymentProof = rs.getBytes("paymentproof");
-//                    int orderQuantity = rs.getInt("orderquantity");
-
-                    System.out.println("Order ID: " + orderid);
-                    System.out.println("Account ID: " + accountId);
-                    System.out.println("Account Username: " + accountUsername);
-                    System.out.println("Inventory ID: " + inventoryId);
-                    System.out.println("Inventory Name: " + inventoryName);
-                    System.out.println("Order Date: " + orderDate);
-                    System.out.println("Order Status: " + orderStatus);
-                    System.out.println("Order Total Price: " + orderTotalPrice);
-//                    System.out.println("Order Quantity: " + orderQuantity);
-
-                    order.setOrderId(orderid);
-                    order.setAccountId(accountId);
-                    order.setAccountUsername(accountUsername);
-                    order.setInventoryId(inventoryId);
-                    order.setInventoryName(inventoryName);
-                    order.setInventoryImage(inventoryImage);
-                    order.setOrderDate(orderDate);
-                    order.setOrderStatus(orderStatus);
-                    order.setOrderTotalPrice(orderTotalPrice);
-                    order.setPaymentStatus(paymentStatus); // Set payment status
-                    order.setPaymentProof(paymentProof); // Set payment proof
-//                    order.setOrderQuantity(orderQuantity);
+                    order = mapOrder(rs);
                 }
             }
         } catch (SQLException e) {
@@ -82,55 +67,143 @@ public class OrderDAO {
     }
 
 
+    private orders mapOrder(ResultSet rs) throws SQLException {
+        orders order = new orders();
+        order.setOrderId(rs.getInt("orderid"));
+        order.setAccountId(rs.getInt("accountid"));
+        order.setAccountUsername(rs.getString("accountusername"));
+        order.setInventoryId(rs.getInt("inventoryid"));
+        order.setInventoryName(rs.getString("inventoryname"));
+        // Assuming "orderDate" in database is of type TIMESTAMP
+        Timestamp timestamp = rs.getTimestamp("orderdate");
+        if (timestamp != null) {
+            order.setOrderDate(timestamp.toLocalDateTime()); // Directly set LocalDateTime
+        }
+        order.setOrderStatus(rs.getString("orderstatus"));
+        order.setOrderTotalPrice(rs.getDouble("ordertotalprice"));
+        // Assuming these fields are present in your result set
+        order.setPaymentStatus(rs.getString("paymentstatus"));
+        order.setPaymentProof(rs.getBytes("paymentproof"));
+        return order;
+    }
+
+
     public List<orders> selectAllOrders() throws SQLException {
-        List<orders> orders = new ArrayList<>();
+        List<orders> ordersList = new ArrayList<>();
         try (Connection con = ConnectionManager.getConnection();
-             PreparedStatement ps = con.prepareStatement(SELECT_ALL_ORDERS);
+             PreparedStatement ps = con.prepareStatement(SELECT_ALL_ORDERS_GROUPBY_ORDERID);
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-            	System.out.println("inside while loop of listallorders");
-                orders order = new orders(); 
-                    order.setOrderId(rs.getInt("orderid"));
-                    order.setAccountId(rs.getInt("accountid"));
-                    order.setAccountUsername(rs.getString("accountusername"));
-                    order.setOrderDate(order.toLocalDate(rs.getDate("orderdate")));  
-                    order.setOrderStatus(rs.getString("orderstatus"));
-                    order.setOrderTotalPrice(rs.getDouble("ordertotalprice"));
-                    order.setPaymentStatus(rs.getString("paymentstatus"));
-                    order.setPaymentProof(rs.getBytes("paymentproof"));
-                    orders.add(order);
-                    
-                    System.out.println("Retrieved Order: " +
-                            "OrderId=" + order.getOrderId() +
-                            ", AccountId=" + order.getAccountId() +
-                            ", AccountUsername=" + order.getAccountUsername() +
-                            ", OrderDate=" + order.getOrderDate() +
-                            ", OrderStatus=" + order.getOrderStatus() +
-                            ", OrderTotalPrice=" + order.getOrderTotalPrice() +
-                    		", PaymentStatus=" + order.getPaymentStatus()+
-                            ", Paymentproof=" + order.getPaymentProof());;
+            	orders order = new orders();
+                order.setOrderId(rs.getInt("orderid"));
+                Timestamp timestamp = rs.getTimestamp("orderdate");
+                if (timestamp != null) {
+                    order.setOrderDate(timestamp.toLocalDateTime()); // Directly set LocalDateTime
+                }
+                order.setAccountUsername(rs.getString("accountusername"));
+                order.setOrderStatus(rs.getString("orderstatus"));
+                order.setPaymentStatus(rs.getString("paymentstatus"));
+                order.setSumOrderTotalPrice(rs.getDouble("SUM(ORDERS.ordertotalprice)"));
+                ordersList.add(order);
             }
         } catch (SQLException e) {
             printSQLException(e);
         }
         
-        System.out.println("returning orderList" + orders);
-        return orders;
+        return ordersList;
     }
 
-    public boolean updateOrderStatus(int orderId, String orderstatus) throws SQLException {
+    public boolean updateOrderStatus(int orderId, String orderStatus, String paymentStatus) throws SQLException {
         boolean rowUpdated = false;
-        try (Connection con = ConnectionManager.getConnection();
-             PreparedStatement ps = con.prepareStatement(UPDATE_ORDER_STATUS)) {
-            ps.setString(1, orderstatus);
-            ps.setInt(2, orderId);
-            rowUpdated = ps.executeUpdate() > 0;
+        Connection con = null;
+        PreparedStatement psOrder = null;
+        PreparedStatement psPayment = null;
+
+        try {
+            con = ConnectionManager.getConnection();
+            con.setAutoCommit(false);  // Start transaction
+
+            // Update order status if it's not null
+            if (orderStatus != null && !orderStatus.isEmpty()) {
+                psOrder = con.prepareStatement(UPDATE_ORDER_STATUS);
+                psOrder.setString(1, orderStatus);
+                psOrder.setInt(2, orderId);
+                int orderRowsAffected = psOrder.executeUpdate();
+                
+                if (orderRowsAffected > 0) {
+                    rowUpdated = true;
+                }
+            } else {
+                // Set orderStatus to 'CANCELLED' if null
+                orderStatus = "CANCELLED";
+                psOrder = con.prepareStatement(UPDATE_ORDER_STATUS);
+                psOrder.setString(1, orderStatus);
+                psOrder.setInt(2, orderId);
+                int orderRowsAffected = psOrder.executeUpdate();
+                
+                if (orderRowsAffected > 0) {
+                    rowUpdated = true;
+                }
+            }
+
+            // Update payment status only if it's not null
+            if (paymentStatus != null && !paymentStatus.isEmpty()) {
+                psPayment = con.prepareStatement(UPDATE_PAYMENT_STATUS);
+                psPayment.setString(1, paymentStatus);
+                psPayment.setInt(2, orderId);
+                int paymentRowsAffected = psPayment.executeUpdate();
+                
+                if (paymentRowsAffected > 0) {
+                    rowUpdated = true;
+                }
+            } else {
+                // Set paymentStatus to 'NOTAPPROVED' if null
+                paymentStatus = "NOTAPPROVED";
+                psPayment = con.prepareStatement(UPDATE_PAYMENT_STATUS);
+                psPayment.setString(1, paymentStatus);
+                psPayment.setInt(2, orderId);
+                int paymentRowsAffected = psPayment.executeUpdate();
+                
+                if (paymentRowsAffected > 0) {
+                    rowUpdated = true;
+                }
+            }
+
+            // Commit transaction if updates were successful
+            if (rowUpdated) {
+                con.commit();
+            } else {
+                con.rollback();
+            }
+
+            System.out.println("order status: " + orderStatus);
+            System.out.println("payment status: " + paymentStatus);
+
         } catch (SQLException e) {
+            if (con != null) {
+                try {
+                    con.rollback();
+                } catch (SQLException ex) {
+                    printSQLException(ex);
+                }
+            }
             printSQLException(e);
+        } finally {
+            if (psOrder != null) {
+                psOrder.close();
+            }
+            if (psPayment != null) {
+                psPayment.close();
+            }
+            if (con != null) {
+                con.setAutoCommit(true);  // Reset to default
+                con.close();
+            }
         }
         return rowUpdated;
     }
+
 
 
 
@@ -150,59 +223,97 @@ public class OrderDAO {
         }
     }
 
-    public static int insertOrderIntoDatabase(Connection con, int accountID, int inventoryID, Date orderDate, String orderStatus,
+    	public static int insertOrderIntoDatabase(Connection con, int accountID, int inventoryID, Timestamp orderDateTime, String orderStatus,
             double orderTotalPrice, int orderQuantity) throws SQLException {
-    PreparedStatement stmt = null;
-    PreparedStatement selectStmt = null;
-    ResultSet rs = null;
-    int orderId = 0;
-
-    try {
-        // Insert order into the database
-        stmt = con.prepareStatement("INSERT INTO orders (accountID, inventoryID, orderDate, orderStatus, orderTotalPrice, orderQuantity) VALUES (?, ?, ?, ?, ?, ?)");
-        stmt.setInt(1, accountID);
-        stmt.setInt(2, inventoryID);
-        stmt.setDate(3, orderDate);
-        stmt.setString(4, orderStatus);
-        stmt.setDouble(5, orderTotalPrice);
-        stmt.setInt(6, orderQuantity);
-        int affectedRows = stmt.executeUpdate();
-        con.commit();
-
-        // Check if insertion was successful
-        if (affectedRows > 0) {
-            // Select the orderid for the inserted order
-            selectStmt = con.prepareStatement("SELECT orderid FROM orders WHERE accountID = ? AND orderDate = ? ORDER BY orderid DESC");
+        PreparedStatement stmt = null;
+        PreparedStatement selectStmt = null;
+        ResultSet rs = null;
+        int orderId = 0;
+        
+        // Truncate the orderDateTime to seconds
+        Timestamp truncatedOrderDateTime = truncateToSeconds(orderDateTime);
+        
+        try {
+            // Check the maximum order id for orders with the same accountID and orderDateTime
+            String maxOrderIdQuery = "SELECT MAX(orderid) AS max_orderid FROM orders WHERE accountID = ? AND orderDate = ?";
+            selectStmt = con.prepareStatement(maxOrderIdQuery);
             selectStmt.setInt(1, accountID);
-            selectStmt.setDate(2, orderDate);
+            selectStmt.setTimestamp(2, truncatedOrderDateTime);
             rs = selectStmt.executeQuery();
-
+            
             if (rs.next()) {
-                orderId = rs.getInt("orderid");
-
-                // Use orderId as needed
+                orderId = rs.getInt("max_orderid");
+            }
+            
+            if (orderId == 0) {
+                // If no existing order for this account and datetime, get the overall max orderid
+                String overallMaxOrderIdQuery = "SELECT MAX(orderid) AS max_orderid FROM orders";
+                selectStmt = con.prepareStatement(overallMaxOrderIdQuery);
+                rs = selectStmt.executeQuery();
+                
+                if (rs.next()) {
+                    orderId = rs.getInt("max_orderid");
+                }
+            }
+            
+            // Increment the order id for the new order
+            orderId++;
+            
+            // Insert order into the database
+            stmt = con.prepareStatement("INSERT INTO orders (orderid, accountID, inventoryID, orderDate, orderStatus, orderTotalPrice, orderQuantity) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            stmt.setInt(1, orderId);
+            stmt.setInt(2, accountID);
+            stmt.setInt(3, inventoryID);
+            stmt.setTimestamp(4, truncatedOrderDateTime);
+            stmt.setString(5, orderStatus);
+            stmt.setDouble(6, orderTotalPrice);
+            stmt.setInt(7, orderQuantity);
+            int affectedRows = stmt.executeUpdate();
+            
+            stmt = con.prepareStatement("SELECT MIN(orderid) AS min_orderid FROM orders WHERE accountID = ? AND orderDate = ?");
+            stmt.setInt(1, accountID);
+            stmt.setTimestamp(2, truncatedOrderDateTime); 
+            rs = stmt.executeQuery(); 
+            
+            if (rs.next()) {
+                orderId = rs.getInt("min_orderid");
+            }
+            
+            
+            stmt = con.prepareStatement("UPDATE orders SET orderid = ? WHERE accountID = ? AND orderDate = ?");
+            stmt.setInt(1, orderId);
+            stmt.setInt(2, accountID);
+            stmt.setTimestamp(3, truncatedOrderDateTime);
+            
+            stmt.executeUpdate();
+            con.commit();
+            
+            // Check if insertion was successful
+            if (affectedRows > 0) {
                 System.out.println("Inserted Order ID: " + orderId);
-
-                // Optionally update orders.orderid if necessary
-                // UPDATE orders SET orderid = ? WHERE accountID = ? AND orderDate = ?
             } else {
-                throw new SQLException("Failed to retrieve orderid for the inserted order");
+                throw new SQLException("Failed to insert order");
+            }
+            
+        } finally {
+            // Close resources in the finally block
+            if (rs != null) {
+                rs.close();
+            }
+            if (selectStmt != null) {
+                selectStmt.close();
+            }
+            if (stmt != null) {
+                stmt.close();
             }
         }
-    } finally {
-        // Close resources in the finally block
-        if (rs != null) {
-            rs.close();
-        }
-        if (selectStmt != null) {
-            selectStmt.close();
-        }
-        if (stmt != null) {
-            stmt.close();
-        }
+        
+        return orderId; // Return the generated orderId
     }
-
-    return orderId; // Return the generated orderId
-}
+    	
+    	private static Timestamp truncateToSeconds(Timestamp timestamp) {
+    	    long milliseconds = timestamp.getTime();
+    	    return new Timestamp((milliseconds / 1000) * 1000);
+    	}
 
 }

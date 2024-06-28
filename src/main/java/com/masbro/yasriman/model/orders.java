@@ -1,7 +1,8 @@
-package com.masbro.yasriman.model; 
+package com.masbro.yasriman.model;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class orders {
     private int orderId;
@@ -10,12 +11,15 @@ public class orders {
     private int inventoryId;
     private String inventoryName;
     private byte[] inventoryImage;
-    private LocalDate orderDate;
+    private LocalDateTime  orderDate;
     private String orderStatus;
     private double orderTotalPrice;
     private int orderQuantity;
     private String paymentStatus;
     private byte[] paymentProof;
+    private double sumOrderTotalPrice;
+    private int paymentID;
+    private byte[] base64Image;
     
     public byte[] getPaymentProof() {
 		return paymentProof;
@@ -33,7 +37,7 @@ public class orders {
         this.paymentStatus = paymentStatus;
     }
     
-    public orders(int accountId, int inventoryId,  LocalDate orderDate, String orderStatus, double orderTotalPrice,
+    public orders(int accountId, int inventoryId,  LocalDateTime  orderDate, String orderStatus, double orderTotalPrice,
 			int orderQuantity) {
 		// TODO Auto-generated constructor stub
     	this.accountId = accountId;
@@ -97,11 +101,12 @@ public class orders {
         this.accountUsername = accountUsername;
     }
 
-    public LocalDate getOrderDate() {
+    public LocalDateTime  getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(LocalDate orderDate) {
+
+    public void setOrderDate(LocalDateTime  orderDate) {
         this.orderDate = orderDate;
     }
 
@@ -129,11 +134,35 @@ public class orders {
         this.orderQuantity = orderQuantity;
     }
 
-    public static Date toSqlDate(LocalDate date) {
-        return date == null ? null : Date.valueOf(date);
+    public static java.sql.Timestamp toSqlDate(LocalDateTime  dateTime) {
+        return dateTime == null ? null : java.sql.Timestamp.valueOf(dateTime);
     }
 
-    public static LocalDate toLocalDate(Date date) {
-        return date == null ? null : date.toLocalDate();
+    public static LocalDateTime  toLocalDate(java.sql.Timestamp  timestamp) {
+        return timestamp == null ? null : timestamp.toLocalDateTime();
     }
+
+	public void setSumOrderTotalPrice(double sumOrderTotalPrice) {
+		this.sumOrderTotalPrice = sumOrderTotalPrice;
+	}
+	
+	public double getSumOrderTotalPrice() {
+		return sumOrderTotalPrice;
+	}
+
+	public void setPaymentID(int paymentID) {
+		this.paymentID = paymentID;
+	}
+	
+	public int getPaymentID() {
+		return paymentID;
+	}
+
+	public void setImageBase64(byte[] base64Image) {
+		this.base64Image = base64Image;
+	}
+	
+	public byte[] getImageBase64() {
+		return base64Image;
+	}
 }

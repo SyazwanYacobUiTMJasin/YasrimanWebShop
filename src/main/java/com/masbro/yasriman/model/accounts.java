@@ -15,6 +15,7 @@ public class accounts {
 	private String city;
 	private int postalcode;
 	private byte[] picture;
+	private String supervisor;
 	
 	public accounts() {
 	}
@@ -27,6 +28,7 @@ public class accounts {
 		this.password = password;
 		this.phonenum = phonenum;
 	}
+	
 	 
 	public accounts(int id, String role, String username, String password, String email, String firstname, String lastname, String phonenum,
 			String street, String state, String city, int postalcode, byte[] picture) {
@@ -46,6 +48,33 @@ public class accounts {
 		this.postalcode = postalcode;
 		this.picture = picture;
 	}
+	
+	public accounts(int id, String role, String username, String password, String email, String firstname, String lastname, String phonenum,
+		            String street, String state, String city, int postalcode, byte[] picture, String supervisor) {
+			this.id = id;
+			this.role = role;
+			this.firstname = firstname;
+			this.lastname = lastname;
+			this.username = username;
+			this.password = password;
+			this.email = email;
+			this.role = role;
+			this.phonenum = phonenum;
+			this.street = street;
+			this.state = state;
+			this.city = city;
+			this.postalcode = postalcode;
+			this.picture = picture;
+			this.supervisor = supervisor;
+	}
+		
+		public String getSupervisor() {
+	        return supervisor;
+	    }
+
+	    public void setSupervisor(String supervisor) {
+	        this.supervisor = supervisor;
+	    }
 
 	public int getId() {
 		return id;

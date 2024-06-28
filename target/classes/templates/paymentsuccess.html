@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yasriman | Payment Success</title>
+    <link rel="stylesheet" href="css/paymentsuccess.css" />
+    <link rel="stylesheet" th:href="@{/webjars/font-awesome/6.0.0-beta2/css/all.min.css}" />
+    <link rel="icon" th:href="@{/images/logo.jpg}" type="image/png">
+    <link rel="stylesheet" href="css/animation.css">
+    <link rel="stylesheet" href="css/loading.css">
+</head>
+<body>
+<div id="loading-screen">
+    <video id="loading-video" autoplay loop muted>
+        <source th:src="@{/video/loadingscreen.mp4}" type="video/mp4">
+    </video>
+</div>
+<div class="navbarbg">
+    <a href="./index.html"><h2 class="fade-in-up delay-1">YASRIMAN</h2></a>
+    <div class="logintext fade-in-up delay-2">
+        <div class="searchdiv">
+            <img src="https://svgshare.com/i/177L.svg" alt="" draggable="false" />
+            <input type="text" placeholder="Search" name="search" autocomplete="off" id="searchInput" />
+        </div>
+        <div th:if="${session.loggedinaccountusername != null}">
+            <a th:href="@{/viewcustomeraccount(uid=${session.loggedinaccountid},from=index)}">
+                <span th:text="${session.loggedinaccountusername}"></span>
+                <div class="loginicon">
+                    <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/fee6b20cb0abd925cc4a3bda7cf3fa3366c37bcc07b2da638108c5651aca2ad0?apiKey=8730b69884724863a1e8089b99726052" class="img" draggable="false" />
+                </div>
+            </a>
+        </div>
+        <div th:unless="${session.loggedinaccountusername != null}">
+            <a th:href="@{/signupform}">
+                Sign In/Sign Up
+                <div class="loginicon">
+                    <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/fee6b20cb0abd925cc4a3bda7cf3fa3366c37bcc07b2da638108c5651aca2ad0?apiKey=8730b69884724863a1e8089b99726052" class="img" draggable="false" />
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="fade-in-up delay-3" th:if="${session.loggedinaccountrole == 'Staff' or session.loggedinaccountrole == 'Supervisor'}">
+        <a th:href="@{/staffdashboard}">DASHBOARD</a>
+    </div>
+    <div class="navlinks fade-in-up delay-3">
+        <a href="/">HOME</a>
+        <a th:href="inventory?action=viewallproducts">PRODUCTS</a>
+        <a href="cart">CART</a>
+    </div>
+</div>
+
+<div class="hero">
+    <h1>Payment Successful!</h1>
+    
+    <!-- Audio element for notification -->
+    <audio id="notificationSound" muted>
+        <source th:src="@{/audios/paymentsuccess.mp3}" type="audio/mpeg">
+    </audio>
+    
+    <div>
+        <p>Thank you for your purchase. Your payment was successful.</p>
+        <p>Order ID: <span th:text="${session.orderid}"></span></p>
+        <p>Amount Paid: RM<span th:text="${#numbers.formatDecimal(session.ordertotalprice, 2, 0)}"></span></p>
+    </div>
+    <a href="/"><button class="backbtn">Back to Home Page</button></a>
+</div>
+
+<script src="js/loading.js"></script>
+<script src="js/paymentsuccess.js"></script>
+</body>
+</html>

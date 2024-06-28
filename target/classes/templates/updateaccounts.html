@@ -49,6 +49,10 @@
                         <td><input type="text" name="id" th:value="${accounts.id}" size="50" readonly></td>
                     </tr>
                     <tr>
+	                    <td>Supervisor:</td>
+	                    <td><input type="text" name="supervisor" th:value="${accounts.supervisor}" size="50" readonly></td>
+	                </tr>
+                    <tr>
                         <td>Role:</td>
                         <td>
                             <select name="role">
@@ -57,6 +61,7 @@
                                 <!-- List other roles as options -->
                                 <option th:if="${accounts.role ne 'Customer'}" th:value="Customer">Customer</option>
                                 <option th:if="${accounts.role ne 'Staff'}" th:value="Staff">Staff</option>
+                                <option th:if="${accounts.role ne 'Supervisor'}" th:value="Supervisor">Supervisor</option>
                             </select>                            
                         </td>
                     </tr>

@@ -114,7 +114,11 @@ input[type="text"]:focus {
 }
 
 /* END NAVBAR */
-
+#myChart
+{
+	max-width: 800px;
+	max-height: 250px;
+}
 #hero {
     display: flex;
     height: 75vh;
@@ -127,14 +131,15 @@ input[type="text"]:focus {
     background-color: #1a4d2e;
     color: white;
     padding: 20px;
+    position: fixed;
+    height: 100%;
 }
 
 #main {
     flex: 1;
     padding: 20px;
-    display: grid;
-    grid-template-rows: repeat(2, 1fr);
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    flex-direction: column;
     gap: 20px;
     height: 100%;
 }
@@ -168,6 +173,7 @@ input[type="text"]:focus {
   width: 100%;
   height: fit-content;
   padding: 30px 20px;
+  margin-left: 15vw;
 }
 
 #sidebar b{
@@ -188,6 +194,12 @@ input[type="text"]:focus {
 .grid-contentwimg img{
   width: 70px;
   height: auto;
+}
+
+.totalordertext
+{
+	display:flex;
+	align-items: flex-end;
 }
 
 @media (width < 830px) {

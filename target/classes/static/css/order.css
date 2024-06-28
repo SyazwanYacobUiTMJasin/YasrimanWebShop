@@ -143,7 +143,7 @@ input[type="text"]:focus {
     
     width: 100%;
     margin: 0 auto;
-    overflow: hidden;
+    
     /* box-shadow: 0 0 10px rgba(0,0,0,0.5); */
   }
   
@@ -220,6 +220,11 @@ input[type="text"]:focus {
 .modal-column {
     flex: 1;
     padding: 0 20px;
+}
+
+tbody
+{
+	background-color: #ffffff62;
 }
 
 tbody tr td input[type="checkbox"]
@@ -369,8 +374,80 @@ tr.space
 	display:flex;
 	justify-content: space-between;
 	align-items: center;
+	overflow:hidden;
+	height: 100px;
 }
 
+.mainbox
+{
+	display: flex;
+	flex-direction:column;
+	gap: 30px;
+}
+
+.mainbox div h1
+{
+	padding-bottom: 20px;
+}
+
+.orderstatustext
+{
+	display:flex;
+	flex-direction: row;
+	align-items:center;
+	justify-content:center;
+	font-size: 20px;
+	height: fit-content;
+	padding: 10px 0;
+    overflow: hidden;
+    gap: 10px;
+}
+
+.status-dropdown {
+    background-color: #d5c7b2;
+    border: 1px solid #1a4d2e;
+    outline: none;
+    padding: 5px;
+    transition: border-bottom 0.3s;
+    width: fit-content; 
+    opacity: 1;
+    color: #1a4d2e;
+}
+
+.status-dropdown2 {
+    background-color: #d5c7b2;
+    border: 1px solid #1a4d2e;
+    outline: none;
+    padding: 5px;
+    transition: border-bottom 0.3s;
+    width: fit-content; 
+    color: #1a4d2e;
+}
+
+.status-dropdown:focus {
+    border-bottom: 2px solid #d5c7b2;
+    transition: border-bottom 0.3s;
+}
+
+form{
+	width: 80vw;
+	margin: 0 auto;
+}
+
+.form-actions
+{
+	display:flex;
+	padding: 20px;
+	height: 100px;
+	width:20vw;
+	justify-content:space-between;
+	align-items: center;
+}
+
+.form-actions a, .form-actions input
+{
+	padding: 10px 20px;
+}
 
 @media (width < 979px) {
   * {

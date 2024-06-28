@@ -31,7 +31,9 @@ public class AccountDAO {
     private static final String FETCH_ACCOUNT_BY_ID = "SELECT accountid, accountrole, accountusername FROM accounts WHERE accountid=?";
     private static final String LIST_ALL_ACCOUNT = "SELECT * FROM accounts ORDER BY accountid";
     private static final String VIEW_ONE_ACCOUNT = "SELECT * FROM accounts WHERE accountid=?";
-    private static final String UPDATE_CUSTOMER_ACCOUNT = "UPDATE accounts SET accountrole=?,accountusername=?,accountfirstname=?,accountlastname=?,accountpassword=?,accountemail=?,accountphonenum=?,accountstreet=?,accountstate=?,accountcity=?,accountpostalcode=? WHERE accountid=?";
+    private static final String UPDATE_CUSTOMER_ACCOUNT = "UPDATE accounts SET accountrole=?, accountusername=?, accountfirstname=?, accountlastname=?, accountpassword=?, accountemail=?, accountphonenum=?, accountstreet=?, accountstate=?, accountcity=?, accountpostalcode=?, supervisorid=? WHERE accountid=?";
+    private static final String COMMIT_CHANGES = "COMMIT";
+
     public AccountDAO() {}
 
     public boolean isEmailExists(String email) throws SQLException {
@@ -198,7 +200,9 @@ public class AccountDAO {
                 int  accountpostalcode = rs.getInt("accountpostalcode");
                 byte[] accountpicture = rs.getBytes("accountpicture");
                 
-				accounts = new accounts(accountidsql, accountrole, accountusername, accountpassword, accountemail, accountfirstname, accountlastname, accountphonenum, accountstreet, accountstate, accountcity, accountpostalcode, accountpicture);
+                int supervisorId = rs.getInt("supervisorid");
+                String supervisor = supervisorId > 0 ? getSupervisorNameById(supervisorId) : "N/A";
+				accounts = new accounts(accountidsql, accountrole, accountusername, accountpassword, accountemail, accountfirstname, accountlastname, accountphonenum, accountstreet, accountstate, accountcity, accountpostalcode, accountpicture, supervisor);
             }
 
             con.close();
@@ -265,7 +269,7 @@ public class AccountDAO {
 	} 
 	
 	public accounts updateCustomerAccount(int accountid, String role, String username, String firstName, String lastName, String email,
-			String password, String phone, String street, String state, String city, int postalCode) throws SQLException {
+	        String password, String phone, String street, String state, String city, int postalCode, int supervisorId) throws SQLException {
 		// TODO Auto-generated method stub
 		accounts accounts = null;
 		Connection con = null;
@@ -284,8 +288,9 @@ public class AccountDAO {
 	        ps.setString(8, street);     
 	        ps.setString(9, state);       
 	        ps.setString(10, city);      
-	        ps.setInt(11, postalCode);      
-	        ps.setInt(12, accountid);           
+	        ps.setInt(11, postalCode); 
+            ps.setInt(12, supervisorId); // Set the supervisor ID     
+	        ps.setInt(13, accountid);           
                 
 	        int rowsUpdated = ps.executeUpdate();
             if (rowsUpdated > 0) {
@@ -315,5 +320,34 @@ public class AccountDAO {
         return accounts;
 	}
 
+    public String getSupervisorNameById(int supervisorId) {
+	    String supervisorName = "N/A";
+	    try {
+	        Connection con = ConnectionManager.getConnection();
+	        PreparedStatement ps = con.prepareStatement("SELECT accountfirstname, accountlastname FROM accounts WHERE accountid = ?");
+	        ps.setInt(1, supervisorId);
+
+	        ResultSet rs = ps.executeQuery();
+	        if (rs.next()) {
+	            supervisorName = rs.getString("accountfirstname") + " " + rs.getString("accountlastname");
+	        }
+
+	        con.close();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return supervisorName;
+	}
+
+	public void commit(Connection con)
+	{
+		 try {
+			try (PreparedStatement commitStatement = con.prepareStatement(COMMIT_CHANGES)) {
+			    commitStatement.execute();
+			}
+		 } catch (SQLException ex) {
+             ex.printStackTrace();
+         }
+	}
 	
 }

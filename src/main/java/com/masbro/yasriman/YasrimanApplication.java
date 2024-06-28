@@ -47,4 +47,10 @@ public class YasrimanApplication {
     public String showError() {
         return "error";
     }
+    
+	@GetMapping("/paymentsuccess")
+    public String showPaymentsuccess() {
+        return "paymentsuccess";
+    }
+    
 }

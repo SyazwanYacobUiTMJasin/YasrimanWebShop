@@ -71,14 +71,22 @@
             <div id="noResults">No items currently available right now.</div>
         </div>
         <div th:each="inventory : ${inventoryList}" class="grid-item fade-in-up delay-1">
-            <a th:href="@{/inventory?action=viewproductdetails(id=${inventory.inventoryID})}"
-               style="text-decoration: none; color: inherit">
+            <a th:href="@{/inventory(action='viewproductdetails', id=${inventory.inventoryID})}" style="text-decoration: none; color: inherit">
                 <input class="inventoryID" type="hidden" th:value="${inventory.inventoryID}">
-                <img th:src="'data:image/jpeg;base64,' + ${inventory.inventoryImageBase64}" alt="${inventory.inventoryName}" width="auto" height="100">
-                <h3 th:text="${inventory.inventoryName}"></h3>
-                <p class="price">RM <span th:text="${#numbers.formatDecimal(inventory.inventoryPricePerItem, 2, 0)}"></span></p>
+                <img th:src="@{'data:image/jpeg;base64,' + ${inventory.inventoryImageBase64}}" th:alt="${inventory.inventoryName}" width="auto" height="100">
+                <h3 th:text="${inventory.inventoryName}">Product Name</h3>
+                <p class="price">RM <span th:text="${#numbers.formatDecimal(inventory.inventoryPricePerItem, 2, 0)}">Price</span></p>
+                <p class="price">Stock: <span th:text="${inventory.inventoryQuantityExisting}">Stock Quantity</span></p>
             </a>
-            <button class="add-to-cart">Add to Cart</button>
+            <div th:if="${inventory.inventoryStatus == 'available' and inventory.inventoryQuantityExisting > 0}">
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            <div th:unless="${inventory.inventoryStatus == 'available' and inventory.inventoryQuantityExisting > 0}">
+                <div class="unavailable-item">
+                    <button class="add-to-cart" disabled>Add to Cart</button>
+                    This item is currently unavailable.
+                </div>
+            </div>
         </div>
       </div>
     </div>

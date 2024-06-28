@@ -1,12 +1,32 @@
-package com.masbro.yasriman.model; 
+package com.masbro.yasriman.model;
+
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Payment {
+	private int accountId;
+    private LocalDateTime orderDate;
 	private int paymentid;
 	private String paymentstatus;
 	private int orderid;
 	private byte[] paymentproof;
-	
-	
+	public int getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(int accountId) {
+        this.accountId = accountId;
+    }
+
+    public LocalDateTime getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(LocalDateTime orderDate2) {
+        this.orderDate = orderDate2;
+    }
+    
 	public byte[] getPaymentproof() {
 		return paymentproof;
 	}
@@ -36,5 +56,7 @@ public class Payment {
 	public void setOrderid(int orderid) {
 		this.orderid = orderid;
 	}
+
+
 	
 }

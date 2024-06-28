@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./css/dashboard.css">
     <link rel="stylesheet" href="./css/animation.css">
     <link rel="stylesheet" href="./css/loading.css">
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body th:if="${session.accountrole == 'Staff' || session.accountrole == 'Supervisor'}">
     <div id="loading-screen">
@@ -36,47 +36,63 @@
             </ul>
         </div>
 
-        <div class="main">
+        <div class="main  fade-in-up delay-1">
             <h1>Dashboard</h1>
             <div id="main">
-                <!-- Grid Items -->
-                <div class="grid-item fade-in-up delay-1">
-                    <h3 class="grid-title">Today's Profit</h3>
-                    <div class="grid-content">
-                        <p>RM178.34</p>
-                    </div>
+                <div>
+                    Welcome to Yasriman Family <br>
+                    Here is where you manage the accounts, inventory, and payment for orders.
                 </div>
-                <div class="grid-item fade-in-up delay-1">
-                    <h3 class="grid-title">Most Sold Plant</h3>
-                    <div class="grid-contentwimg">
-                        <div class="details">
-                            <p>Plant Name: Caladium Plant</p>
-                            <p>Quantity Sold: 14</p>
-                        </div>
-                        <img src="./images/p1.jpg" alt="">
-                    </div>
+        
+                <div>
+                <div class="totalordertext">
+                    <h1>Total Profit</h1><small>/order</small>
                 </div>
-                <div class="grid-item fade-in-up delay-2">
-                    <h3 class="grid-title">Most Sold Tool</h3>
-                    <div class="grid-contentwimg">
-                        <div class="details">
-                            <p>Tools Name: Sarung Tangan</p>
-                            <p>Quantity Sold: 23</p>
-                        </div>
-                        <img src="./images/sarung.jpeg" alt="">
-                    </div>
-                </div>
-                <div class="grid-item fade-in-up delay-2">
-                    <h3 class="grid-title">Monthly Total Orders</h3>
-                    <div class="grid-content">
-                        <p>81 Total Orders</p>
-                        <p>+12 From Previous Month</p>
-                    </div>
+                    <canvas id="myChart"></canvas>
                 </div>
             </div>
         </div>
     </div>
     <script src="./js/loading.js"></script>
-
+    <script>
+        /* Retrieve orderDataList from the model */
+        var orderDataList = /*[[${orderDataList}]]*/ [];
+    
+        var labels = orderDataList.map(function(data) {
+            return new Date(data.orderDate).toISOString().split('T')[0];
+        });
+    
+        var data = orderDataList.map(function(data) {
+            return data.sumOrderTotalPrice;
+        });
+    
+        var orderData = {
+            labels: labels,
+            datasets: [{
+                label: 'Total Order Price',
+                data: data,
+                backgroundColor: 'rgba(26, 77, 46, 0.2)', // #1a4d2e
+                borderColor: 'rgba(26, 77, 46, 1)', // #1a4d2e
+                borderWidth: 2
+            }]
+        };
+    
+        var config = {
+            type: 'line',
+            data: orderData,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        };
+    
+        window.onload = function() {
+            var ctx = document.getElementById('myChart').getContext('2d');
+            new Chart(ctx, config);
+        };
+    </script>
 </body>
 </html>

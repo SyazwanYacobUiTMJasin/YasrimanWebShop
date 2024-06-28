@@ -129,6 +129,14 @@
         <a th:href="@{editcustomeraccount(uid=${accounts.id})}">
             <button type="button" class="submitbutton">Edit Profile</button>
         </a>
+        <div class="buttons">
+	    	<a href="@{signout}">
+	                <button type="button" class="submitbutton">Sign out</button>
+	        </a>
+	    	<a href="@{editcustomeraccount(uid=${accounts.id})}">
+	                <button type="button" class="submitbutton">Edit Profile</button>
+	        </a>
+	    </div>
     </div>
     
     <script>

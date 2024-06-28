@@ -37,20 +37,23 @@
         <div class="hero fade-in-up delay-1">
             <h1>Order Management</h1>
             <div class="table-container">
-                <table border="1" class="fade-in-up delay-0">
+                <table border="1" class="fade-in-up delay-0" id="tableid">
                         <tr> 
                             <th>ID</th>
                             <th>Date</th>
                             <th>Customer</th>
                             <th>Order Status</th>
-                            <th>Payment Status</th>
+                            <th id="payment-status-header" onclick="sortTable()">Payment Status</th>
                             <th>Total</th>
                             <th colspan="2">Action</th>
                         </tr>
                         <th:block th:each="order : ${orders}">
 						    <tr>
 						        <td th:text="${order.orderId}"></td>
-						        <td th:text="${order.orderDate}"></td>
+						        <td>
+                                    <fmt:parseDate th:value="${order.orderDate}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="parsedDate" type="both" />
+                                    <fmt:formatDate th:value="${parsedDate}" pattern="MMM d, yyyy h:mm a" />
+                                </td>
 						        <td th:text="${order.accountUsername}"></td>
 						        <td th:text="${order.orderStatus}"></td>
 						        <td th:text="${order.paymentStatus}"></td>
@@ -63,6 +66,7 @@
             </div>
         </div>
     </div>
+    <script src="@{/js/order.js}"></script>
      <script th:src="@{/js/loading.js}"></script>
 </body>
 </html>

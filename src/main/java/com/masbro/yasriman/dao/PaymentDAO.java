@@ -1,10 +1,12 @@
-package com.masbro.yasriman.dao; 
+package com.masbro.yasriman.dao;
 
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Base64;
 
 import org.springframework.stereotype.Repository;
@@ -20,25 +22,33 @@ import com.masbro.yasriman.model.Payment;
 @Repository
 public class PaymentDAO {
 	private static final String VIEW_ONE_ACCOUNT = "SELECT * FROM accounts WHERE accountid=?";
+	private static final String insertPaymentSQL = "INSERT INTO payment (paymentid, orderid, accountid, orderdate, paymentproof) VALUES (payment_id_seq.NEXTVAL, ?, ?, ?, ?)";
 	
-	public static void insertOrderAndPayment(int accountID, int inventoryID, Date orderDate, String orderStatus,
-            double orderTotalPrice, int orderQuantity, Payment payment) throws SQLException {
+	
+	public static void insertOrderAndPayment(int accountID, int inventoryID, LocalDateTime  orderDate, String orderStatus,
+	        double orderTotalPrice, int orderQuantity, Payment payment, int count) throws SQLException {
     Connection con = null;
-
+    
     try {
         con = ConnectionManager.getConnection();
         con.setAutoCommit(false);
 
+     // Convert LocalDateTime to Timestamp for database insertion
+        Timestamp orderTimestamp = Timestamp.valueOf(orderDate);
+        
         // Insert order
         System.out.println("insertOrderAndPayment :" + orderQuantity);
-        int orderId = OrderDAO.insertOrderIntoDatabase(con, accountID, inventoryID, orderDate, orderStatus, orderTotalPrice, orderQuantity);
-
+        int orderId = OrderDAO.insertOrderIntoDatabase(con, accountID, inventoryID, orderTimestamp , orderStatus, orderTotalPrice, orderQuantity);
+        
         // Set the retrieved orderId in the payment object
         payment.setOrderid(orderId);
-
+        payment.setAccountId(accountID);
+        payment.setOrderDate(orderDate);
+        
         // Insert payment info
-        insertPaymentInfo(con, payment);
-
+        if(count==0)
+        	insertPaymentInfo(con, payment);
+        count++;
         // Commit the transaction
         con.commit();
     } catch (SQLException e) {
@@ -63,22 +73,24 @@ public class PaymentDAO {
 }
 
 
-public static void insertPaymentInfo(Connection con, Payment payment) throws SQLException {
-PreparedStatement stmt = null;
-
-try {
-String insertPaymentSQL = "INSERT INTO payment (orderid, paymentproof) VALUES (?, ?)";
-stmt = con.prepareStatement(insertPaymentSQL);
-stmt.setInt(1, payment.getOrderid()); 
-stmt.setBytes(2, payment.getPaymentproof()); 
-
-stmt.executeUpdate();
-} finally {
-if (stmt != null) {
-stmt.close();
-}
-}
-}
+	public static void insertPaymentInfo(Connection con, Payment payment) throws SQLException {
+	    PreparedStatement stmt = null;
+	    
+	    try {
+	        
+	        stmt = con.prepareStatement(insertPaymentSQL);
+	        stmt.setInt(1, payment.getOrderid());
+	        stmt.setInt(2, payment.getAccountId());
+	        stmt.setTimestamp(3, Timestamp.valueOf(payment.getOrderDate()));
+	        stmt.setBytes(4, payment.getPaymentproof());
+	        
+	        stmt.executeUpdate();
+	    } finally {
+	        if (stmt != null) {
+	            stmt.close();
+	        }
+	    }
+	}
 
 	
 	public static accounts viewCustomerAddress(int accountid) {
@@ -119,6 +131,7 @@ stmt.close();
 	    }
 	    return account;
 	}
+
 
 
 	

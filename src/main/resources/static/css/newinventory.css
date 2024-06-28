@@ -61,12 +61,28 @@ font-size: 24px;
 
 button {
 padding: 10px 20px;
-background-color: #29844d;
+background-color: #1a4d2e;
 color: white;
 border: none;
 border-radius: 5px;
 font-size: 16px;
 cursor: pointer;
+}
+
+button.back
+{
+	padding: 10px 20px;
+	background-color: #d5c7b2;
+	color: #1a4d2e;
+	border: none;
+	border-radius: 5px;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+button.back:hover {
+background-color: #1a4d2e;
+color: white;
 }
 
 button:hover {
@@ -113,10 +129,11 @@ border-radius: 4px;
 text-align: right;
 }
 
-#main {
-width: 70%;
-margin-left: auto;
-overflow: visible;
+#main{
+  width: 75%;
+  margin-left: 20vw;
+  margin-right: auto;
+  overflow:visible ;
 }
 
 #hero {
@@ -126,10 +143,12 @@ margin-top: 25vh;
 }
 
 #sidebar {
-min-width: 222px;
-background-color: #1a4d2e;
-color: white;
-padding: 20px;
+	min-width: 222px;
+	background-color: #1a4d2e;
+	color: white;
+	padding: 20px;
+    position: fixed;
+    height: 100%;
 }
 
 #sidebar ul {

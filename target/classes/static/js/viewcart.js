@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function updateTotals(subtotal) {
-        const total = subtotal + shippingFee;
+        const total = subtotal;
         document.getElementById('basket-subtotal').textContent = subtotal.toFixed(2);
         document.getElementById('basket-total').textContent = total.toFixed(2);
         document.querySelector('.total-items').textContent = cart.length;
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
         renderCart();
     }
 
-    let shippingFee = 15.0;
+    let shippingFee = 0;
 
     checkoutForm.addEventListener('submit', function (event) {
         if (!validateForm()) {

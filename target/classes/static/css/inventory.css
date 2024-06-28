@@ -130,9 +130,19 @@ h1 {
   font-size: 24px; /* Sets the size of the font */
 }
 
-button {
+button.view {
   padding: 10px 20px; /* Padding inside the button */
-  background-color: #29844d; /* Blue background color */
+  background-color: #d5c7b2; /* Blue background color */
+  color: #1a4d2e; /* Text color */
+  border: none; /* No border */
+  border-radius: 5px; /* Rounded corners */
+  font-size: 16px; /* Font size for the text inside the button */
+  cursor: pointer; /* Changes the mouse cursor to a pointer when hovered */
+}
+
+button.edit, button.new {
+  padding: 10px 20px; /* Padding inside the button */
+  background-color: #1a4d2e; /* Blue background color */
   color: white; /* Text color */
   border: none; /* No border */
   border-radius: 5px; /* Rounded corners */
@@ -140,9 +150,14 @@ button {
   cursor: pointer; /* Changes the mouse cursor to a pointer when hovered */
 }
 
-button:hover {
+button.edit:hover, button.new:hover {
   background-color: #d5c7b2; /* Darker blue when hovered */
-  color: #1a4d2e;
+  color:#1a4d2e;
+}
+
+button.view:hover {
+  background-color: #1a4d2e; /* Darker blue when hovered */
+  color: white;
 }
 
 .searchinvdiv {
@@ -251,8 +266,10 @@ th {
 
 #main{
   width: 75%;
-  margin-left: auto;
+  margin-left: 20vw;
+  margin-right: auto;
   overflow:visible ;
+  
 }
 
 #hero {
@@ -267,6 +284,8 @@ th {
   background-color: #1a4d2e;
   color: white;
   padding: 20px;
+  position: fixed;
+  height: 100%;
 }
 
 #sidebar ul{
@@ -286,6 +305,9 @@ th {
   font-size: 20px;
 }
 
+tbody{
+	background-color: #ffffff62;
+}
 @media (width < 830px) {
   * {
     font-size: 95%;

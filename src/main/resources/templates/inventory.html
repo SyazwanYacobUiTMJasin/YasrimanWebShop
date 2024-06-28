@@ -31,7 +31,7 @@
     <div id="main">
       <div class="header-container">
         <h1>Inventory Management</h1>
-        <a th:href="@{/inventory?action=new}"><button>Create New</button></a>
+        <a th:href="@{/inventory?action=new}"><button class="new">Create New</button></a>
       </div>
 
       <div class="table-container">
@@ -61,10 +61,10 @@
               <td>RM <span th:text="${#numbers.formatDecimal(inventory.inventoryPricePerItem, 2, 2)}"></span></td>
               <td th:text="${inventory.inventoryQuantityExisting}"></td>
               <td>
-                <a th:href="@{/inventory?action=view(id=${inventory.inventoryID})}"><button>View</button></a>
+                <a th:href="@{/inventory?action=view(id=${inventory.inventoryID})}"><button class="view">View</button></a>
               </td>
               <td>
-                <a th:href="@{/inventory?action=edit(id=${inventory.inventoryID})}"><button>Edit</button></a>
+                <a th:href="@{/inventory?action=edit(id=${inventory.inventoryID})}"><button class="edit">Update</button></a>
               </td>
             </tr>
           </th:block>

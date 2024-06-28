@@ -4,8 +4,6 @@ import com.masbro.yasriman.dao.PaymentDAO;
 import com.masbro.yasriman.model.accounts;
 import com.masbro.yasriman.model.orders;
 
-import jakarta.servlet.http.HttpSessionEvent;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,9 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.http.HttpSession;
-import java.io.IOException;
-import java.sql.Date;
-import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.List;
 
@@ -66,14 +62,21 @@ public class PaymentController {
         
     }
 
-    private String submitForm(int accountId,
-                              MultipartFile paymentProof,
-                              HttpSession session,
-                              Model model) {
-        byte[] paymentproof = null;
+    @PostMapping("/submitForm")
+    private String submitForm(@RequestParam("accountId") int accountId,
+                            @RequestParam("paymentProof") MultipartFile paymentProof,
+                            HttpSession session,
+                            Model model) {
         try {
-            if (!paymentProof.isEmpty()) {
-                paymentproof = paymentProof.getBytes();
+            byte[] paymentProofBytes = null;
+            if (paymentProof != null && !paymentProof.isEmpty()) {
+                String contentType = paymentProof.getContentType();
+                if (contentType != null && (contentType.equals("image/jpeg") || contentType.equals("image/jpg") || contentType.equals("image/png"))) {
+                    paymentProofBytes = paymentProof.getBytes();
+                } else {
+                    model.addAttribute("errorMessage", "Invalid file type. Please upload a JPEG or PNG image.");
+                    return "error";
+                }
             }
 
             List<orders> orders = (List<orders>) session.getAttribute("orders");
@@ -82,26 +85,25 @@ public class PaymentController {
                 return "error";
             }
 
+            int count = 0;
             for (orders order : orders) {
                 com.masbro.yasriman.model.Payment payment = new com.masbro.yasriman.model.Payment();
                 payment.setOrderid(order.getOrderId());
-                payment.setPaymentproof(paymentproof);
+                payment.setPaymentproof(paymentProofBytes);
 
-                // Convert LocalDate to java.sql.Date
-                Date sqlOrderDate = Date.valueOf(order.getOrderDate());
-
-                // Call insertOrderAndPayment with converted date
-                paymentDAO.insertOrderAndPayment(order.getAccountId(), order.getInventoryId(), sqlOrderDate,
-                        order.getOrderStatus(), order.getOrderTotalPrice(), order.getOrderQuantity(), payment);
+                LocalDateTime orderDateTime = order.getOrderDate();
+                
+                PaymentDAO.insertOrderAndPayment(order.getAccountId(), order.getInventoryId(), orderDateTime,
+                        order.getOrderStatus(), order.getOrderTotalPrice(), order.getOrderQuantity(), payment, count);
+                count++;
             }
 
             // Clear the orders from the session after successful commit
             session.removeAttribute("orders");
-            return "redirect:/";
-        } catch (SQLException | IOException ex) {
-            // Handle exception
+            return "paymentsuccess";
+        } catch (Exception ex) {
             ex.printStackTrace();
-            model.addAttribute("errorMessage", "Error processing payment.");
+            model.addAttribute("errorMessage", "Error processing payment: " + ex.getMessage());
             return "error";
         }
     }
