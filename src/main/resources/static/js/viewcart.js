@@ -79,10 +79,14 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!validateForm()) {
             event.preventDefault();
         } else {
-            cartDataInput.value = JSON.stringify(cart);
+            const cartDataWithoutImages = cart.map(item => {
+                const { imgSrc, ...itemWithoutImage } = item;
+                return itemWithoutImage;
+            });
+            cartDataInput.value = encodeURIComponent(JSON.stringify(cartDataWithoutImages));
+            console.log('Sending cart data:', cartDataInput.value); // For debugging
         }
     });
-
     renderCart();
 });
 
@@ -96,3 +100,4 @@ function validateForm() {
         return true;
     }
 }
+

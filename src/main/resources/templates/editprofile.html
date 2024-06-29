@@ -123,6 +123,7 @@
                 </div>
                 <p th:if="${postalcodeerror}" style="color:red;"
                    th:text="${postalcodeerror}"></p>
+                   <p th:text="${session.errorMessage}" style="color:red;"></p>
 
                 <button type="submit" class="submitbutton">Save Changes</button>
             </form>

@@ -123,10 +123,10 @@ public class PaymentDAO {
 	            String accountstate = rs.getString("accountstate");
 	            String accountcity = rs.getString("accountcity");
 	            int accountpostalcode = rs.getInt("accountpostalcode");
-	            Blob blob = rs.getBlob("accountpicture");
+	            byte[] blobdata = rs.getBytes("accountpicture");
 	            byte[] accountpicture = null;
-	            if (blob != null) {
-	                accountpicture = blob.getBytes(1, (int) blob.length());
+	            if (blobdata != null) {
+	                accountpicture = blobdata;
 	            }
 
 	            account = new accounts(accountidsql, accountrole, accountusername, accountpassword, accountemail, accountfirstname, accountlastname, accountphonenum, accountstreet, accountstate, accountcity, accountpostalcode, accountpicture);

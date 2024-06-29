@@ -62,12 +62,11 @@
             <div class="mainbox">
                 <div class="paymentdetails">
                     <h1>Payment Details</h1>
+                    <h3>Payment Total</h3>
+                    <span th:text="'RM ' + ${#numbers.formatDecimal(order.sumOrderTotalPrice, 1, 2)}"></span>
                     <table border="1">
                         <thead>
-                        	<tr>
-		                        <td>Payment Total</td>
-		                        <td th:text="'RM ' + ${#numbers.formatDecimal(order.sumOrderTotalPrice, 1, 2)}"></td>
-                            </tr>
+                        	
                             <tr>
                                 <th>Payment ID</th>
                                 <th>Payment Status</th>

@@ -11,44 +11,47 @@
     <link rel="stylesheet" href="css/loading.css">
 </head>
 <body>
-<div id="loading-screen">
-    <video id="loading-video" autoplay loop muted>
-        <source th:src="@{/video/loadingscreen.mp4}" type="video/mp4">
-    </video>
-</div>
-<div class="navbarbg">
-    <a href="@{/}"><h2 class="fade-in-up delay-1">YASRIMAN</h2></a>
-    <div class="logintext fade-in-up delay-2">
-        <div class="searchdiv">
-            <img src="https://svgshare.com/i/177L.svg" alt="" draggable="false" />
-            <input type="text" placeholder="Search" name="search" autocomplete="off" id="searchInput" />
+    <div id="loading-screen">
+        <video id="loading-video" autoplay loop muted>
+          <source src="./video/loadingscreen.mp4" type="video/mp4">
+        </video>
+      </div>
+    <div class="navbarbg">
+        <a th:href="@{/}">
+            <h2 class="fade-in-up delay-1">YASRIMAN</h2>
+        </a>
+        <div class="logintext fade-in-up delay-2">
+            <div class="searchdiv">
+                <img src="https://svgshare.com/i/177L.svg" alt="" draggable="false" />
+                <input type="text" placeholder="Search" name="search" autocomplete="off" id="searchInput" />
+            </div>
+            <div th:if="${session.accountusername != null}">
+                <a th:href="@{/viewcustomeraccount(uid=${session.loggedinaccountid},from=index)}">
+                    <span th:text="${session.accountusername}"></span>
+                    <div class="loginicon">
+                        <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/fee6b20cb0abd925cc4a3bda7cf3fa3366c37bcc07b2da638108c5651aca2ad0?apiKey=8730b69884724863a1e8089b99726052&" class="img" draggable="false" />
+                    </div>
+                </a>
+            </div>
+            <div th:unless="${session.accountusername != null}">
+                <a th:href="@{signup}">
+                    Sign In/Sign Up
+                    <div class="loginicon">
+                        <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/fee6b20cb0abd925cc4a3bda7cf3fa3366c37bcc07b2da638108c5651aca2ad0?apiKey=8730b69884724863a1e8089b99726052&" class="img" draggable="false" />
+                    </div>
+                </a>
+            </div>
         </div>
-        <div th:if="${session.loggedinaccountusername != null}">
-            <a th:href="@{/viewcustomeraccount(uid=${session.loggedinaccountid},from=index)}">
-                <span th:text="${session.loggedinaccountusername}"></span>
-                <div class="loginicon">
-                    <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/fee6b20cb0abd925cc4a3bda7cf3fa3366c37bcc07b2da638108c5651aca2ad0?apiKey=8730b69884724863a1e8089b99726052" class="img" draggable="false" />
-                </div>
-            </a>
+        <div th:if="${session.accountrole == 'Staff' || session.accountrole == 'Supervisor'}" class="fade-in-up delay-3">
+            <a th:href="@{/staffdashboard}">DASHBOARD</a>
         </div>
-        <div th:unless="${session.loggedinaccountusername != null}">
-            <a th:href="@{/signup}">
-                Sign In/Sign Up
-                <div class="loginicon">
-                    <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/fee6b20cb0abd925cc4a3bda7cf3fa3366c37bcc07b2da638108c5651aca2ad0?apiKey=8730b69884724863a1e8089b99726052" class="img" draggable="false" />
-                </div>
-            </a>
-        </div>
-    </div>
-    <div class="fade-in-up delay-3" th:if="${session.loggedinaccountrole == 'Staff' or session.loggedinaccountrole == 'Supervisor'}">
-        <a th:href="@{/staffdashboard}">DASHBOARD</a>
-    </div>
+    
     <div class="navlinks fade-in-up delay-3">
-        <a th:href="@{/}">HOME</a>
-        <a th:href="@{/inventory?action=viewallproducts}">PRODUCTS</a>
-        <a th:href="@{/cart}">CART</a>
+        <a href="/" class="active">HOME</a>
+        <a href="inventory?action=viewallproducts">PRODUCTS</a>
+        <a href="cart">CART</a>
     </div>
-</div>
+  </div>
 
 <div class="hero">
     <h1>Payment Successful!</h1>

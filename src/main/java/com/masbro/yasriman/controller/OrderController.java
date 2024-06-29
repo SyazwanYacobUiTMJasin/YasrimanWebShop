@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -16,6 +17,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -129,63 +132,99 @@ public String showOrderDetails(HttpServletRequest request, HttpServletResponse r
     @PostMapping(params = "action=checksigninstatus")
     public String checkSignInStatus(HttpServletRequest request, HttpServletResponse response, HttpSession session, Model model) throws ServletException, IOException {
         String accountId = request.getParameter("uid");
-        System.out.println(accountId + "FROM ORDER CONTROLLER CHECKSIGNINSTATUS");
-        if ("".equals(accountId)) {
-            session.setAttribute("signinerror", "Please sign in first before proceeding to payment");
+        String accountStreet = (String) session.getAttribute("accountstreet");
+        String accountCity = (String) session.getAttribute("accountcity");
+        String accountState = (String) session.getAttribute("accountstate");
+        int accountPoscode = (int) session.getAttribute("accountpostalcode");
+        System.out.println(accountId + " FROM ORDER CONTROLLER CHECKSIGNINSTATUS");
+        
+        if (accountId == null || accountId.isEmpty() ) {
+            session.setAttribute("signinerror", "Please sign in first");
             return "redirect:/signin";
         } else {
-            String cartDataJson = request.getParameter("cartData");
-            try {
-                processCartData(request, response, cartDataJson, accountId);
-                // response.sendRedirect("./payment?action=viewform&uid=" + accountId);
-                return "redirect:/payment?action=viewform&uid=" + accountId;
-            } catch (SQLException ex) {
-                // Handle exception
-                return "error";
+
+            // Check if any address field is empty
+            if (accountStreet == null || accountStreet.isEmpty() ||
+                accountCity == null || accountCity.isEmpty() ||
+                accountState == null || accountState.isEmpty() ||
+                accountPoscode <=0) {
+                session.setAttribute("errorMessage", "Please complete your address information");
+                return "redirect:/editcustomeraccount?uid="+accountId; // Redirect to an error page or handle appropriately
+            }  else
+            {
+                String cartDataJson = request.getParameter("cartData");
+                System.out.println("Received cart data: " + cartDataJson);
+                
+                if (cartDataJson == null || cartDataJson.isEmpty()) {
+                    session.setAttribute("errorMessage", "Cart data is missing or invalid");
+                    return "redirect:/error";
+                }
+                
+                try {
+                    // URL-decode the cart data
+                    String decodedCartData = URLDecoder.decode(cartDataJson, StandardCharsets.UTF_8.toString());
+                    System.out.println("Decoded cart data: " + decodedCartData);
+                    
+                    // Process the decoded cart data
+                    processCartData(request, response, decodedCartData, accountId);
+                    return "redirect:/payment?action=viewform&uid=" + accountId;
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                    session.setAttribute("errorMessage", "Error processing cart data: " + ex.getMessage());
+                    return "redirect:/error";
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    session.setAttribute("errorMessage", "Unexpected error: " + ex.getMessage());
+                    return "redirect:/error";
+                }
             }
         }
     }
 
     private void processCartData(HttpServletRequest request, HttpServletResponse response,
                              String cartDataJson, String accountId) throws SQLException, ServletException, IOException {
-    int orderAccountId = Integer.parseInt(accountId);
-    HttpSession session = request.getSession();
+        int orderAccountId = Integer.parseInt(accountId);
+        HttpSession session = request.getSession();
 
-    try {
-        JsonArray cartArray = JsonParser.parseString(cartDataJson).getAsJsonArray();
+        try {
+            // URL-decode the cart data
+            String decodedCartData = URLDecoder.decode(cartDataJson, StandardCharsets.UTF_8.toString());
+            System.out.println("Decoded cart data: " + decodedCartData);
 
-        List<orders> orders = (List<orders>) session.getAttribute("orders");
-        if (orders == null) {
-            orders = new ArrayList<>();
+            // Use Gson to parse the JSON
+            Gson gson = new Gson();
+            JsonArray cartArray = gson.fromJson(decodedCartData, JsonArray.class);
+
+            List<orders> orders = (List<orders>) session.getAttribute("orders");
+            if (orders == null) {
+                orders = new ArrayList<>();
+            }
+
+            for (int i = 0; i < cartArray.size(); i++) {
+                JsonObject cartItem = cartArray.get(i).getAsJsonObject();
+
+                String title = cartItem.get("title").getAsString();
+                double price = cartItem.get("price").getAsDouble();
+                int inventoryID = Integer.parseInt(cartItem.get("inventoryID").getAsString());
+                int quantity = cartItem.get("quantity").getAsInt();
+                int accountID = orderAccountId;
+                LocalDateTime orderDate = LocalDateTime.now();
+                String orderStatus = "PROCESS";
+                double orderTotalPrice = price * quantity;
+
+                // Add order to the list
+                orders.add(new orders(accountID, inventoryID, orderDate, orderStatus, orderTotalPrice, quantity));
+            }
+
+            // Update session attribute
+            session.setAttribute("orders", orders);
+            System.out.println("DEBUG: Orders in session after update: " + session.getAttribute("orders"));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ServletException("Error processing cart data", e);
         }
-
-        for (int i = 0; i < cartArray.size(); i++) {
-            JsonObject cartItem = cartArray.get(i).getAsJsonObject();
-
-            String title = cartItem.get("title").getAsString();
-            double price = cartItem.get("price").getAsDouble();
-            String imgSrc = cartItem.get("imgSrc").getAsString();
-            int inventoryID = cartItem.get("inventoryID").getAsInt();
-            int quantity = cartItem.get("quantity").getAsInt();
-            int accountID = orderAccountId; // Using the accountId passed to this method
-            LocalDateTime orderDate = LocalDateTime.now(); // Assuming current date as order date
-            String orderStatus = "PROCESS"; // Initial order status
-            double orderTotalPrice = price * quantity;
-
-            // Add order to the list
-            orders.add(new orders(accountID, inventoryID, orderDate, orderStatus, orderTotalPrice, quantity));
-        }
-
-        // Update session attribute
-        session.setAttribute("orders", orders);
-        System.out.println("DEBUG: Orders in session after update: " + session.getAttribute("orders"));
-
-    } catch (Exception e) {
-        e.printStackTrace();
-        // Handle exception as needed, e.g., logging or throwing ServletException
-        throw new ServletException("Error processing cart data", e);
     }
-}
 
 
     @ExceptionHandler(SQLException.class)

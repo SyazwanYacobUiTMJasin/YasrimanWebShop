@@ -10,14 +10,12 @@
         <a href="/"><h2>YASRIMAN</h2></a>
         <div class="navlinks">
             <a href="/">HOME</a>
-            <!--<a href="./product.html">PRODUCTS</a>
-            <a href="./information.html">INFORMATION</a>
-            <a href="./faq.html" class="active">FAQ</a>
-            <a href="./viewcart.html">CART</a>-->
         </div> 
     </div>
-    <h1>Error</h1>
-    <p th:text="${session.errorMessage}"></p>
-    <a th:href="@{/}">Go back to Home</a>
+    <div class="hero">
+        <h1>Error</h1>
+        Message: <span th:text="${session.errorMessage}"></span>
+        <a th:href="@{/}">Go back to Home</a>
+    </div>
 </body>
 </html>

@@ -55,16 +55,21 @@ public class PaymentController {
     }
 
     private String viewForm(int accountId, Model model) {
-         
-            accounts paymentAccounts = paymentDAO.viewCustomerAddress(accountId);
+        accounts paymentAccounts = paymentDAO.viewCustomerAddress(accountId);
+        
+        if (paymentAccounts != null) {
             byte[] pictureBytes = paymentAccounts.getPicture();
             String base64EncodedImage = (pictureBytes != null && pictureBytes.length > 0) ?
                     Base64.getEncoder().encodeToString(pictureBytes) : "a"; // Default placeholder value
             model.addAttribute("base64EncodedImage", base64EncodedImage);
             model.addAttribute("accounts", paymentAccounts);
             return "payment";
-        
+        } else {
+            model.addAttribute("errorMessage", "Account information not found for ID: " + accountId);
+            return "error"; // Or handle the error case appropriately
+        }
     }
+    
 
     @PostMapping("/submitForm")
     private String submitForm(@RequestParam("accountId") int accountId,

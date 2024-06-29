@@ -119,6 +119,7 @@ public class OrderDAO {
         Connection con = null;
         PreparedStatement psOrder = null;
         PreparedStatement psPayment = null;
+        PreparedStatement psInventory = null;
 
         try {
             con = ConnectionManager.getConnection();
@@ -157,6 +158,27 @@ public class OrderDAO {
                 if (paymentRowsAffected > 0) {
                     rowUpdated = true;
                 }
+
+                // If payment status is set to "APPROVED", update inventory
+                if ("APPROVED".equalsIgnoreCase(paymentStatus)) {
+                    // Fetch order details
+                    String selectOrderSQL = "SELECT inventoryid, orderquantity FROM orders WHERE orderid = ?";
+                    PreparedStatement psSelectOrder = con.prepareStatement(selectOrderSQL);
+                    psSelectOrder.setInt(1, orderId);
+                    ResultSet rs = psSelectOrder.executeQuery();
+
+                    while (rs.next()) {
+                        int inventoryId = rs.getInt("inventoryid");
+                        int orderQuantity = rs.getInt("orderquantity");
+
+                        // Update inventory quantity
+                        String updateInventorySQL = "UPDATE inventory SET inventoryquantityexisting = inventoryquantityexisting - ? WHERE inventoryid = ?";
+                        psInventory = con.prepareStatement(updateInventorySQL);
+                        psInventory.setInt(1, orderQuantity);
+                        psInventory.setInt(2, inventoryId);
+                        psInventory.executeUpdate();
+                    }
+                }
             } else {
                 // Set paymentStatus to 'NOTAPPROVED' if null
                 paymentStatus = "NOTAPPROVED";
@@ -190,12 +212,9 @@ public class OrderDAO {
             }
             printSQLException(e);
         } finally {
-            if (psOrder != null) {
-                psOrder.close();
-            }
-            if (psPayment != null) {
-                psPayment.close();
-            }
+            if (psOrder != null) psOrder.close();
+            if (psPayment != null) psPayment.close();
+            if (psInventory != null) psInventory.close();
             if (con != null) {
                 con.setAutoCommit(true);  // Reset to default
                 con.close();
