@@ -36,7 +36,7 @@ public class AccountDAO {
 
     public AccountDAO() {}
 
-    public boolean isEmailExists(String email) throws SQLException {
+    public static boolean isEmailExists(String email) throws SQLException {
         boolean emailExists = false;
         try (Connection con = ConnectionManager.getConnection();
              PreparedStatement ps = con.prepareStatement(CHECK_DISTINCT_EMAIL_SQL)) {
@@ -52,7 +52,7 @@ public class AccountDAO {
         return emailExists;
     }
 
-    public void insertAccount(accounts newAccount) throws SQLException {
+    public static void insertAccount(accounts newAccount) throws SQLException {
         try (Connection con = ConnectionManager.getConnection();
              PreparedStatement ps = con.prepareStatement(INSERT_ACCOUNT_SQL)) {
             ps.setString(1, newAccount.getFirstname());
@@ -116,7 +116,7 @@ public class AccountDAO {
     }
 
 
-    private void printSQLException(SQLException ex) {
+    private static void printSQLException(SQLException ex) {
         for (Throwable e: ex) {
             if (e instanceof SQLException) {
                 e.printStackTrace(System.err);

@@ -19,6 +19,11 @@ C:\Users\slimo\OneDrive\Desktop\yasriman\src\main\java\com\masbro\yasriman\dao\D
 C:\Users\slimo\OneDrive\Desktop\yasriman\src\main\java\com\masbro\yasriman\dao\InventoryDAO.java
 C:\Users\slimo\OneDrive\Desktop\yasriman\src\main\java\com\masbro\yasriman\dao\OrderDAO.java
 C:\Users\slimo\OneDrive\Desktop\yasriman\src\main\java\com\masbro\yasriman\dao\PaymentDAO.java
+C:\Users\slimo\OneDrive\Desktop\yasriman\src\main\java\com\masbro\yasriman\emailapi\controller\UserController.java
+C:\Users\slimo\OneDrive\Desktop\yasriman\src\main\java\com\masbro\yasriman\emailapi\entity\User.java
+C:\Users\slimo\OneDrive\Desktop\yasriman\src\main\java\com\masbro\yasriman\emailapi\repository\UserRepository.java
+C:\Users\slimo\OneDrive\Desktop\yasriman\src\main\java\com\masbro\yasriman\emailapi\service\EmailSenderService.java
+C:\Users\slimo\OneDrive\Desktop\yasriman\src\main\java\com\masbro\yasriman\emailapi\service\UserService.java
 C:\Users\slimo\OneDrive\Desktop\yasriman\src\main\java\com\masbro\yasriman\model\accounts.java
 C:\Users\slimo\OneDrive\Desktop\yasriman\src\main\java\com\masbro\yasriman\model\ApiRequest.java
 C:\Users\slimo\OneDrive\Desktop\yasriman\src\main\java\com\masbro\yasriman\model\ApiResponse.java

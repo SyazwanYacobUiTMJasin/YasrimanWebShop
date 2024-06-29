@@ -20,9 +20,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.masbro.yasriman.dao.AccountDAO;
 import com.masbro.yasriman.dao.DashboardDAO;
+import com.masbro.yasriman.emailapi.controller.UserController;
+import com.masbro.yasriman.emailapi.entity.User;
 import com.masbro.yasriman.model.accounts;
 import com.masbro.yasriman.model.orders;
 
+import jakarta.mail.MessagingException;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
@@ -41,6 +44,9 @@ import org.springframework.http.MediaType;
 public class AccountController extends HttpServlet {
 
      private final AccountDAO AccountDAO;
+
+    @Autowired
+    private UserController userController;
 
     @Autowired
     public AccountController(AccountDAO accountDAO) {
@@ -71,7 +77,7 @@ public class AccountController extends HttpServlet {
                                 @RequestParam("email") String accountemail,
                                 @RequestParam("password") String accountpassword,
                                 @RequestParam("phone") String accountphonenum,
-                                HttpSession session) throws SQLException, IOException, ServletException {
+                                HttpSession session) throws SQLException, IOException, ServletException, MessagingException {
 
         accounts newAccount = new accounts(accountfirstname, accountlastname, accountusername, accountemail, accountpassword, accountphonenum);
 
@@ -88,6 +94,8 @@ public class AccountController extends HttpServlet {
                 session.setAttribute("accountemail", accountemail);
                 session.setAttribute("accountrole", "Customer");
                 session.setAttribute("signinerror", "null");
+                User user = new User(accountfirstname, accountlastname, accountusername, accountemail, accountpassword, accountphonenum);
+                userController.signUp(user);
                 return "redirect:/signin"; // Redirect to the signin form
             }
         } catch (SQLException e) {

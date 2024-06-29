@@ -1,7 +1,9 @@
 com\masbro\yasriman\api\model\OrderAPI.class
 com\masbro\yasriman\api\controller\OrderControllerAPI.class
 com\masbro\yasriman\api\repository\OrderRepository.class
+com\masbro\yasriman\emailapi\service\UserService.class
 com\masbro\yasriman\dao\AccountDAO.class
+com\masbro\yasriman\emailapi\service\EmailSenderService.class
 com\masbro\yasriman\model\Message.class
 com\masbro\yasriman\model\InventoryManage.class
 com\masbro\yasriman\connection\ConnectionManager.class
@@ -15,7 +17,9 @@ com\masbro\yasriman\model\Payment.class
 com\masbro\yasriman\model\ApiRequest.class
 com\masbro\yasriman\model\ChatGptRequestMessage.class
 com\masbro\yasriman\model\ApiResponse.class
+com\masbro\yasriman\emailapi\controller\UserController.class
 com\masbro\yasriman\controller\PaymentController.class
+com\masbro\yasriman\emailapi\repository\UserRepository.class
 com\masbro\yasriman\dao\InventoryDAO.class
 com\masbro\yasriman\dao\OrderDAO.class
 com\masbro\yasriman\model\accounts.class
@@ -30,6 +34,7 @@ com\masbro\yasriman\api\service\GptRequestBuilder.class
 com\masbro\yasriman\controller\OrderController.class
 com\masbro\yasriman\api\service\OrderService.class
 com\masbro\yasriman\controller\AccountController.class
+com\masbro\yasriman\emailapi\entity\User.class
 com\masbro\yasriman\api\controller\AccountControllerAPI.class
 com\masbro\yasriman\api\service\AiRequestProcessor.class
 com\masbro\yasriman\model\Plant.class

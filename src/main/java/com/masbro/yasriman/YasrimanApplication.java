@@ -1,9 +1,14 @@
 package com.masbro.yasriman;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import com.masbro.yasriman.emailapi.service.EmailSenderService;
 
 @SpringBootApplication
 @Controller
@@ -52,6 +57,15 @@ public class YasrimanApplication {
     public String showPaymentsuccess() {
         return "paymentsuccess";
     }
+
+    // @Autowired
+    // private EmailSenderService senderService;
     
+    // @EventListener(ApplicationReadyEvent.class)
+    // public void sendMail()
+    // {
+    //     senderService.sendEmail("yasrimanonlineshop@gmail.com", "Welcome to Our Plant Shop", "Thank you for signing up!");
+
+    // }
 }
 //testcommit
