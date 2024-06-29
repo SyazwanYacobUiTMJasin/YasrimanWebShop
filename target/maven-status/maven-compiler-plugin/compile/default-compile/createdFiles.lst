@@ -20,6 +20,7 @@ com\masbro\yasriman\dao\InventoryDAO.class
 com\masbro\yasriman\dao\OrderDAO.class
 com\masbro\yasriman\model\accounts.class
 com\masbro\yasriman\model\Inventory.class
+com\masbro\yasriman\dao\DashboardDAO.class
 com\masbro\yasriman\model\ChatGptRequest.class
 com\masbro\yasriman\model\Tool.class
 com\masbro\yasriman\controller\ApiController.class
