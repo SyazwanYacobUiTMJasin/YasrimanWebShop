@@ -50,14 +50,12 @@
                         <th:block th:each="order : ${orders}">
 						    <tr>
 						        <td th:text="${order.orderId}"></td>
-						        <td>
-                                    <fmt:parseDate th:value="${order.orderDate}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="parsedDate" type="both" />
-                                    <fmt:formatDate th:value="${parsedDate}" pattern="MMM d, yyyy h:mm a" />
+						        <td><span th:text="${#temporals.format(order.orderDate, 'MMM d, yyyy h:mm a')}"></span>
                                 </td>
 						        <td th:text="${order.accountUsername}"></td>
 						        <td th:text="${order.orderStatus}"></td>
 						        <td th:text="${order.paymentStatus}"></td>
-						        <td>RM <span th:text="${#numbers.formatDecimal(order.orderTotalPrice, 2, 2)}"></span></td>
+						        <td>RM <span th:text="${#numbers.formatDecimal(order.sumOrderTotalPrice, 2, 2)}"></span></td>
 						        <td><a class="btn btn-info edit-btn" th:href="@{/order?action=show(orderid=${order.orderId},from='view')}">View</a></td>
             					<td><a class="btn btn-primary update-btn" th:href="@{/order?action=show(orderid=${order.orderId},from='update')}">Update</a></td>
 						    </tr>

@@ -29,23 +29,23 @@ public class OrderDAO {
     private static final String UPDATE_PAYMENT_STATUS = "UPDATE payment SET paymentstatus = ? WHERE orderid = ?";
     private static final String INSERT_ORDER_SQL = "INSERT INTO orders (accountID, inventoryID, orderDate, orderStatus, orderTotalPrice, orderQuantity) VALUES (?, ?, ?, ?, ?, ?)";
     private static final String SELECT_ALL_ORDERS_GROUPBY_ORDERID = "SELECT \r\n"
-    		+ "    ORDERS.orderid, \r\n"
-    		+ "    ORDERS.orderdate, \r\n"
-    		+ "    ACCOUNTS.accountusername, \r\n"
-    		+ "    ORDERS.orderstatus, \r\n"
-    		+ "    PAYMENT.paymentstatus, \r\n"
-    		+ "    SUM(ORDERS.ordertotalprice)\r\n"
-    		+ "FROM ORDERS\r\n"
-    		+ "JOIN ACCOUNTS\r\n"
-    		+ "    ON ORDERS.ACCOUNTID = ACCOUNTS.ACCOUNTID\r\n"
-    		+ "JOIN PAYMENT\r\n"
-    		+ "    ON ORDERS.ORDERID = PAYMENT.ORDERID\r\n"
-    		+ "GROUP BY  \r\n"
-    		+ "    ORDERS.orderid, \r\n"
-    		+ "    ORDERS.orderdate, \r\n"
-    		+ "    ACCOUNTS.accountusername, \r\n"
-    		+ "    ORDERS.orderstatus, \r\n"
-    		+ "    PAYMENT.paymentstatus";
+                    + "    ORDERS.orderid, \r\n"
+                    + "    ORDERS.orderdate, \r\n"
+                    + "    ACCOUNTS.accountusername, \r\n"
+                    + "    ORDERS.orderstatus, \r\n"
+                    + "    PAYMENT.paymentstatus, \r\n"
+                    + "    SUM(ORDERS.ordertotalprice)\r\n"
+                    + "FROM ORDERS\r\n"
+                    + "JOIN ACCOUNTS\r\n"
+                    + "    ON ORDERS.ACCOUNTID = ACCOUNTS.ACCOUNTID\r\n"
+                    + "JOIN PAYMENT\r\n"
+                    + "    ON ORDERS.ORDERID = PAYMENT.ORDERID\r\n"
+                    + "GROUP BY  \r\n"
+                    + "    ORDERS.orderid, \r\n"
+                    + "    ORDERS.orderdate, \r\n"
+                    + "    ACCOUNTS.accountusername, \r\n"
+                    + "    ORDERS.orderstatus, \r\n"
+                    + "    PAYMENT.paymentstatus";
     
     public OrderDAO() {}
 
@@ -104,7 +104,7 @@ public class OrderDAO {
                 order.setAccountUsername(rs.getString("accountusername"));
                 order.setOrderStatus(rs.getString("orderstatus"));
                 order.setPaymentStatus(rs.getString("paymentstatus"));
-                order.setSumOrderTotalPrice(rs.getDouble("SUM(ORDERS.ordertotalprice)"));
+                order.setSumOrderTotalPrice(rs.getDouble("sum"));
                 ordersList.add(order);
             }
         } catch (SQLException e) {

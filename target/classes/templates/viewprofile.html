@@ -126,14 +126,11 @@
                 </div>
             </form>
         </div>
-        <a th:href="@{editcustomeraccount(uid=${accounts.id})}">
-            <button type="button" class="submitbutton">Edit Profile</button>
-        </a>
         <div class="buttons">
-	    	<a href="@{signout}">
-	                <button type="button" class="submitbutton">Sign out</button>
+	    	<a th:href="@{/signout}">
+	                <button type="button" class="signoutbutton">Sign out</button>
 	        </a>
-	    	<a href="@{editcustomeraccount(uid=${accounts.id})}">
+	    	<a th:href="@{editcustomeraccount(uid=${accounts.id})}">
 	                <button type="button" class="submitbutton">Edit Profile</button>
 	        </a>
 	    </div>

@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
         renderCart();
     }
 
-    let shippingFee = 0;
+    
 
     checkoutForm.addEventListener('submit', function (event) {
         if (!validateForm()) {

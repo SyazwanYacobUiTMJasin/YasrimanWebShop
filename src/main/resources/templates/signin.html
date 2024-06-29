@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="./css/signin.css" />
     <link rel="stylesheet" href="./css/animation.css">
     <link rel="stylesheet" href="./css/loading.css">
-
 </head>
 <body>
     <div id="loading-screen">
@@ -20,13 +19,13 @@
         <div class="formcontainer fade-in-up delay-1">
             <div class="formcontent fade-in-up delay-1">
                 <h1>SIGN IN</h1>
-                <p th:if="${session.signinerror != null}" style="color: red; font-weight: 500;" th:text="${session.signinerror}"></p>
+                <p th:if="${session.signinerror != 'null' && session.signinerror != null }" style="color: red; font-weight: 500;" th:text="${session.signinerror}"></p>
                 <form th:action="@{/signin}" method="post" onsubmit="return validateForm()">
                     <div class="secondline">
                         <input type="email" id="email" name="email" placeholder="Email" autocomplete="off" required /><br />
                         <div class="passwordgroup">
                             <input type="password" id="password" name="password" placeholder="Password" autocomplete="off" required /><br />
-                            <img class="eyeToggle" src="https://svgshare.com/i/176H.svg" draggable="false" alt="Show Password" onclick="togglePasswordVisibility('password')" />
+                            <img class="eyeToggle" src="https://svgshare.com/i/176H.svg" draggable="false" alt="Show Password" onclick="togglePasswordVisibility('password', this)" />
                         </div>
                     </div>
                     <div class="signintext">
@@ -44,8 +43,8 @@
             </div>
         </div>
     </div>
-    <script src="./js/signin.js"></script>
+    
     <script src="./js/loading.js"></script>
-
+    <script src="./js/signin.js"></script>
 </body>
 </html>

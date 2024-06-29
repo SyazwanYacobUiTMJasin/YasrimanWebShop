@@ -7,7 +7,7 @@
   box-sizing: border-box;
   font-family: "Inria Sans", sans-serif;
   transition: all 0.3s;
-  overflow-x: hidden;
+  overflow: hidden;
   /* overflow-y: hidden; */
 }
 

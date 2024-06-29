@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
               // Initialize variables for subtotal and total
               let subtotal = 0;
-              let shippingFee = 15.0; // Assuming a fixed shipping fee
 
               // Calculate the subtotal
               cart.forEach(item => {
@@ -13,11 +12,10 @@ document.addEventListener('DOMContentLoaded', function () {
               });
 
               // Calculate the total
-              let total = subtotal + shippingFee;
+              let total = subtotal;
 
               // Display the values in the respective elements
               document.getElementById('subtotal').textContent = subtotal.toFixed(2);
-              document.getElementById('shipping').textContent = shippingFee.toFixed(2);
               document.getElementById('total').textContent = total.toFixed(2);
           });
           
@@ -34,7 +32,7 @@ var popupContainer = document.getElementById("popupContainer");
       function confirmCancel() {
         var userConfirmation = confirm("Are you sure you want to cancel the payment and go back to the cart?");
         if (userConfirmation) {
-          window.location.href = 'viewcart.html';
+          window.location.href = 'cart';
         }
       }
       

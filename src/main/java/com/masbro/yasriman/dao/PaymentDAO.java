@@ -22,8 +22,7 @@ import com.masbro.yasriman.model.Payment;
 @Repository
 public class PaymentDAO {
 	private static final String VIEW_ONE_ACCOUNT = "SELECT * FROM accounts WHERE accountid=?";
-	private static final String insertPaymentSQL = "INSERT INTO payment (paymentid, orderid, accountid, orderdate, paymentproof) VALUES (payment_id_seq.NEXTVAL, ?, ?, ?, ?)";
-	
+	private static final String insertPaymentSQL = "INSERT INTO payment (orderid, accountid, inventoryid, orderdate, paymentproof) VALUES (?, ?, ?, ?, ?)";
 	
 	public static void insertOrderAndPayment(int accountID, int inventoryID, LocalDateTime  orderDate, String orderStatus,
 	        double orderTotalPrice, int orderQuantity, Payment payment, int count) throws SQLException {
@@ -43,6 +42,7 @@ public class PaymentDAO {
         // Set the retrieved orderId in the payment object
         payment.setOrderid(orderId);
         payment.setAccountId(accountID);
+        payment.setInventoryId(inventoryID);
         payment.setOrderDate(orderDate);
         
         // Insert payment info
@@ -75,15 +75,21 @@ public class PaymentDAO {
 
 	public static void insertPaymentInfo(Connection con, Payment payment) throws SQLException {
 	    PreparedStatement stmt = null;
-	    
+
 	    try {
-	        
+	        // Truncate the orderDate to seconds
+	        System.out.println("Timestamp.valueOf(payment.getOrderDate()" + Timestamp.valueOf(payment.getOrderDate()));
+
+	        LocalDateTime truncatedDate = payment.getOrderDate().withNano(0);
+	        Timestamp truncatedTimestamp = Timestamp.valueOf(truncatedDate);
+
 	        stmt = con.prepareStatement(insertPaymentSQL);
 	        stmt.setInt(1, payment.getOrderid());
 	        stmt.setInt(2, payment.getAccountId());
-	        stmt.setTimestamp(3, Timestamp.valueOf(payment.getOrderDate()));
-	        stmt.setBytes(4, payment.getPaymentproof());
-	        
+	        stmt.setInt(3, payment.getInventoryId());
+	        stmt.setTimestamp(4, truncatedTimestamp);
+	        stmt.setBytes(5, payment.getPaymentproof());
+
 	        stmt.executeUpdate();
 	    } finally {
 	        if (stmt != null) {
@@ -91,6 +97,7 @@ public class PaymentDAO {
 	        }
 	    }
 	}
+
 
 	
 	public static accounts viewCustomerAddress(int accountid) {

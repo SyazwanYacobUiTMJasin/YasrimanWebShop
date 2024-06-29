@@ -40,7 +40,7 @@
             </a>
         </div>
     </div>
-    <div th:if="${session.accountrole == 'Staff' || session.accountrole == 'Supervisor'}" class="fade-in-up delay-3">
+    <div th:if="${session.accountrole == 'Staff' || session.accountrole == 'Supervisor'}">
         <a th:href="@{/staffdashboard}">DASHBOARD</a>
     </div>
     <div class="navlinks">
@@ -64,18 +64,17 @@
 </div>
 
 <div class="gridallprod fade-in-up delay-1">
-    <h1>All Product</h1>
+    <h1>All Products</h1>
     <div class="grid-container">
-      <div th:if="${inventoryList != null}">
         <div th:if="${inventoryList.isEmpty()}">
             <div id="noResults">No items currently available right now.</div>
         </div>
         <div th:each="inventory : ${inventoryList}" class="grid-item fade-in-up delay-1">
             <a th:href="@{/inventory(action='viewproductdetails', id=${inventory.inventoryID})}" style="text-decoration: none; color: inherit">
                 <input class="inventoryID" type="hidden" th:value="${inventory.inventoryID}">
-                <img th:src="@{'data:image/jpeg;base64,' + ${inventory.inventoryImageBase64}}" th:alt="${inventory.inventoryName}" width="auto" height="100">
+                <img th:src="@{'data:image/jpeg;base64,' + ${inventory.inventoryImageBase64}}" th:alt="${inventory.inventoryName}" width="auto" height="100" draggable="false">
                 <h3 th:text="${inventory.inventoryName}">Product Name</h3>
-                <p class="price">RM <span th:text="${#numbers.formatDecimal(inventory.inventoryPricePerItem, 2, 0)}">Price</span></p>
+                <p class="price">RM <span th:text="${#numbers.formatDecimal(inventory.inventoryPricePerItem, 1, 2)}">Price</span></p>
                 <p class="price">Stock: <span th:text="${inventory.inventoryQuantityExisting}">Stock Quantity</span></p>
             </a>
             <div th:if="${inventory.inventoryStatus == 'available' and inventory.inventoryQuantityExisting > 0}">
@@ -88,7 +87,6 @@
                 </div>
             </div>
         </div>
-      </div>
     </div>
     <div id="noResults" style="display: none">No items match your search.</div>
 </div>

@@ -22,10 +22,10 @@ import com.masbro.yasriman.model.orders;
 @Repository
 public class InventoryDAO {
 
-    private static final String INSERT_INVENTORY_SQL = "INSERT INTO INVENTORY (INVENTORYID, INVENTORYNAME, INVENTORYPRICEPERITEM, INVENTORYQUANTITYEXISTING, INVENTORYDESC, INVENTORYSTATUS, INVENTORYIMAGE, INVENTORYROLE, INVENTORYQUANTITYIN) VALUES (inventory_id_seq.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?)";
-    private static final String INSERT_INVENTORY_MANAGE_SQL = "INSERT INTO INVENTORYMANAGE (INVMANAGEID, ACCOUNTID, INVENTORYID, INVMANAGEDATECHANGED) VALUES (invmanage_id_seq.NEXTVAL, ?, ?, ?)";
-    private static final String INSERT_PLANT_SQL = "INSERT INTO PLANT (PLANTID, PLANTMANUAL, INVENTORYID) VALUES (plant_id_seq.NEXTVAL, ?, ?)";
-    private static final String INSERT_TOOL_SQL = "INSERT INTO TOOL (TOOLID, TOOLCATEGORY, INVENTORYID) VALUES (tool_id_seq.NEXTVAL, ?, ?)";
+    private static final String INSERT_INVENTORY_SQL = "INSERT INTO INVENTORY (INVENTORYNAME, INVENTORYPRICEPERITEM, INVENTORYQUANTITYEXISTING, INVENTORYDESC, INVENTORYSTATUS, INVENTORYIMAGE, INVENTORYROLE, INVENTORYQUANTITYIN) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String INSERT_INVENTORY_MANAGE_SQL = "INSERT INTO INVENTORYMANAGE (ACCOUNTID, INVENTORYID, INVMANAGEDATECHANGED) VALUES (?, ?, ?)";
+    private static final String INSERT_PLANT_SQL = "INSERT INTO PLANT (PLANTMANUAL, INVENTORYID) VALUES (?, ?)";
+    private static final String INSERT_TOOL_SQL = "INSERT INTO TOOL (TOOLCATEGORY, INVENTORYID) VALUES (?, ?)";
     private static final String UPDATE_INVENTORY_SQL = "UPDATE INVENTORY SET INVENTORYNAME = ?, INVENTORYPRICEPERITEM = ?, INVENTORYQUANTITYEXISTING = ?, INVENTORYDESC = ?, INVENTORYSTATUS = ?, INVENTORYIMAGE = ?, INVENTORYROLE = ?, INVENTORYQUANTITYIN = ? WHERE INVENTORYID = ?";
 //    private static final String UPDATE_PLANT_SQL = "UPDATE PLANT SET PLANTMANUAL = ? WHERE PLANTID = ?";
 //    private static final String UPDATE_TOOL_SQL = "UPDATE TOOL SET TOOLCATEGORY = ? WHERE TOOLID = ?";
@@ -485,10 +485,10 @@ public class InventoryDAO {
             	paymentid = rs.getInt("paymentid");
             	paymentstatus = rs.getString("paymentstatus");
             	
-            	Blob blob = rs.getBlob("paymentproof");
+            	byte[] blobData  = rs.getBytes("paymentproof");
 	            byte[] paymentproof = null;
-	            if (blob != null) {
-	            	paymentproof = blob.getBytes(1, (int) blob.length());
+	            if (blobData  != null) {
+	            	paymentproof = blobData;
 	            }
 	            
 	            orderrs.setPaymentProof(paymentproof);

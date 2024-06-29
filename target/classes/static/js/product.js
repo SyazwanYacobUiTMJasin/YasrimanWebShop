@@ -100,17 +100,21 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 document.addEventListener('DOMContentLoaded', function () {
-    const cartButtons = document.querySelectorAll('.add-to-cart');
+    const addToCartButtons = document.querySelectorAll('.add-to-cart');
 
-    cartButtons.forEach(button => {
+    addToCartButtons.forEach(button => {
+        console.log('Adding event listener to button'); // Debugging line
         button.addEventListener('click', function () {
-            const gridItem = button.parentElement;
+            console.log('Button clicked'); // Debugging line
+            const gridItem = button.closest('.grid-item');
             const title = gridItem.querySelector('h3').textContent;
-            const price = parseFloat(gridItem.querySelector('.price').textContent.replace('RM', ''));
+            const price = parseFloat(gridItem.querySelector('.price span').textContent);
             const imgSrc = gridItem.querySelector('img').src;
-            const inventoryID = gridItem.querySelector('.inventoryID').value; // Get inventoryID
+            const inventoryID = gridItem.querySelector('.inventoryID').value;
 
-            addToCart({ title, price, imgSrc, inventoryID }); // Include inventoryID in addToCart call
+            console.log('Adding to cart:', { title, price, imgSrc, inventoryID }); // Debugging line
+
+            addToCart({ title, price, imgSrc, inventoryID });
 
             button.textContent = 'Added';
             setTimeout(() => {
@@ -121,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function addToCart(item) {
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        const existingItem = cart.find(cartItem => cartItem.title === item.title);
+        const existingItem = cart.find(cartItem => cartItem.inventoryID === item.inventoryID);
 
         if (existingItem) {
             existingItem.quantity += 1;
@@ -131,5 +135,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         localStorage.setItem('cart', JSON.stringify(cart));
+        console.log('Cart updated:', cart); // Debugging line
     }
 });

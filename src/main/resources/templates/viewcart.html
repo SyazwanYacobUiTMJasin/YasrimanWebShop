@@ -40,7 +40,7 @@
             </a>
         </div>
     </div>
-    <div th:if="${session.accountrole == 'Staff' || session.accountrole == 'Supervisor'}" class="fade-in-up delay-3">
+    <div th:if="${session.accountrole == 'Staff' || session.accountrole == 'Supervisor'}">
         <a th:href="@{/staffdashboard}">DASHBOARD</a>
     </div>
     <div class="navlinks">
@@ -61,7 +61,6 @@
                         <div class="subtotal-title">Subtotal</div>
                         <div class="subtotal-value final-value" id="basket-subtotal">0.00</div>
                     </div>
-                    <div class="shippingfee">Shipping Fee: RM15.00</div>
                     <div class="summary-total">
                         <div class="total-title">Total</div>
                         <div class="total-value final-value" id="basket-total">0.00</div>

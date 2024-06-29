@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -57,8 +58,9 @@ public class AccountController extends HttpServlet {
 	}
 
     @GetMapping("/signup")
-    private String signupform(){
+    private String signupform( HttpSession session){
     	System.out.println("showsignupform");
+        session.setAttribute("signinerror", "null");
         return "signup";
     }
     
@@ -85,6 +87,7 @@ public class AccountController extends HttpServlet {
                 session.setAttribute("accountphonenum", accountphonenum);
                 session.setAttribute("accountemail", accountemail);
                 session.setAttribute("accountrole", "Customer");
+                session.setAttribute("signinerror", "null");
                 return "redirect:/signin"; // Redirect to the signin form
             }
         } catch (SQLException e) {
@@ -93,8 +96,8 @@ public class AccountController extends HttpServlet {
     }
 
     @GetMapping("/signin")
-    private String signinform(){
-    	System.out.println("showsigninform");
+    private String signinform( HttpSession session){
+    	System.out.println("showsigninform" + session.getAttribute("signinerror"));
         return "signin";
     }
 
@@ -120,7 +123,7 @@ public class AccountController extends HttpServlet {
                 session.setAttribute("accountcity", account.getCity());
                 session.setAttribute("accountpostalcode", account.getPostalcode());
                 session.setAttribute("accountpicture", account.getPicture());
-
+                session.setAttribute("signinerror", "null");
                 return "redirect:/"; // Redirect to the home page
             } else {
                 session.setAttribute("signinerror", "Invalid email or password");
@@ -132,22 +135,21 @@ public class AccountController extends HttpServlet {
     }
 
     @GetMapping("/staffdashboard")
-    public String staffdashboard(HttpServletRequest request) {
+    public String staffdashboard(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
         Integer loggedinaccountid = (Integer) session.getAttribute("loggedinaccountid");
         String accountrole = (String) session.getAttribute("accountrole");
 
         if ((loggedinaccountid != null && "Staff".equals(accountrole)) || "Supervisor".equals(accountrole)) {
             List<orders> orderDataList = DashboardDAO.getOrderData();
-            request.setAttribute("orderDataList", orderDataList);
+            model.addAttribute("orderDataList", orderDataList); // Add orderDataList to the model
             System.out.println("showDashboard");
-            return "dashboard"; 
+            return "dashboard"; // Return the name of your Thymeleaf template
         } else {
             session.setAttribute("errorMessage", "You are not allowed to go here!!!");
-            return "redirect:/error"; 
+            return "redirect:/error"; // Redirect to an error page if not authorized
         }
     }
-
 
     @GetMapping("/listallaccounts")
     public ModelAndView listAllAccounts(HttpServletRequest request) throws IOException {

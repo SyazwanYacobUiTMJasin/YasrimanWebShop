@@ -1,15 +1,18 @@
 package com.masbro.yasriman.controller;
 
+import com.masbro.yasriman.dao.InventoryDAO;
 import com.masbro.yasriman.dao.PaymentDAO;
 import com.masbro.yasriman.model.accounts;
 import com.masbro.yasriman.model.orders;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.Base64;
@@ -41,10 +44,11 @@ public class PaymentController {
     public String handlePostRequest(@RequestParam("action") String action,
                                     @RequestParam("uid") int accountId,
                                     @RequestParam("paymentproof") MultipartFile paymentProof,
-                                    HttpSession session,
+                                    HttpSession session, HttpServletRequest  request,
                                     Model model) {
+                                        session = request.getSession();
         if ("submitform".equals(action)) {
-            return submitForm(accountId, paymentProof, session, model);
+            return submitForm(accountId, paymentProof, session, request, model);
         } else {
             return "error"; // Handle unknown action
         }
@@ -65,8 +69,9 @@ public class PaymentController {
     @PostMapping("/submitForm")
     private String submitForm(@RequestParam("accountId") int accountId,
                             @RequestParam("paymentProof") MultipartFile paymentProof,
-                            HttpSession session,
+                            HttpSession session, HttpServletRequest  request,
                             Model model) {
+                                session = request.getSession();
         try {
             byte[] paymentProofBytes = null;
             if (paymentProof != null && !paymentProof.isEmpty()) {
@@ -89,6 +94,9 @@ public class PaymentController {
             for (orders order : orders) {
                 com.masbro.yasriman.model.Payment payment = new com.masbro.yasriman.model.Payment();
                 payment.setOrderid(order.getOrderId());
+	            payment.setAccountId(order.getAccountId());
+	            payment.setInventoryId(order.getInventoryId());
+	            payment.setOrderDate(order.getOrderDate());
                 payment.setPaymentproof(paymentProofBytes);
 
                 LocalDateTime orderDateTime = order.getOrderDate();
@@ -96,6 +104,12 @@ public class PaymentController {
                 PaymentDAO.insertOrderAndPayment(order.getAccountId(), order.getInventoryId(), orderDateTime,
                         order.getOrderStatus(), order.getOrderTotalPrice(), order.getOrderQuantity(), payment, count);
                 count++;
+
+                List<orders> inventoryItems = InventoryDAO.getInventoryItemsByOrderId(payment.getOrderid(), order);
+	            request.setAttribute("inventoryItems", inventoryItems);
+	            
+	            session.setAttribute("ordertotalprice", order.getSumOrderTotalPrice());
+	            session.setAttribute("orderid", payment.getOrderid());
             }
 
             // Clear the orders from the session after successful commit

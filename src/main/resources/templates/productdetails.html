@@ -46,9 +46,9 @@
         <a th:href="@{/staffdashboard}">DASHBOARD</a>
     </div>
     <div class="navlinks">
-        <a th:href="/">HOME</a>
-        <a th:href="inventory?action=viewallproducts">PRODUCTS</a>
-        <a th:href="cart" class="active">CART</a>
+        <a href="/"  >HOME</a>
+        <a href="inventory?action=viewallproducts" class="active">PRODUCTS</a>
+        <a href="cart">CART</a>
     </div>
 </div>
 
@@ -61,7 +61,7 @@
             </div>
             <div class="product-details">
                 <b>Price:</b>
-                <input type="text" name="price" class="price" th:value="'RM ' + ${#numbers.formatDecimal(inventory.inventoryPricePerItem, 2, 2)}" readonly/>
+                <input type="text" name="price" class="price" th:value="'RM ' + ${#numbers.formatDecimal(inventory.inventoryPricePerItem, 1, 2)}" readonly/>
                 <br>
                 <b>Stock:</b>
                 <p th:text="${inventory.inventoryQuantityExisting} + ' left'">Stock Quantity</p>

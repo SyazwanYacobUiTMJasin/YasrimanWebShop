@@ -136,12 +136,12 @@ form{
     width: 50vw;
 }
 
-form .submitbutton{
+form .submitbutton, form .signoutbutton{
     width: 10vw;
     margin: 0 auto;
 }
 
-.hero a .submitbutton{
+.hero a .submitbutton, .hero a .signoutbutton{
     width: 10vw;
     margin: 0 auto;
 }
@@ -222,7 +222,7 @@ select:focus{
     border: none;
  }
  
-  .hero a .submitbutton{
+  .hero a .signoutbutton{
     background-color: #1a4d2e;
     color: #f5efe6;
     padding: 10px 20px;
@@ -231,6 +231,16 @@ select:focus{
     outline: none;
     border: none;
  }
+
+ .hero a .submitbutton{
+  background-color: #d5c7b2;
+  color: #1a4d2e;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-top: 20px;
+  outline: none;
+  border: none;
+}
 
  form a button:hover{
     background-color: #d5c7b2;
@@ -297,12 +307,12 @@ select:focus{
  		text-align: left;
  	}
  	
- 	form .submitbutton
+ 	form .submitbutton, form .signoutbutton
  	{
  		width: 100%;
  	}
  	
- 	.hero a .submitbutton
+ 	.hero a .submitbutton, .hero a .signoutbutton
  	{
  		width: 100%;
  	}

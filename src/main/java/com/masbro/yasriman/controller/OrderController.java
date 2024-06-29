@@ -51,27 +51,44 @@ public class OrderController {
     }
 
     @GetMapping(params = "action=show")
-    public String showOrderDetails(HttpServletRequest request, HttpServletResponse response, Model model) throws ServletException, IOException {
-        int orderId = Integer.parseInt(request.getParameter("orderid"));
-        String from = request.getParameter("from");
-        try {
-            orders order = orderDAO.selectOrderById(orderId);
-            model.addAttribute("order", order);
-            request.setAttribute("order", order);
-            if ("view".equals(from)) {
-                // request.getRequestDispatcher("orderdetails.jsp").forward(request, response);
-                return "orderdetails";
-            } else if ("update".equals(from)) {
-                // request.getRequestDispatcher("updateorderdetails.jsp").forward(request, response);
-                return "updateorderdetails";
-            } else {
-                return "error";
-            }
-        } catch (SQLException ex) {
-            // Handle exception
+public String showOrderDetails(HttpServletRequest request, HttpServletResponse response, Model model) throws ServletException, IOException {
+    int orderId = Integer.parseInt(request.getParameter("orderid"));
+    String from = request.getParameter("from");
+
+    try {
+        orders order = orderDAO.selectOrderById(orderId);
+        model.addAttribute("order", order);
+        request.setAttribute("order", order);
+
+        if ("view".equals(from)) {
+            List<orders> inventoryItems = InventoryDAO.getInventoryItemsByOrderId(orderId, order);
+            request.setAttribute("inventoryItems", inventoryItems);
+
+            byte[] pictureBytes = order.getPaymentProof();
+            String base64EncodedImage = (pictureBytes != null && pictureBytes.length > 0) ?
+                    Base64.getEncoder().encodeToString(pictureBytes) : "a";
+            request.setAttribute("base64EncodedImage", base64EncodedImage);
+
+            return "orderdetails";
+        } else if ("update".equals(from)) {
+            List<orders> inventoryItems = InventoryDAO.getInventoryItemsByOrderId(orderId, order);
+            request.setAttribute("inventoryItems", inventoryItems);
+
+            byte[] pictureBytes = order.getPaymentProof();
+            String base64EncodedImage = (pictureBytes != null && pictureBytes.length > 0) ?
+                    Base64.getEncoder().encodeToString(pictureBytes) : "a";
+            request.setAttribute("base64EncodedImage", base64EncodedImage);
+
+            return "updateorderdetails";
+        } else {
             return "error";
         }
+    } catch (SQLException ex) {
+        // Handle exception
+        return "error";
     }
+}
+
 
     @PostMapping(params = "action=update")
     public String updateOrderStatus(HttpServletRequest request, HttpServletResponse response, Model model) throws ServletException, IOException {
@@ -114,6 +131,7 @@ public class OrderController {
         String accountId = request.getParameter("uid");
         System.out.println(accountId + "FROM ORDER CONTROLLER CHECKSIGNINSTATUS");
         if ("".equals(accountId)) {
+            session.setAttribute("signinerror", "Please sign in first before proceeding to payment");
             return "redirect:/signin";
         } else {
             String cartDataJson = request.getParameter("cartData");

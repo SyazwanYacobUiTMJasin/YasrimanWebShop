@@ -54,10 +54,9 @@
         </div>
     </div>
     <script src="./js/loading.js"></script>
-    <script>
-        /* Retrieve orderDataList from the model */
-        var orderDataList = /*[[${orderDataList}]]*/ [];
-    
+    <script th:inline="javascript">
+        var orderDataList = [[${orderDataList}]]; //thymeleaf reading model attribute from AccountController from DashboardDAO. Not an error;
+        
         var labels = orderDataList.map(function(data) {
             return new Date(data.orderDate).toISOString().split('T')[0];
         });
@@ -71,8 +70,8 @@
             datasets: [{
                 label: 'Total Order Price',
                 data: data,
-                backgroundColor: 'rgba(26, 77, 46, 0.2)', // #1a4d2e
-                borderColor: 'rgba(26, 77, 46, 1)', // #1a4d2e
+                backgroundColor: 'rgba(26, 77, 46, 0.2)',
+                borderColor: 'rgba(26, 77, 46, 1)',
                 borderWidth: 2
             }]
         };
@@ -89,10 +88,8 @@
             }
         };
     
-        window.onload = function() {
-            var ctx = document.getElementById('myChart').getContext('2d');
-            new Chart(ctx, config);
-        };
+        var ctx = document.getElementById('myChart').getContext('2d');
+        new Chart(ctx, config);
     </script>
 </body>
 </html>

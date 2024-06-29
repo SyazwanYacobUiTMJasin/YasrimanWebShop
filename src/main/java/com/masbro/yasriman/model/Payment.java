@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 
 public class Payment {
 	private int accountId;
+    private int inventoryId;
     private LocalDateTime orderDate;
 	private int paymentid;
 	private String paymentstatus;
@@ -17,6 +18,14 @@ public class Payment {
 
     public void setAccountId(int accountId) {
         this.accountId = accountId;
+    }
+
+    public int getInventoryId() {
+        return inventoryId;
+    }
+
+    public void setInventoryId(int inventoryId) {
+        this.inventoryId = inventoryId;
     }
 
     public LocalDateTime getOrderDate() {

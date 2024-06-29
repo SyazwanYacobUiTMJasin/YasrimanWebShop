@@ -158,7 +158,7 @@
               </tr>
               <tr>
                 <th>Quantity In</th>
-                <td><input type="number" name="quantityIn" th:value="${inventory.inventoryQuantityExisting}"  /></td>
+                <td><input type="number" name="quantityIn" th:value="${inventory.inventoryQuantityExisting}" min="0"></td>
               </tr>
               <tr id="plantManualRow" th:style="${inventory.inventoryRole == 'plant'} ? '' : 'display:none'">
                 <th>Plant Manual</th>
