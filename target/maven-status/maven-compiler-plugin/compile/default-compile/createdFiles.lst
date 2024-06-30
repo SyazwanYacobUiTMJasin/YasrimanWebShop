@@ -4,9 +4,11 @@ com\masbro\yasriman\api\controller\InventoryControllerAPI.class
 com\masbro\yasriman\api\repository\OrderRepository.class
 com\masbro\yasriman\emailapi\service\UserService.class
 com\masbro\yasriman\api\model\InventoryAPI.class
+com\masbro\yasriman\api\repository\PaymentRepository.class
 com\masbro\yasriman\dao\AccountDAO.class
 com\masbro\yasriman\emailapi\service\EmailSenderService.class
 com\masbro\yasriman\model\Message.class
+com\masbro\yasriman\api\model\PaymentAPI.class
 com\masbro\yasriman\api\service\InventoryService.class
 com\masbro\yasriman\model\InventoryManage.class
 com\masbro\yasriman\connection\ConnectionManager.class
@@ -25,8 +27,10 @@ com\masbro\yasriman\api\repository\InventoryRepository.class
 com\masbro\yasriman\emailapi\controller\UserController.class
 com\masbro\yasriman\controller\PaymentController.class
 com\masbro\yasriman\emailapi\repository\UserRepository.class
+com\masbro\yasriman\api\service\PaymentService.class
 com\masbro\yasriman\dao\InventoryDAO.class
 com\masbro\yasriman\dao\OrderDAO.class
+com\masbro\yasriman\api\controller\PaymentControllerAPI.class
 com\masbro\yasriman\model\accounts.class
 com\masbro\yasriman\model\Inventory.class
 com\masbro\yasriman\dao\DashboardDAO.class

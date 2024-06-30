@@ -167,7 +167,7 @@ public class OrderDAO {
                 }
 
                 // If payment status is set to "APPROVED", update inventory
-                if ("APPROVED".equalsIgnoreCase(paymentStatus)) {
+                if ("APPROVED".equalsIgnoreCase(paymentStatus) && "PACKAGING".equalsIgnoreCase(orderStatus)) {
                     // Fetch order details
                     String selectOrderSQL = "SELECT inventoryid, orderquantity FROM orders WHERE orderid = ?";
                     PreparedStatement psSelectOrder = con.prepareStatement(selectOrderSQL);

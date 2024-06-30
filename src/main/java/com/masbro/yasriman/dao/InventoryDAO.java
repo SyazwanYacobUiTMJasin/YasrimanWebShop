@@ -490,7 +490,7 @@ public class InventoryDAO {
             	orderrs.setInventoryId(rs.getInt("inventoryid"));
             	orderrs.setInventoryName(rs.getString("inventoryname"));
             	orderrs.setOrderQuantity(rs.getInt("orderquantity"));
-            	orderrs.setOrderTotalPrice(rs.getInt("ordertotalprice"));
+            	orderrs.setOrderTotalPrice(rs.getDouble("ordertotalprice"));
             	paymentid = rs.getInt("paymentid");
             	paymentstatus = rs.getString("paymentstatus");
             	

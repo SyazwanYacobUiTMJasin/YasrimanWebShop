@@ -4,18 +4,15 @@ document.addEventListener('DOMContentLoaded', function () {
     const checkoutForm = document.getElementById('checkoutForm');
     
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    console.log('Cart data:', cart);
 
     function renderCart() {
         cartItemsContainer.innerHTML = '';
         let subtotal = 0;
         let totalItemCount = 0;
-
         cart.forEach(item => {
             const itemTotal = item.price * item.quantity;
             subtotal += itemTotal;
             totalItemCount += item.quantity;
-
             const productElement = document.createElement('div');
             productElement.classList.add('basket-product');
             productElement.innerHTML = `
@@ -29,27 +26,23 @@ document.addEventListener('DOMContentLoaded', function () {
                 </div>
                 <div class="price">${item.price.toFixed(2)}</div>
                 <div class="quantity">
-                    <input type="number" value="${item.quantity}" min="1" class="quantity-field">
+                    <input type="number" value="${item.quantity}" min="1" max="${item.maxStock}" class="quantity-field">
                 </div>
                 <div class="subtotal">${itemTotal.toFixed(2)}</div>
                 <div class="remove">
                     <button>Remove</button>
                 </div>
             `;
-
             const quantityField = productElement.querySelector('.quantity-field');
             quantityField.addEventListener('change', function () {
                 updateQuantity(item, quantityField.value);
             });
-
             const removeButton = productElement.querySelector('.remove button');
             removeButton.addEventListener('click', function () {
                 removeItem(item);
             });
-
             cartItemsContainer.appendChild(productElement);
         });
-
         updateTotals(subtotal);
         cartDataInput.value = JSON.stringify(cart);
     }
@@ -62,7 +55,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function updateQuantity(item, newQuantity) {
-        item.quantity = parseInt(newQuantity, 10);
+        newQuantity = parseInt(newQuantity, 10);
+        if (newQuantity > item.maxStock) {
+            alert(`Maximum stock (${item.maxStock}) reached for this item.`);
+            newQuantity = item.maxStock;
+        }
+        item.quantity = newQuantity;
         localStorage.setItem('cart', JSON.stringify(cart));
         renderCart();
     }
@@ -73,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
         renderCart();
     }
 
-    
+    let shippingFee = 0;
 
     checkoutForm.addEventListener('submit', function (event) {
         if (!validateForm()) {
@@ -83,10 +81,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 const { imgSrc, ...itemWithoutImage } = item;
                 return itemWithoutImage;
             });
-            cartDataInput.value = encodeURIComponent(JSON.stringify(cartDataWithoutImages));
+            cartDataInput.value = JSON.stringify(cartDataWithoutImages);
             console.log('Sending cart data:', cartDataInput.value); // For debugging
         }
     });
+
     renderCart();
 });
 
@@ -100,4 +99,3 @@ function validateForm() {
         return true;
     }
 }
-

@@ -64,62 +64,22 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // product.js
-document.addEventListener('DOMContentLoaded', function () {
-    const addToCartButtons = document.querySelectorAll('.add-to-cart');
-
-    addToCartButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            const productContainer = button.closest('.product-container');
-            const productName = productContainer.querySelector('h1').textContent;
-            const priceElement = productContainer.querySelector('.price');
-            const price = parseFloat(priceElement.value.replace('RM ', ''));
-            const imgSrc = productContainer.querySelector('.product-image img').src;
-
-            addToCart({ productName, price, imgSrc });
-
-            button.textContent = 'Added';
-            setTimeout(() => {
-                button.textContent = 'Add to Cart';
-            }, 1000);
-        });
-    });
-
-    function addToCart(item) {
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        const existingItem = cart.find(cartItem => cartItem.productName === item.productName);
-
-        if (existingItem) {
-            existingItem.quantity += 1;
-        } else {
-            item.quantity = 1;
-            cart.push(item);
-        }
-
-        localStorage.setItem('cart', JSON.stringify(cart));
-    }
-});
 
 document.addEventListener('DOMContentLoaded', function () {
     const addToCartButtons = document.querySelectorAll('.add-to-cart');
 
     addToCartButtons.forEach(button => {
-        console.log('Adding event listener to button'); // Debugging line
         button.addEventListener('click', function () {
-            console.log('Button clicked'); // Debugging line
             const gridItem = button.closest('.grid-item');
             const title = gridItem.querySelector('h3').textContent;
-            const price = parseFloat(gridItem.querySelector('.price span').textContent);
+            const price = parseFloat(gridItem.querySelector('.price').textContent.replace('RM', ''));
             const imgSrc = gridItem.querySelector('img').src;
             const inventoryID = gridItem.querySelector('.inventoryID').value;
+            const maxStock = parseInt(gridItem.querySelector('.stock').textContent.split(': ')[1]);
 
-            console.log('Adding to cart:', { title, price, imgSrc, inventoryID }); // Debugging line
+            addToCart({ title, price, imgSrc, inventoryID, maxStock });
 
-            addToCart({ title, price, imgSrc, inventoryID });
-
-            button.textContent = 'Added';
-            setTimeout(() => {
-                button.textContent = 'Add to Cart';
-            }, 1000);
+            updateButtonState(button, inventoryID);
         });
     });
 
@@ -128,13 +88,45 @@ document.addEventListener('DOMContentLoaded', function () {
         const existingItem = cart.find(cartItem => cartItem.inventoryID === item.inventoryID);
 
         if (existingItem) {
-            existingItem.quantity += 1;
+            if (existingItem.quantity < item.maxStock) {
+                existingItem.quantity += 1;
+            } else {
+                alert(`Maximum stock (${item.maxStock}) reached for this item.`);
+                return;
+            }
         } else {
             item.quantity = 1;
             cart.push(item);
         }
 
         localStorage.setItem('cart', JSON.stringify(cart));
-        console.log('Cart updated:', cart); // Debugging line
+        updateButtonState(null, item.inventoryID);
     }
+
+    function updateButtonState(button, inventoryID) {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const cartItem = cart.find(item => item.inventoryID === inventoryID);
+        const gridItem = document.querySelector(`.grid-item .inventoryID[value="${inventoryID}"]`).closest('.grid-item');
+        const maxStock = parseInt(gridItem.querySelector('.stock').textContent.split(': ')[1]);
+
+        if (cartItem && cartItem.quantity >= maxStock) {
+            gridItem.querySelector('.add-to-cart').disabled = true;
+            gridItem.querySelector('.add-to-cart').textContent = 'Max Reached';
+        } else {
+            gridItem.querySelector('.add-to-cart').disabled = false;
+            gridItem.querySelector('.add-to-cart').textContent = 'Add to Cart';
+        }
+
+        if (button) {
+            button.textContent = 'Added';
+            setTimeout(() => {
+                updateButtonState(null, inventoryID);
+            }, 1000);
+        }
+    }
+// Initial update of all buttons
+    addToCartButtons.forEach(button => {
+        const inventoryID = button.closest('.grid-item').querySelector('.inventoryID').value;
+        updateButtonState(null, inventoryID);
+    });
 });

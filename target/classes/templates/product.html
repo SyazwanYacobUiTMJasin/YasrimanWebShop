@@ -75,7 +75,7 @@
                 <img th:src="@{'data:image/jpeg;base64,' + ${inventory.inventoryImageBase64}}" th:alt="${inventory.inventoryName}" width="auto" height="100" draggable="false">
                 <h3 th:text="${inventory.inventoryName}">Product Name</h3>
                 <p class="price">RM <span th:text="${#numbers.formatDecimal(inventory.inventoryPricePerItem, 1, 2)}">Price</span></p>
-                <p class="price">Stock: <span th:text="${inventory.inventoryQuantityExisting}">Stock Quantity</span></p>
+                <p class="stock">Stock: <span th:text="${inventory.inventoryQuantityExisting}">Stock Quantity</span></p>
             </a>
             <div th:if="${inventory.inventoryStatus == 'available' and inventory.inventoryQuantityExisting > 0}">
                 <button class="add-to-cart">Add to Cart</button>
