@@ -10,9 +10,10 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.masbro.yasriman.connection.ConnectionManager;
+import com.masbro.yasriman.connection.SpringConnectionManager;
 import com.masbro.yasriman.model.Inventory;
 import com.masbro.yasriman.model.Plant;
 import com.masbro.yasriman.model.Tool;
@@ -22,6 +23,14 @@ import com.masbro.yasriman.model.orders;
 @Repository
 public class InventoryDAO {
 
+    @Autowired
+    private SpringConnectionManager ConnectionManager;
+
+    @Autowired
+    public InventoryDAO(SpringConnectionManager connectionManager) {
+        this.ConnectionManager = connectionManager;
+    }
+    
     private static final String INSERT_INVENTORY_SQL = "INSERT INTO INVENTORY (INVENTORYNAME, INVENTORYPRICEPERITEM, INVENTORYQUANTITYEXISTING, INVENTORYDESC, INVENTORYSTATUS, INVENTORYIMAGE, INVENTORYROLE, INVENTORYQUANTITYIN) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String INSERT_INVENTORY_MANAGE_SQL = "INSERT INTO INVENTORYMANAGE (ACCOUNTID, INVENTORYID, INVMANAGEDATECHANGED) VALUES (?, ?, ?)";
     private static final String INSERT_PLANT_SQL = "INSERT INTO PLANT (PLANTMANUAL, INVENTORYID) VALUES (?, ?)";
@@ -456,7 +465,7 @@ public class InventoryDAO {
         return inventories;
     }
 
-	public static List<orders> getInventoryItemsByOrderId(int orderId, orders order) throws SQLException{
+	public List<orders> getInventoryItemsByOrderId(int orderId, orders order) throws SQLException{
 		Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet rs = null;

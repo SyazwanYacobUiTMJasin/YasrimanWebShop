@@ -1,6 +1,7 @@
 package com.masbro.yasriman.controller;
 
 import com.masbro.yasriman.dao.InventoryDAO;
+import com.masbro.yasriman.dao.OrderDAO;
 import com.masbro.yasriman.dao.PaymentDAO;
 import com.masbro.yasriman.model.accounts;
 import com.masbro.yasriman.model.orders;
@@ -22,11 +23,14 @@ import java.util.List;
 @RequestMapping("/payment")
 public class PaymentController {
 
-    private final PaymentDAO paymentDAO;
+    private final PaymentDAO PaymentDAO;
+    private final InventoryDAO InventoryDAO;
 
+    
     @Autowired
-    public PaymentController(PaymentDAO paymentDAO) {
-        this.paymentDAO = paymentDAO;
+    public PaymentController(PaymentDAO PaymentDAO, InventoryDAO InventoryDAO) {
+        this.PaymentDAO = PaymentDAO;
+        this.InventoryDAO = InventoryDAO;
     }
 
     @GetMapping
@@ -55,7 +59,7 @@ public class PaymentController {
     }
 
     private String viewForm(int accountId, Model model) {
-        accounts paymentAccounts = paymentDAO.viewCustomerAddress(accountId);
+        accounts paymentAccounts = PaymentDAO.viewCustomerAddress(accountId);
         
         if (paymentAccounts != null) {
             byte[] pictureBytes = paymentAccounts.getPicture();

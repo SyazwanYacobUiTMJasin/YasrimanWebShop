@@ -48,10 +48,14 @@ public class AccountController extends HttpServlet {
     @Autowired
     private UserController userController;
 
+    private final DashboardDAO DashboardDAO;
+
     @Autowired
-    public AccountController(AccountDAO accountDAO) {
-        this.AccountDAO = accountDAO;
+    public AccountController(AccountDAO AccountDAO, DashboardDAO dashboardDAO) {
+        this.AccountDAO = AccountDAO;
+        this.DashboardDAO = dashboardDAO;
     }
+
 
     @GetMapping("/signout")
     private String signoutCustomerAccount(HttpServletRequest request, HttpServletResponse response) throws IOException {

@@ -10,11 +10,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.masbro.yasriman.model.accounts;
 import com.masbro.yasriman.model.orders;
-import com.masbro.yasriman.connection.ConnectionManager;
+import com.masbro.yasriman.connection.SpringConnectionManager;
 
 /**
  * OrderDAO.java This DAO class provides CRUD database operations for the
@@ -23,6 +23,13 @@ import com.masbro.yasriman.connection.ConnectionManager;
  */
 @Repository
 public class OrderDAO {
+    @Autowired
+    private SpringConnectionManager ConnectionManager;
+
+    @Autowired
+    public OrderDAO(SpringConnectionManager connectionManager) {
+        this.ConnectionManager = connectionManager;
+    }
     private static final String SELECT_ORDER_BY_ID = "SELECT * FROM orders JOIN accounts USING (accountid) JOIN inventory using (INVENTORYID) JOIN PAYMENT USING (ORDERID) WHERE orderid=?";
     private static final String SELECT_ALL_ORDERS = "SELECT * FROM orders JOIN accounts USING (accountid) JOIN inventory using (INVENTORYID) JOIN PAYMENT USING (ORDERID)";
     private static final String UPDATE_ORDER_STATUS = "UPDATE orders SET orderstatus = ? WHERE orderid = ?";

@@ -9,22 +9,30 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Base64;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import com.masbro.yasriman.connection.ConnectionManager;
 import java.sql.Date;
 import com.masbro.yasriman.model.accounts;
+import com.masbro.yasriman.connection.SpringConnectionManager;
 import com.masbro.yasriman.model.Payment;
 
 @Repository
 public class PaymentDAO {
+	@Autowired
+    private SpringConnectionManager ConnectionManager;
+
+	@Autowired
+    public PaymentDAO(SpringConnectionManager connectionManager) {
+        this.ConnectionManager = connectionManager;
+    }
 	private static final String VIEW_ONE_ACCOUNT = "SELECT * FROM accounts WHERE accountid=?";
 	private static final String insertPaymentSQL = "INSERT INTO payment (orderid, accountid, inventoryid, orderdate, paymentproof) VALUES (?, ?, ?, ?, ?)";
 	
-	public static void insertOrderAndPayment(int accountID, int inventoryID, LocalDateTime  orderDate, String orderStatus,
+	public void insertOrderAndPayment(int accountID, int inventoryID, LocalDateTime  orderDate, String orderStatus,
 	        double orderTotalPrice, int orderQuantity, Payment payment, int count) throws SQLException {
     Connection con = null;
     
@@ -100,7 +108,7 @@ public class PaymentDAO {
 
 
 	
-	public static accounts viewCustomerAddress(int accountid) {
+	public accounts viewCustomerAddress(int accountid) {
 		// TODO Auto-generated method stub
 		accounts account = null;
 	    try {

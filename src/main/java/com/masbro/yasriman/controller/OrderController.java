@@ -9,8 +9,10 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.masbro.yasriman.dao.DashboardDAO;
 import com.masbro.yasriman.dao.InventoryDAO;
 import com.masbro.yasriman.dao.OrderDAO;
+import com.masbro.yasriman.dao.PaymentDAO;
 import com.masbro.yasriman.model.orders;
 
 import jakarta.servlet.ServletException;
@@ -33,10 +35,14 @@ import java.util.List;
 public class OrderController {
 
     private final OrderDAO orderDAO;
+    private final PaymentDAO PaymentDAO;
+    private final InventoryDAO InventoryDAO;
 
     @Autowired
-    public OrderController(OrderDAO orderDAO) {
+    public OrderController(OrderDAO orderDAO, PaymentDAO PaymentDAO, InventoryDAO InventoryDAO) {
         this.orderDAO = orderDAO;
+        this.PaymentDAO = PaymentDAO;
+        this.InventoryDAO = InventoryDAO;
     }
 
     @GetMapping(params = "action=view")

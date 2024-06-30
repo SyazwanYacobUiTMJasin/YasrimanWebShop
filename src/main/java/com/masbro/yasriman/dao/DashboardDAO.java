@@ -7,15 +7,24 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.masbro.yasriman.model.orders;
-import com.masbro.yasriman.connection.ConnectionManager;
+import com.masbro.yasriman.connection.SpringConnectionManager;
 
 @Repository
 public class DashboardDAO {
+    
 	
-	public static List<orders> getOrderData() {
+    private final SpringConnectionManager ConnectionManager;
+    
+    @Autowired
+    public DashboardDAO(SpringConnectionManager connectionManager) {
+        this.ConnectionManager = connectionManager;
+    }
+
+	public List<orders> getOrderData() {
         List<orders> orderList = new ArrayList<>();
 
         String sql = "SELECT orderDate, SUM(orderTotalPrice) AS sumOrderTotalPrice FROM orders GROUP BY orderDate ORDER BY orderDate";

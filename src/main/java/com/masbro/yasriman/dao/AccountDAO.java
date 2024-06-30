@@ -8,9 +8,10 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.masbro.yasriman.connection.ConnectionManager;
+import com.masbro.yasriman.connection.SpringConnectionManager;
 import com.masbro.yasriman.model.accounts;
 
 /**
@@ -25,6 +26,15 @@ import com.masbro.yasriman.model.accounts;
  */
 @Repository
 public class AccountDAO {
+
+    @Autowired
+    private SpringConnectionManager ConnectionManager;
+
+    @Autowired
+    public AccountDAO(SpringConnectionManager connectionManager) {
+        this.ConnectionManager = connectionManager;
+    }
+
     private static final String CHECK_DISTINCT_EMAIL_SQL = "SELECT accountemail FROM accounts WHERE accountemail = ?";
     private static final String INSERT_ACCOUNT_SQL = "INSERT INTO accounts(accountfirstname, accountlastname, accountusername, accountemail, accountpassword, accountphonenum) VALUES (?, ?, ?, ?, ?, ?)";
     private static final String CHECK_ACCOUNT_AUTH = "SELECT accountid, accountrole, accountusername FROM accounts WHERE accountemail=? AND accountpassword=?";
@@ -36,7 +46,7 @@ public class AccountDAO {
 
     public AccountDAO() {}
 
-    public static boolean isEmailExists(String email) throws SQLException {
+    public boolean isEmailExists(String email) throws SQLException {
         boolean emailExists = false;
         try (Connection con = ConnectionManager.getConnection();
              PreparedStatement ps = con.prepareStatement(CHECK_DISTINCT_EMAIL_SQL)) {
@@ -52,7 +62,7 @@ public class AccountDAO {
         return emailExists;
     }
 
-    public static void insertAccount(accounts newAccount) throws SQLException {
+    public void insertAccount(accounts newAccount) throws SQLException {
         try (Connection con = ConnectionManager.getConnection();
              PreparedStatement ps = con.prepareStatement(INSERT_ACCOUNT_SQL)) {
             ps.setString(1, newAccount.getFirstname());
@@ -116,7 +126,7 @@ public class AccountDAO {
     }
 
 
-    private static void printSQLException(SQLException ex) {
+    private void printSQLException(SQLException ex) {
         for (Throwable e: ex) {
             if (e instanceof SQLException) {
                 e.printStackTrace(System.err);

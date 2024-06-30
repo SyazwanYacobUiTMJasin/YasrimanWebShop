@@ -10,6 +10,7 @@ com\masbro\yasriman\connection\ConnectionManager.class
 com\masbro\yasriman\model\ChatGptResponse.class
 com\masbro\yasriman\model\orders.class
 com\masbro\yasriman\dao\PaymentDAO.class
+com\masbro\yasriman\connection\SpringConnectionManager.class
 com\masbro\yasriman\api\repository\AccountRepository.class
 com\masbro\yasriman\api\model\AccountAPI.class
 com\masbro\yasriman\model\Choice.class
