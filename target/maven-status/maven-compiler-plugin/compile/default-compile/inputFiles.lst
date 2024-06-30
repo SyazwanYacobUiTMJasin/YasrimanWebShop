@@ -1,12 +1,16 @@
 C:\Users\slimo\OneDrive\Desktop\yasriman\src\main\java\com\masbro\yasriman\api\controller\AccountControllerAPI.java
+C:\Users\slimo\OneDrive\Desktop\yasriman\src\main\java\com\masbro\yasriman\api\controller\InventoryControllerAPI.java
 C:\Users\slimo\OneDrive\Desktop\yasriman\src\main\java\com\masbro\yasriman\api\controller\OrderControllerAPI.java
 C:\Users\slimo\OneDrive\Desktop\yasriman\src\main\java\com\masbro\yasriman\api\model\AccountAPI.java
+C:\Users\slimo\OneDrive\Desktop\yasriman\src\main\java\com\masbro\yasriman\api\model\InventoryAPI.java
 C:\Users\slimo\OneDrive\Desktop\yasriman\src\main\java\com\masbro\yasriman\api\model\OrderAPI.java
 C:\Users\slimo\OneDrive\Desktop\yasriman\src\main\java\com\masbro\yasriman\api\repository\AccountRepository.java
+C:\Users\slimo\OneDrive\Desktop\yasriman\src\main\java\com\masbro\yasriman\api\repository\InventoryRepository.java
 C:\Users\slimo\OneDrive\Desktop\yasriman\src\main\java\com\masbro\yasriman\api\repository\OrderRepository.java
 C:\Users\slimo\OneDrive\Desktop\yasriman\src\main\java\com\masbro\yasriman\api\service\AccountAPIService.java
 C:\Users\slimo\OneDrive\Desktop\yasriman\src\main\java\com\masbro\yasriman\api\service\AiRequestProcessor.java
 C:\Users\slimo\OneDrive\Desktop\yasriman\src\main\java\com\masbro\yasriman\api\service\GptRequestBuilder.java
+C:\Users\slimo\OneDrive\Desktop\yasriman\src\main\java\com\masbro\yasriman\api\service\InventoryService.java
 C:\Users\slimo\OneDrive\Desktop\yasriman\src\main\java\com\masbro\yasriman\api\service\OrderService.java
 C:\Users\slimo\OneDrive\Desktop\yasriman\src\main\java\com\masbro\yasriman\connection\ConnectionManager.java
 C:\Users\slimo\OneDrive\Desktop\yasriman\src\main\java\com\masbro\yasriman\connection\SpringConnectionManager.java
