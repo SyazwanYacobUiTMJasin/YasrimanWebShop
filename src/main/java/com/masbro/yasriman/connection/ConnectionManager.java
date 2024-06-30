@@ -11,9 +11,9 @@ public class ConnectionManager {
 //    private static final String DB_USER = "postgres";
 //    private static final String DB_PASSWORD = "admin";
 
-	private static final String DB_CONNECTION = "jdbc:postgresql://ec2-100-28-180-202.compute-1.amazonaws.com:5432/d8trm6b6okkcv";
-	private static final String DB_USER = "mvaesvsvxifdse";
-	private static final String DB_PASSWORD = "86459741ed2a71b3c44fd9bb4844854949933030bc7c30711a7b53915652b6ed";
+	private static final String DB_CONNECTION = "jdbc:postgresql://c5p86clmevrg5s.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/d5k1jtp4a56fjf";
+	private static final String DB_USER = "u9bo7cn5kn94o3";
+	private static final String DB_PASSWORD = "p84e3a6a4d126d8a49a53be32ec5874f1eb2281baff07a357247d6bedb5eddd11";
 
     public static void main(String[] args) {
         try {
