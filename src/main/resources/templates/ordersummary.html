@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Order Summary</title>
+    <link rel="icon" href="https://i.ibb.co/F7PH3zS/logo.jpg" type="image/png">
+    <link rel="stylesheet" href="./css/ordersummary.css">
+    <link rel="stylesheet" href="./css/animation.css">
+    <link rel="stylesheet" href="./css/loading.css">
+</head>
+<body>
+    <div id="loading-screen">
+        <video id="loading-video" autoplay loop muted>
+          <source src="./video/loadingscreen.mp4" type="video/mp4">
+        </video>
+      </div>
+    <div class="navbarbg">
+        <a th:href="@{/}">
+            <h2 class="fade-in-up delay-1">YASRIMAN</h2>
+        </a>
+        <div class="logintext fade-in-up delay-2">
+            <div class="searchdiv">
+                <img src="https://svgshare.com/i/177L.svg" alt="" draggable="false" />
+                <input type="text" placeholder="Search" name="search" autocomplete="off" id="searchInput" />
+            </div>
+            <div th:if="${session.accountusername != null}">
+                <a th:href="@{/viewcustomeraccount(uid=${session.loggedinaccountid},from=index)}">
+                    <span th:text="${session.accountusername}"></span>
+                    <div class="loginicon">
+                        <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/fee6b20cb0abd925cc4a3bda7cf3fa3366c37bcc07b2da638108c5651aca2ad0?apiKey=8730b69884724863a1e8089b99726052&" class="img" draggable="false" />
+                    </div>
+                </a>
+            </div>
+            <div th:unless="${session.accountusername != null}">
+                <a th:href="@{signup}">
+                    Sign In/Sign Up
+                    <div class="loginicon">
+                        <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/fee6b20cb0abd925cc4a3bda7cf3fa3366c37bcc07b2da638108c5651aca2ad0?apiKey=8730b69884724863a1e8089b99726052&" class="img" draggable="false" />
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div th:if="${session.accountrole == 'Staff' || session.accountrole == 'Supervisor'}" class="fade-in-up delay-3">
+            <a th:href="@{/staffdashboard}">DASHBOARD</a>
+        </div>
+    
+    <div class="navlinks fade-in-up delay-3">
+        <a href="/" class="active">HOME</a>
+        <a href="inventory?action=viewallproducts">PRODUCTS</a>
+        <a href="cart">CART</a>
+        <a th:href="@{/order(action=history, uid=${session.loggedinaccountid})}">ORDER HISTORY</a>
+    </div>
+</div>
+
+<div id="main">
+<div class="header-container">
+<h1>Order Summary</h1>
+</div>
+<div class="content-container">
+    <h2>Order Details</h2>
+    <div class="details">
+        <p>Order ID: <span th:text="${order.orderId}"></span></p>
+        <p>Order Date: <span th:text="${#dates.format(order.orderDateUtil, 'yyyy-MM-dd HH:mm:ss')}"></span></p>
+        <p>Order Status: <span th:text="${order.orderStatus}"></span></p>
+    </div>
+
+    <h2>Ordered Items</h2>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Inventory Name</th>
+                    <th>Quantity</th>
+                    <th>Total Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="item : ${orderItems}">
+                    <td th:text="${item.inventoryName}"></td>
+                    <td th:text="${item.orderQuantity}"></td>
+                    <td th:text="'RM ' + ${item.orderTotalPrice}"></td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="subtotal">
+            Subtotal: RM 
+            <span th:text="${#numbers.formatDecimal(totalPrice, 2, 2)}"></span>
+        </p>
+    </div>
+
+    <h2>Payment Details</h2>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Payment Status</th>
+                    <th>Payment Proof</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td th:text="${order.paymentStatus}"></td>
+                    <td>
+                        <div class="paymentproofdiv" th:if="${order.paymentProof != null}">
+                            <img th:src="'data:image/jpeg;base64,' + ${order.paymentProofBase64}" class="imageproof" draggable="false" width="500px" height="auto">
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script src="./js/loading.js"></script>
+</body>
+</html>

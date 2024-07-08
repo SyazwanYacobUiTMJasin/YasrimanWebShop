@@ -47,6 +47,7 @@
         <a href="/"  >HOME</a>
         <a href="inventory?action=viewallproducts" class="active">PRODUCTS</a>
         <a href="cart">CART</a>
+        <a th:href="@{/order(action=history, uid=${session.loggedinaccountid})}">ORDER HISTORY</a>
     </div>
 </div>
 
@@ -91,7 +92,7 @@
     <div id="noResults" style="display: none">No items match your search.</div>
 </div>
 
-<section class="footer fade-in-up delay-0">
+<section class="footer fade-in-up delay-1">
     <div class="box-container">
         <table>
             <tr>
@@ -104,47 +105,40 @@
             <tr>
                 <td>
                     <div class="box">
-                        <a href="./index.html"><i class="fas fa-arrow-right"></i> Home</a>
+                        <a href="/">
+                            <i class="fas fa-arrow-right"></i> Home
+                        </a>
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div class="box">
-                        <a href="./product.html"><i class="fas fa-arrow-right"></i> Products</a>
-                    </div>
-                </td>
-            </tr>
-            <!-- <tr>
-                <td>
-                    <div class="box">
-                        <a href="./information.html"><i class="fas fa-arrow-right"></i> Information</a>
+                        <a href="products">
+                            <i class="fas fa-arrow-right"></i> Products
+                        </a>
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div class="box">
-                        <a href="./faq.html"><i class="fas fa-arrow-right"></i> FAQ</a>
-                    </div>
-                </td>
-            </tr> -->
-            <tr>
-                <td>
-                    <div class="box">
-                        <a href="./viewcart.html"><i class="fas fa-arrow-right"></i> Cart</a>
+                        <a href="cart">
+                            <i class="fas fa-arrow-right"></i> Cart
+                        </a>
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div class="box">
-                        <a href="./signup.html"><i class="fas fa-arrow-right"></i> Sign In/Sign Up</a>
+                        <a href="signupform">
+                            <i class="fas fa-arrow-right"></i> Sign In/Sign Up
+                        </a>
                     </div>
                 </td>
             </tr>
         </table>
-
         <table>
             <tr>
                 <td>
@@ -156,35 +150,45 @@
             <tr>
                 <td>
                     <div class="box">
-                        <a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a>
+                        <a href="https://www.facebook.com/" target="_blank">
+                            <i class="fab fa-facebook-f"></i> Facebook
+                        </a>
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div class="box">
-                        <a href="https://twitter.com/" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
+                        <a href="https://twitter.com/" target="_blank">
+                            <i class="fab fa-twitter"></i> Twitter
+                        </a>
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div class="box">
-                        <a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+                        <a href="https://www.instagram.com/" target="_blank">
+                            <i class="fab fa-instagram"></i> Instagram
+                        </a>
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div class="box">
-                        <a href="https://www.linkedin.com/" target="_blank"><i class="fab fa-linkedin"></i> Linkedin</a>
+                        <a href="https://www.linkedin.com/" target="_blank">
+                            <i class="fab fa-linkedin"></i> Linkedin
+                        </a>
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div class="box">
-                        <a href="https://www.pinterest.com/business/hub/" target="_blank"><i class="fab fa-pinterest"></i> Pinterest</a>
+                        <a href="https://www.pinterest.com/business/hub/" target="_blank">
+                            <i class="fab fa-pinterest"></i> Pinterest
+                        </a>
                     </div>
                 </td>
             </tr>

@@ -3,6 +3,7 @@ package com.masbro.yasriman.model;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Base64;
 
 public class orders {
     private int orderId;
@@ -20,7 +21,9 @@ public class orders {
     private double sumOrderTotalPrice;
     private int paymentID;
     private byte[] base64Image;
-    
+
+    private java.util.Date orderDateUtil;
+
     public byte[] getPaymentProof() {
 		return paymentProof;
 	}
@@ -165,4 +168,26 @@ public class orders {
 	public byte[] getImageBase64() {
 		return base64Image;
 	}
+
+    public java.util.Date getOrderDateUtil() {
+        return orderDateUtil;
+    }
+
+    public void setOrderDateUtil(java.util.Date orderDateUtil) {
+        this.orderDateUtil = orderDateUtil;
+    }
+
+    public String getPaymentProofBase64() {
+        if (this.paymentProof != null) {
+            return Base64.getEncoder().encodeToString(this.paymentProof);
+        }
+        return "";
+    }
+
+    public String getInventoryImageBase64() {
+        if (this.inventoryImage != null) {
+            return Base64.getEncoder().encodeToString(this.inventoryImage);
+        }
+        return "";
+    }
 }

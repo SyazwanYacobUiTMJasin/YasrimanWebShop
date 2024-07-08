@@ -50,6 +50,7 @@
         <a href="/" class="active">HOME</a>
         <a href="inventory?action=viewallproducts">PRODUCTS</a>
         <a href="cart">CART</a>
+        <a th:href="@{/order(action=history, uid=${session.loggedinaccountid})}">ORDER HISTORY</a>
     </div>
   </div>
     <div class="hero ">
@@ -175,7 +176,7 @@
             </table>
         </div>
     </section>
-    <div id="chat-button">Chat
+    <!-- <div id="chat-button">Chat
     </div>
     <div id="chat-window">
         <div id="chat-header">Chatbot</div>
@@ -185,7 +186,7 @@
             <input type="text" id="chat-message" placeholder="Type a message..." />
             <button id="send-button">Send</button>
         </div>
-    </div>
+    </div> -->
 
     <script src="./js/loading.js"></script>
     <script>

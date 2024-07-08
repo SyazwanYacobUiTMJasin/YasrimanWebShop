@@ -531,4 +531,26 @@ public class InventoryDAO {
 	   return orderarr;
 
 	}
+
+    public boolean deleteInventory(int id) throws SQLException {
+	    String SQL = "DELETE FROM INVENTORY WHERE INVENTORYID = ?";
+	    Connection connection = null;
+	    PreparedStatement preparedStatement = null;
+	    boolean rowDeleted;
+	    try {
+	        connection = ConnectionManager.getConnection();
+	        preparedStatement = connection.prepareStatement(SQL);
+	        preparedStatement.setInt(1, id);
+	        rowDeleted = preparedStatement.executeUpdate() > 0;
+	    } finally {
+	        if (preparedStatement != null) {
+	            preparedStatement.close();
+	        }
+	        if (connection != null) {
+	            connection.close();
+	        }
+	    }
+	    return rowDeleted;
+	}
+	
 }

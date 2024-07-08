@@ -239,7 +239,7 @@ table {
     background-color: #d5c7b24f;
   }
 
-  .edit-btn, .update-btn {
+  .edit-btn, .update-btn, .delete-btn {
   
   text-decoration: none; 
   font-weight: 400;
@@ -265,6 +265,11 @@ table {
   
   .update-btn { 
     background-color: #1a4d2e;
+    color: white;
+    font-weight: 400;
+  }
+  .delete-btn { 
+    background-color: rgb(142, 0, 0);
     color: white;
     font-weight: 400;
   }

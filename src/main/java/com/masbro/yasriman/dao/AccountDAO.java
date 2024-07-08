@@ -360,4 +360,61 @@ public class AccountDAO {
          }
 	}
 	
+    public boolean deleteAccount(int accountid) throws SQLException {
+        String DELETE_ORDERS_SQL = "DELETE FROM ORDERS WHERE ACCOUNTID = ?";
+        String DELETE_PAYMENTS_SQL = "DELETE FROM PAYMENT WHERE ACCOUNTID = ?";
+        String DELETE_INVENTORYMANAGE_SQL = "DELETE FROM INVENTORYMANAGE WHERE ACCOUNTID = ?";
+        String DELETE_ACCOUNT_SQL = "DELETE FROM ACCOUNTS WHERE ACCOUNTID = ?";
+
+        Connection connection = null;
+        PreparedStatement psDeleteOrders = null;
+        PreparedStatement psDeletePayments = null;
+        PreparedStatement psDeleteInventoryManage = null;
+        PreparedStatement psDeleteAccount = null;
+
+        try {
+            connection = ConnectionManager.getConnection();
+            connection.setAutoCommit(false); // Begin transaction
+
+            // Delete related records in orders
+            psDeleteOrders = connection.prepareStatement(DELETE_ORDERS_SQL);
+            psDeleteOrders.setInt(1, accountid);
+            psDeleteOrders.executeUpdate();
+
+            // Delete related records in payments
+            psDeletePayments = connection.prepareStatement(DELETE_PAYMENTS_SQL);
+            psDeletePayments.setInt(1, accountid);
+            psDeletePayments.executeUpdate();
+
+            // Delete related records in inventorymanage
+            psDeleteInventoryManage = connection.prepareStatement(DELETE_INVENTORYMANAGE_SQL);
+            psDeleteInventoryManage.setInt(1, accountid);
+            psDeleteInventoryManage.executeUpdate();
+
+            // Delete the account
+            psDeleteAccount = connection.prepareStatement(DELETE_ACCOUNT_SQL);
+            psDeleteAccount.setInt(1, accountid);
+            int rowDeleted = psDeleteAccount.executeUpdate();
+
+            connection.commit(); // Commit transaction
+            return rowDeleted > 0;
+
+        } catch (SQLException e) {
+            if (connection != null) {
+                try {
+                    connection.rollback(); // Rollback transaction on error
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if (psDeleteOrders != null) psDeleteOrders.close();
+            if (psDeletePayments != null) psDeletePayments.close();
+            if (psDeleteInventoryManage != null) psDeleteInventoryManage.close();
+            if (psDeleteAccount != null) psDeleteAccount.close();
+            if (connection != null) connection.close();
+        }
+    }
 }

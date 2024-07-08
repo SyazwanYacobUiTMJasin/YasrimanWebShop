@@ -21,3 +21,19 @@ function sortTable() {
 
     rows.forEach(row => table.appendChild(row));
 }
+
+function showDeleteNotification() {
+    alert("You need to change the payment status to 'Not Approved' before deleting the order.");
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const deleteButtons = document.querySelectorAll('.delete-btn');
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', function(event) {
+            if (this.hasAttribute('disabled')) {
+                event.preventDefault();
+                showDeleteNotification();
+            }
+        });
+    });
+});

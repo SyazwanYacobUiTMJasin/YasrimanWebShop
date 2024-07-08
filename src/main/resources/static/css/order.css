@@ -8,7 +8,6 @@
   font-family: "Inria Sans", sans-serif;
   transition: all 0.3s;
   overflow-x: hidden;
-  /* overflow-y: hidden; */
 }
 
 body {
@@ -49,9 +48,9 @@ body {
 
 #hero #sidebar ul li a
 {
-	text-decoration: none; 
+  text-decoration: none; 
   font-weight: 400;
-	color: white;
+  color: white;
 }
 
 .navbarbg .loginicon {
@@ -122,7 +121,6 @@ input[type="text"]:focus {
 
 .hero{
     margin: 0;
-    /* margin-top: 23vh; */
     display: flex;
     flex-direction: column;
     justify-content: start;
@@ -130,8 +128,6 @@ input[type="text"]:focus {
     gap: 20px;
     padding: 30px 20px;
     width: 100%;
-
-
 }
 
 .hero h1{
@@ -140,112 +136,92 @@ input[type="text"]:focus {
 }
 
 .table-container {
-    
     width: 100%;
     margin: 0 auto;
-    
-    /* box-shadow: 0 0 10px rgba(0,0,0,0.5); */
-  }
-  
-  table {
+}
+
+table {
     width: 100%;
     border-collapse: collapse;
-  }
-  
-  th, td {
-    /* border: 1px solid rgba(0, 0, 0, 0.174); */
-    border-bottom: 1px solid #ddd;
+    border: 1px solid #ddd;
+    max-height: 40vh;
+    overflow: auto;
+}
+
+th, td {
     padding: 8px;
-    text-align: left;
-  }
-  
-  th {
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
     background-color: #d5c7b24f;
     color: #1a4d2e;
-  }
-  
-  input[type="checkbox"] {
+}
+
+.edit-btn, .update-btn, .delete-btn {
+    text-decoration: none; 
+    font-weight: 400;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
     cursor: pointer;
-  }
-  
-  button {
+}
+
+.buttons {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.hero .edit-btn {
+    background-color: #d5c7b2;
+    color: #1a4d2e;
+}
+
+.update-btn { 
     background-color: #1a4d2e;
     color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 4px; /* Rounded corners */
-  }
-  
-  button:hover {
-    background-color: #d5c7b2; /* Darker green on hover */
-    color: #1a4d2e;
-  }
-
-  .edit-modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
 }
 
-.edit-modal-content {
-    background-color: #fefefe;
-    margin: 10% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 50%; /* Adjusted for better spacing */
+.delete-btn {
+    background-color: rgb(142, 0, 0);
+    color: white;
+    font-weight: 400;
 }
 
-.modal-input {
-    width: 95%; /* Adjust to better fit within columns */
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
+a.btn {
+    color: white;
+    text-decoration: none;
 }
 
-.modal-row {
-    display: flex;
-    justify-content: space-between;
+.btn:hover {
+    opacity: 0.8;
 }
 
-.modal-column {
-    flex: 1;
-    padding: 0 20px;
+tbody {
+    background-color: #ffffff62;
 }
 
-tbody
-{
-	background-color: #ffffff62;
-}
-
-tbody tr td input[type="checkbox"]
-{
+tbody tr td input[type="checkbox"] {
     width: 20px;
     height: auto;
 }
 
 .custom-checkbox {
-    width: 30px; /* Width */
-    height: 30px; /* Height */
+    width: 30px;
+    height: 30px;
     overflow: hidden;
     margin-left: 10px;
 }
 
-/* Define the appearance of the checkbox */
 .custom-checkbox input[type="checkbox"] {
-    width: 100%; /* Take up full width */
-    height: 100%; /* Take up full height */
-    margin: 0; /* Remove default margins */
-    padding: 0; /* Remove default padding */
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
     outline: none;
     border: 1px solid #1a4d2e;
 }
@@ -257,7 +233,6 @@ tbody tr td input[type="checkbox"]
 }
 
 #sidebar {
-  
   min-width: 222px;
   background-color: #1a4d2e;
   color: white;
@@ -281,68 +256,8 @@ tbody tr td input[type="checkbox"]
   font-size: 20px;
 }
 
-table tr th
-{
-	text-align:center;
-}
-
-table {
-    border-collapse: collapse;
-    border: 1px solid #ddd;
-    width: 100%;
-    max-height: 40vh;
-    overflow:auto;
-    /* box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); */
-  }
-
-  th, td {
-    padding: 8px;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  th {
-    background-color: #d5c7b24f;
-  }
-  
-.edit-btn, .update-btn {
-  
-  text-decoration: none; 
-  font-weight: 400;
-    padding: 6px 12px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .buttons
-  {
-  	display:flex;
-  	width: 100%;
-  	justify-content: center;
-  	align-items: center;
-  	gap: 30px;
-  }
-  
-  .hero .edit-btn {
-    background-color: #d5c7b2;
-    color: #1a4d2e;
-  }
-  
-  .update-btn { 
-    background-color: #1a4d2e;
-    color: white;
-    font-weight: 400;
-  }
-  
-  a.btn.btn-primary.update-btn
-  {
-  color:white;
-  }
-
-tr.space
-{
-	height: 10px;
+tr.space {
+    height: 10px;
 }
 
 .formcontent input[type="text"],
@@ -370,35 +285,32 @@ tr.space
 }
 
 .topbar{
-	width: 100%;
-	display:flex;
-	justify-content: space-between;
-	align-items: center;
-	overflow:hidden;
-	height: 100px;
+    width: 100%;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    overflow:hidden;
+    height: 100px;
 }
 
-.mainbox
-{
-	display: flex;
-	flex-direction:column;
-	gap: 30px;
+.mainbox {
+    display: flex;
+    flex-direction:column;
+    gap: 30px;
 }
 
-.mainbox div h1
-{
-	padding-bottom: 20px;
+.mainbox div h1 {
+    padding-bottom: 20px;
 }
 
-.orderstatustext
-{
-	display:flex;
-	flex-direction: row;
-	align-items:center;
-	justify-content:center;
-	font-size: 20px;
-	height: fit-content;
-	padding: 10px 0;
+.orderstatustext {
+    display:flex;
+    flex-direction: row;
+    align-items:center;
+    justify-content:center;
+    font-size: 20px;
+    height: fit-content;
+    padding: 10px 0;
     overflow: hidden;
     gap: 10px;
 }
@@ -429,24 +341,22 @@ tr.space
     transition: border-bottom 0.3s;
 }
 
-form{
-	width: 80vw;
-	margin: 0 auto;
+form {
+    width: 80vw;
+    margin: 0 auto;
 }
 
-.form-actions
-{
-	display:flex;
-	padding: 20px;
-	height: 100px;
-	width:20vw;
-	justify-content:space-between;
-	align-items: center;
+.form-actions {
+    display:flex;
+    padding: 20px;
+    height: 100px;
+    width:20vw;
+    justify-content:space-between;
+    align-items: center;
 }
 
-.form-actions a, .form-actions input
-{
-	padding: 10px 20px;
+.form-actions a, .form-actions input {
+    padding: 10px 20px;
 }
 
 @media (width < 979px) {
@@ -454,23 +364,18 @@ form{
     font-size: 95%;
   }
 
-  .hero
-  {
+  .hero {
     flex-direction: column;
   }
 
-  .table-container
-  {
+  .table-container {
     width: 100%;
   }
 
-  table
-  {
+  table {
     transform: scale(0.9);
-
   }
 }
-
 
 @media (width < 600px) {
   #sidebar  {
@@ -479,36 +384,28 @@ form{
     height: 100%;
   }
 
-  #sidebar ul
-  {
+  #sidebar ul {
     padding: 0;
   }
 
-  .table-container
-  {
-    
+  .table-container {
     overflow: auto;
   }
 
-  table
-  {
+  table {
     width: 400px;
     padding: 0 0px;
     min-width: 400px;
     overflow: auto;
   }
 
-  .hero
-  {
+  .hero {
     overflow-x: auto;
-    /* width: 1200px; */
   }
 }
 
-@media (width < 400px)
-{
-  #main
-  {
+@media (width < 400px) {
+  #main {
     padding: 20px 0;
   }
 }

@@ -95,3 +95,9 @@ document.querySelector('.header-container button').addEventListener('click', fun
           closeEditModal();
         }
       }
+
+      function confirmDelete(inventoryId) {
+        if (confirm("Are you sure you want to delete this inventory item?")) {
+            window.location.href = "inventory?action=delete&id=" + inventoryId;
+        }
+    }

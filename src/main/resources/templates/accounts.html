@@ -47,7 +47,7 @@
                             <th>Role</th>
                             <th>First Name</th>
                             <th>Last Name</th>
-                            <th colspan="2">Action</th>
+                            <th colspan="3">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -57,13 +57,23 @@
                             <td th:text="${account.firstname}"></td>
                             <td th:text="${account.lastname}"></td>
                             <td><a class="btn btn-info edit-btn" th:href="@{viewcustomeraccount(uid=${account.id}, from='dashboard')}">View</a></td>
-                            <td><a class="btn btn-primary update-btn" th:href="@{viewcustomeraccount(uid=${account.id}, from='dashboardupdate')}">Update</a></td>
+                            <td><a th:onclick="'confirmUpdate(' + ${account.id} + ')'" class="btn btn-primary update-btn" th:href="@{viewcustomeraccount(uid=${account.id}, from='dashboardupdate')}">Update</a></td>
+                            <td>
+                                <a class="btn btn-primary delete-btn" 
+                                   th:onclick="'confirmDelete(' + ${account.id} + ')'"
+                                   href="javascript:void(0);" 
+                                   th:href="@{/deletecustomeraccount(uid=${account.id})}">
+                                    Delete
+                                </a>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </div> 
+    <input type="hidden" id="userRole" th:value="${session.accountrole}">
+    <script src="./js/accounts.js"></script>
     <script src="./js/loading.js"></script>
 </body>
 </html>

@@ -50,6 +50,7 @@
         <a href="/" class="active">HOME</a>
         <a href="inventory?action=viewallproducts">PRODUCTS</a>
         <a href="cart">CART</a>
+        <a th:href="@{/order(action=history, uid=${session.loggedinaccountid})}">ORDER HISTORY</a>
     </div>
   </div>
 

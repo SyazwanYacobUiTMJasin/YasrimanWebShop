@@ -53,7 +53,23 @@ public class OrderDAO {
                     + "    ACCOUNTS.accountusername, \r\n"
                     + "    ORDERS.orderstatus, \r\n"
                     + "    PAYMENT.paymentstatus";
-    
+    private static final String SELECT_ORDER_ITEMS_BY_ORDER_ID = "SELECT " +
+                    "inventory.inventoryname, " +
+                    "inventory.inventoryimage, " +
+                    "orders.orderquantity, " +
+                    "orders.ordertotalprice " +
+                    "FROM orders " +
+                    "JOIN inventory ON orders.inventoryid = inventory.inventoryid " +
+                    "WHERE orders.orderid = ?";
+    private static final String SELECT_ORDER_DETAILS_BY_ID = "SELECT o.orderid, o.accountid, a.accountusername, " +
+                    "i.inventoryname, i.inventoryid, o.orderdate, o.orderstatus, " +
+                    "o.ordertotalprice, o.orderquantity, p.paymentid, p.paymentproof, p.paymentstatus " +
+                    "FROM orders o " +
+                    "JOIN accounts a ON o.accountid = a.accountid " +
+                    "JOIN inventory i ON o.inventoryid = i.inventoryid " +
+                    "JOIN payment p ON o.orderid = p.orderid " +
+                    "WHERE o.orderid = ?";
+
     public OrderDAO() {}
 
     public orders selectOrderById(int orderId) throws SQLException {
@@ -73,7 +89,22 @@ public class OrderDAO {
         return order;
     }
 
+    public orders getOrderDetailsById(int orderId) throws SQLException {
+        orders order = null;
+        try (Connection con = ConnectionManager.getConnection();
+             PreparedStatement ps = con.prepareStatement(SELECT_ORDER_DETAILS_BY_ID)) {
+            ps.setInt(1, orderId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    order = mapOrder(rs);
+                }
+            }
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
 
+        return order;
+    }
     private orders mapOrder(ResultSet rs) throws SQLException {
         orders order = new orders();
         order.setOrderId(rs.getInt("orderid"));
@@ -341,5 +372,77 @@ public class OrderDAO {
     	    long milliseconds = timestamp.getTime();
     	    return new Timestamp((milliseconds / 1000) * 1000);
     	}
+
+        public List<orders> selectAllOrdersGroupedByOrderId(int accountID) throws SQLException {
+            List<orders> ordersList = new ArrayList<>();
+            String sql = "SELECT " +
+                         "    orders.orderid, " +
+                         "    SUM(orders.orderquantity) as totalquantity, " +
+                         "    SUM(orders.ordertotalprice) as totalprice, " +
+                         "    (SELECT payment.paymentproof FROM payment WHERE payment.orderid = orders.orderid) as paymentproof " +
+                         "FROM orders " +
+                         "WHERE orders.accountid = ? " +
+                         "GROUP BY orders.orderid";
+            
+            try (Connection con = ConnectionManager.getConnection();
+                 PreparedStatement ps = con.prepareStatement(sql)) {
+                
+                ps.setInt(1, accountID);
+                
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        orders order = new orders();
+                        order.setOrderId(rs.getInt("orderid"));
+                        order.setOrderQuantity(rs.getInt("totalquantity"));
+                        order.setOrderTotalPrice(rs.getDouble("totalprice"));
+                        order.setPaymentProof(rs.getBytes("paymentproof"));
+                        ordersList.add(order);
+                    }
+                }
+            } catch (SQLException e) {
+                printSQLException(e);
+            }
+            
+            return ordersList;
+        }
+
+       
+    	
+    	public List<orders> selectOrderItemsByOrderId(int orderId) throws SQLException {
+            List<orders> orderItems = new ArrayList<>();
+            try (Connection con = ConnectionManager.getConnection();
+                 PreparedStatement ps = con.prepareStatement(SELECT_ORDER_ITEMS_BY_ORDER_ID)) {
+                ps.setInt(1, orderId);
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        orders item = new orders();
+                        item.setInventoryName(rs.getString("inventoryname"));
+                        item.setInventoryImage(rs.getBytes("inventoryimage"));
+                        item.setOrderQuantity(rs.getInt("orderquantity"));
+                        item.setOrderTotalPrice(rs.getDouble("ordertotalprice"));
+                        orderItems.add(item);
+                    }
+                }
+            } catch (SQLException e) {
+                printSQLException(e);
+            }
+            return orderItems;
+        }
+    	
+    	public boolean deleteOrder (int orderId) throws SQLException {
+    		String SQL ="DELETE FROM orders WHERE ORDERID = ?";
+    		try (
+    				Connection con = ConnectionManager.getConnection();
+    				PreparedStatement statement = con.prepareStatement(SQL)){
+    			    statement.setInt(1,orderId);
+    			    int affectedRows = statement.executeUpdate ();
+    			    return affectedRows > 0;
+    		}
+    		catch (SQLException e){
+    	    printSQLException (e);
+    		return false;
+    	}
+
+        }
 
 }

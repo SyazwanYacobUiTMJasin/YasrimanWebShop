@@ -288,14 +288,14 @@ public class AccountController extends HttpServlet {
             }
         } else if ("dashboardupdate".equals(from)) {
             String accountrole = (String) session.getAttribute("accountrole");
-            if ("Staff".equals(accountrole) || "Supervisor".equals(accountrole)) {
+            if ("Supervisor".equals(accountrole)) {
                 accounts accounts = AccountDAO.viewCustomerAccount(accountid);
                 modelAndView.addObject("accounts", accounts);
                 modelAndView.setViewName("updateaccounts");
                 System.out.println("From dashboardupdate");
             } else {
                 session.setAttribute("errorMessage", "You are not allowed to go here!!!");
-                modelAndView.setViewName("redirect:/error");
+                modelAndView.setViewName("redirect:/listallaccounts");
             }
         } else if ("index".equals(from)) {
             if (loggedinaccountid != null && loggedinaccountid.equals(accountid)) {
@@ -470,4 +470,18 @@ public class AccountController extends HttpServlet {
         }
     }
 
+    @GetMapping("/deletecustomeraccount")
+    private void deleteCustomerAccount(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+        HttpSession session = request.getSession();
+        String role = (String) session.getAttribute("accountrole");
+
+        if ("Supervisor".equals(role)) {
+            int accountid = Integer.parseInt(request.getParameter("uid"));
+            AccountDAO.deleteAccount(accountid);
+            response.sendRedirect("listallaccounts");
+        } else {
+            session.setAttribute("errorMessage", "Only supervisors can delete accounts.");
+            response.sendRedirect("listallaccounts");
+        }
+    }
 }

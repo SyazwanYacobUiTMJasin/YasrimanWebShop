@@ -232,6 +232,82 @@ public String showOrderDetails(HttpServletRequest request, HttpServletResponse r
         }
     }
 
+    @GetMapping(params = "action=history")
+    public String listOrderHistory(HttpServletRequest request, Model model) {
+        String uidParam = request.getParameter("uid");
+        HttpSession session = request.getSession();
+
+        if (uidParam != null && !uidParam.isEmpty()) {
+            try {
+                int accountId = Integer.parseInt(uidParam);
+                List<orders> ordersList = orderDAO.selectAllOrdersGroupedByOrderId(accountId);
+                model.addAttribute("orders", ordersList);
+                return "orderhistory";
+            } catch (NumberFormatException | SQLException e) {
+                session.setAttribute("errorMessage", "Invalid account ID or database error");
+                return "error";
+            }
+        } else {
+            session.setAttribute("errorMessage", "Please create an account first.");
+            return "error";
+        }
+    }
+
+    @GetMapping(params = "action=summary")
+    public String showOrderSummary(HttpServletRequest request, Model model) {
+        int orderId = Integer.parseInt(request.getParameter("orderid"));
+
+        try {
+            orders order = orderDAO.getOrderDetailsById(orderId);
+
+            if (order == null) {
+                model.addAttribute("errorMessage", "Order not found.");
+                return "error";
+            }
+
+            List<orders> orderItems = orderDAO.selectOrderItemsByOrderId(orderId);
+            double totalPrice = orderItems.stream().mapToDouble(orders::getOrderTotalPrice).sum();
+
+            model.addAttribute("order", order);
+            model.addAttribute("orderItems", orderItems);
+            model.addAttribute("totalPrice", totalPrice);
+            
+            return "ordersummary";
+        } catch (SQLException ex) {
+            // Handle exception
+            return "error";
+        }
+    }
+
+    @GetMapping(params = "action=delete")
+    public String deleteOrder(HttpServletRequest request, Model model) {
+        String orderIdParam = request.getParameter("orderid");
+        String paymentStatus = request.getParameter("paymentStatus");
+
+        if (orderIdParam == null || orderIdParam.isEmpty()) {
+            model.addAttribute("errorMessage", "Invalid order ID");
+            return "error";
+        }
+
+        try {
+            int orderId = Integer.parseInt(orderIdParam);
+
+            if ("NOTAPPROVED".equalsIgnoreCase(paymentStatus)) {
+                boolean deleted = orderDAO.deleteOrder(orderId);
+                if (deleted) {
+                    return "redirect:/order?action=view";
+                } else {
+                    model.addAttribute("errorMessage", "Failed to delete order");
+                    return "error";
+                }
+            } else {
+                return "redirect:/order?action=view&error=cannotDelete";
+            }
+        } catch (NumberFormatException | SQLException e) {
+            model.addAttribute("errorMessage", "Invalid order ID format or database error");
+            return "error";
+        }
+    }
 
     @ExceptionHandler(SQLException.class)
     public String handleSQLException(SQLException ex, Model model) {

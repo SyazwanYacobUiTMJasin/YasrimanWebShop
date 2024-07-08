@@ -57,6 +57,8 @@ public class InventoryController {
                 return displayToolProducts(model, session);
             case "viewproductdetails":
                 return viewProductDetailsById(id, model, session);
+            case "delete":
+                return deleteInventory(id, model, session);
             default:
                 return listInventory(model, session);
         }
@@ -240,9 +242,15 @@ public class InventoryController {
         return "redirect:/inventory?action=view&id=" + inventoryID;
     }
 
+    private String deleteInventory(int inventoryID, Model model, HttpSession session) throws SQLException {
+        inventoryDAO.deleteInventory(inventoryID);
+        return "redirect:/inventory";
+    }
+    
     private void addSessionAttributes(Model model, HttpSession session) {
+        model.addAttribute("loggedinusername", session.getAttribute("loggedinusername"));
         model.addAttribute("loggedinaccountid", session.getAttribute("loggedinaccountid"));
-        model.addAttribute("accountrole", session.getAttribute("accountrole"));
+        model.addAttribute("loggedinaccountrole", session.getAttribute("loggedinaccountrole"));
     }
 
     @ExceptionHandler({ SQLException.class, IOException.class })

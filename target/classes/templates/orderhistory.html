@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yasriman | Order History</title>
+    <link rel="icon" href="https://i.ibb.co/F7PH3zS/logo.jpg" type="image/png">
+    <link rel="stylesheet" href="./css/orderhistory.css">
+    <link rel="stylesheet" href="./css/animation.css">
+    <link rel="stylesheet" href="./css/loading.css">
+</head>
+<body>
+    <div id="loading-screen">
+        <video id="loading-video" autoplay loop muted>
+          <source src="./video/loadingscreen.mp4" type="video/mp4">
+        </video>
+      </div>
+    <div class="navbarbg">
+        <a th:href="@{/}">
+            <h2 class="fade-in-up delay-1">YASRIMAN</h2>
+        </a>
+        <div class="logintext fade-in-up delay-2">
+            <div class="searchdiv">
+                <img src="https://svgshare.com/i/177L.svg" alt="" draggable="false" />
+                <input type="text" placeholder="Search" name="search" autocomplete="off" id="searchInput" />
+            </div>
+            <div th:if="${session.accountusername != null}">
+                <a th:href="@{/viewcustomeraccount(uid=${session.loggedinaccountid},from=index)}">
+                    <span th:text="${session.accountusername}"></span>
+                    <div class="loginicon">
+                        <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/fee6b20cb0abd925cc4a3bda7cf3fa3366c37bcc07b2da638108c5651aca2ad0?apiKey=8730b69884724863a1e8089b99726052&" class="img" draggable="false" />
+                    </div>
+                </a>
+            </div>
+            <div th:unless="${session.accountusername != null}">
+                <a th:href="@{signup}">
+                    Sign In/Sign Up
+                    <div class="loginicon">
+                        <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/fee6b20cb0abd925cc4a3bda7cf3fa3366c37bcc07b2da638108c5651aca2ad0?apiKey=8730b69884724863a1e8089b99726052&" class="img" draggable="false" />
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div th:if="${session.accountrole == 'Staff' || session.accountrole == 'Supervisor'}" class="fade-in-up delay-3">
+            <a th:href="@{/staffdashboard}">DASHBOARD</a>
+        </div>
+    
+    <div class="navlinks fade-in-up delay-3">
+        <a href="/" class="active">HOME</a>
+        <a href="inventory?action=viewallproducts">PRODUCTS</a>
+        <a href="cart">CART</a>
+        <a th:href="@{/order(action=history, uid=${session.loggedinaccountid})}">ORDER HISTORY</a>
+    </div>
+</div>
+
+<div id="main" class="fade-in-up delay-1">
+    <div class="header-container">
+        <h1>Order History</h1>
+    </div>
+    <div class="table-container">
+        <div th:if="${#lists.isEmpty(orders)}">
+            <p>It seems like you haven't made any orders yet.</p>
+        </div>
+        <div th:unless="${#lists.isEmpty(orders)}">
+            <table>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Payment Proof</th>
+                    <th>Total Quantity</th>
+                    <th>Total Price</th>
+                    <th>View</th>
+                </tr>
+                <tbody>
+                    <tr th:each="order : ${orders}">
+                        <td th:text="${order.orderId}"></td>
+                        <td>
+                            <div th:if="${order.paymentProof != null}">
+                                <img th:src="'data:image/jpeg;base64,' + ${order.paymentProofBase64}" alt="Payment Proof" width="60" height="60">
+                            </div>
+                        </td>
+                        <td th:text="${order.orderQuantity}"></td>
+                        <td>RM <span th:text="${#numbers.formatDecimal(order.orderTotalPrice, 2, 2)}"></span></td>
+                        <td>
+                            <a th:href="@{/order(action='summary', orderid=${order.orderId})}"><button class="view">View</button></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script src="./js/loading.js"></script>
+</body>
+</html>
