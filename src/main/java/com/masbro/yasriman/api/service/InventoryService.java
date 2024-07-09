@@ -50,4 +50,9 @@ public class InventoryService {
         System.out.println("Retrieved low stock inventory items: " + lowStockItems);
         return lowStockItems;
     }
+
+    public void deleteInventory(int id) {
+        inventoryRepository.deleteById(id);
+        System.out.println("Deleted inventory with ID: " + id);
+    }
 }

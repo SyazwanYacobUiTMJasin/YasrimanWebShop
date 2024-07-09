@@ -67,4 +67,15 @@ public class InventoryControllerAPI {
         List<InventoryAPI> lowStockItems = inventoryService.getLowStockInventory(threshold);
         return new ResponseEntity<>(lowStockItems, HttpStatus.OK);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteInventory(@PathVariable("id") int id) {
+        Optional<InventoryAPI> existingInventory = inventoryService.getInventoryById(id);
+        if (existingInventory.isPresent()) {
+            inventoryService.deleteInventory(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }
