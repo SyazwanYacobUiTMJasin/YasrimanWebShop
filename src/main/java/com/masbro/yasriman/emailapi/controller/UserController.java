@@ -20,7 +20,7 @@ public class UserController {
 
     @PostMapping("/signup")
     public String signUp(@RequestBody User user) throws MessagingException {
-        userService.registerUser(user);
-        return "User registered successfully!";
+        String emailContent =  userService.registerUser(user);
+        return emailContent;
     }
 }

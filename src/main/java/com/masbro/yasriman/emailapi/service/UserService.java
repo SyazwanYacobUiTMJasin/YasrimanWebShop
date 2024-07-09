@@ -15,13 +15,24 @@ public class UserService {
     @Autowired
     private EmailSenderService emailService;
 
-    public void registerUser(User user) throws jakarta.mail.MessagingException {
+    // public void registerUser(User user) throws jakarta.mail.MessagingException {
+    //     try {
+    //         emailService.sendHtmlEmail(user.getEmail(), "Welcome to Our Plant Shop", generateWelcomeEmail(user));
+    //     } catch (MailException e) {
+    //         // Handle the exception
+    //         e.printStackTrace();
+    //     }
+    // }
+
+    public String registerUser(User user) throws jakarta.mail.MessagingException {
+        String emailContent = generateWelcomeEmail(user);
         try {
-            emailService.sendHtmlEmail(user.getEmail(), "Welcome to Our Plant Shop", generateWelcomeEmail(user));
+            emailService.sendHtmlEmail(user.getEmail(), "Welcome to Our Plant Shop", emailContent);
         } catch (MailException e) {
             // Handle the exception
             e.printStackTrace();
         }
+        return emailContent;
     }
 
     private String generateWelcomeEmail(User user) {
