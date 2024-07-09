@@ -6,6 +6,8 @@ C:\Users\slimo\OneDrive\Desktop\yasriman\src\main\java\com\masbro\yasriman\api\m
 C:\Users\slimo\OneDrive\Desktop\yasriman\src\main\java\com\masbro\yasriman\api\model\InventoryAPI.java
 C:\Users\slimo\OneDrive\Desktop\yasriman\src\main\java\com\masbro\yasriman\api\model\OrderAPI.java
 C:\Users\slimo\OneDrive\Desktop\yasriman\src\main\java\com\masbro\yasriman\api\model\PaymentAPI.java
+C:\Users\slimo\OneDrive\Desktop\yasriman\src\main\java\com\masbro\yasriman\api\model\PaymentProof.java
+C:\Users\slimo\OneDrive\Desktop\yasriman\src\main\java\com\masbro\yasriman\api\model\PaymentRequest.java
 C:\Users\slimo\OneDrive\Desktop\yasriman\src\main\java\com\masbro\yasriman\api\repository\AccountRepository.java
 C:\Users\slimo\OneDrive\Desktop\yasriman\src\main\java\com\masbro\yasriman\api\repository\InventoryRepository.java
 C:\Users\slimo\OneDrive\Desktop\yasriman\src\main\java\com\masbro\yasriman\api\repository\OrderRepository.java

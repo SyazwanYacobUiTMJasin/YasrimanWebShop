@@ -1,15 +1,18 @@
 package com.masbro.yasriman.api.controller;
 
 import com.masbro.yasriman.api.model.PaymentAPI;
+import com.masbro.yasriman.api.model.PaymentRequest;
 import com.masbro.yasriman.api.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Base64;
 import java.util.List;
 
 @RestController
@@ -31,29 +34,26 @@ public class PaymentControllerAPI {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping(consumes = {"multipart/form-data"})
-    public ResponseEntity<PaymentAPI> createPayment(
-            @RequestParam("accountId") int accountId,
-            @RequestParam("inventoryId") int inventoryId,
-            @RequestParam("orderid") int orderId,
-            @RequestParam("paymentstatus") String paymentStatus,
-            @RequestParam("paymentproof") MultipartFile paymentProof) {
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<PaymentAPI> createPayment(@RequestBody PaymentRequest paymentRequest) {
         try {
             PaymentAPI payment = new PaymentAPI();
-            payment.setAccountId(accountId);
-            payment.setInventoryId(inventoryId);
-            payment.setOrderid(orderId);
-            payment.setPaymentstatus(paymentStatus);
+            payment.setAccountId(paymentRequest.getAccountId());
+            payment.setInventoryId(paymentRequest.getInventoryId());
+            payment.setOrderid(paymentRequest.getOrderid());
+            payment.setPaymentstatus(paymentRequest.getPaymentstatus());
             payment.setOrderDate(LocalDateTime.now());
-            payment.setPaymentproof(paymentProof.getBytes());
+
+            byte[] paymentProofBytes = Base64.getDecoder().decode(paymentRequest.getPaymentproof().getData());
+            payment.setPaymentproof(paymentProofBytes);
 
             PaymentAPI createdPayment = paymentService.createPayment(payment);
             return new ResponseEntity<>(createdPayment, HttpStatus.CREATED);
-        } catch (IOException e) {
+        } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-
+    
     @PutMapping("/{id}")
     public ResponseEntity<PaymentAPI> updatePayment(@PathVariable int id, @RequestBody PaymentAPI paymentDetails) {
         try {
