@@ -4,6 +4,7 @@ import com.masbro.yasriman.api.model.PaymentAPI;
 import com.masbro.yasriman.api.repository.PaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +23,7 @@ public class PaymentService {
         return paymentRepository.findById(id);
     }
 
+    @Transactional
     public PaymentAPI createPayment(PaymentAPI payment) {
         return paymentRepository.save(payment);
     }
@@ -40,6 +42,7 @@ public class PaymentService {
         return paymentRepository.save(payment);
     }
 
+    @Transactional
     public void deletePayment(int id) {
         PaymentAPI payment = paymentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Payment not found with id: " + id));

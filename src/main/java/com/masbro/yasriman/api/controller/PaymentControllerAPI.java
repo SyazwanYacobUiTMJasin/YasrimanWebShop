@@ -3,9 +3,13 @@ package com.masbro.yasriman.api.controller;
 import com.masbro.yasriman.api.model.PaymentAPI;
 import com.masbro.yasriman.api.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -27,9 +31,27 @@ public class PaymentControllerAPI {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping
-    public PaymentAPI createPayment(@RequestBody PaymentAPI payment) {
-        return paymentService.createPayment(payment);
+    @PostMapping(consumes = {"multipart/form-data"})
+    public ResponseEntity<PaymentAPI> createPayment(
+            @RequestParam("accountId") int accountId,
+            @RequestParam("inventoryId") int inventoryId,
+            @RequestParam("orderid") int orderId,
+            @RequestParam("paymentstatus") String paymentStatus,
+            @RequestParam("paymentproof") MultipartFile paymentProof) {
+        try {
+            PaymentAPI payment = new PaymentAPI();
+            payment.setAccountId(accountId);
+            payment.setInventoryId(inventoryId);
+            payment.setOrderid(orderId);
+            payment.setPaymentstatus(paymentStatus);
+            payment.setOrderDate(LocalDateTime.now());
+            payment.setPaymentproof(paymentProof.getBytes());
+
+            PaymentAPI createdPayment = paymentService.createPayment(payment);
+            return new ResponseEntity<>(createdPayment, HttpStatus.CREATED);
+        } catch (IOException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PutMapping("/{id}")
