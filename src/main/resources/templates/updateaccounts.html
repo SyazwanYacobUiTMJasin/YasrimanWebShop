@@ -59,9 +59,11 @@
                                 <!-- Display the current role as the selected option -->
                                 <option th:value="${accounts.role}" th:selected="true" th:text="${accounts.role}"></option>
                                 <!-- List other roles as options -->
-                                <option th:if="${accounts.role ne 'Customer'}" th:value="Customer">Customer</option>
-                                <option th:if="${accounts.role ne 'Staff'}" th:value="Staff">Staff</option>
-                                <option th:if="${accounts.role ne 'Supervisor'}" th:value="Supervisor">Supervisor</option>
+                                <option th:each="role : ${allRoles}" 
+                                        th:if="${role != accounts.role}" 
+                                        th:value="${role}" 
+                                        th:text="${role}">
+                                </option>
                             </select>                            
                         </td>
                     </tr>

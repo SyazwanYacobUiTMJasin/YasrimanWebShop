@@ -417,4 +417,22 @@ public class AccountDAO {
             if (connection != null) connection.close();
         }
     }
+
+    public List<String> getAllRoles() {
+        List<String> roles = new ArrayList<>();
+        try {
+            Connection con = ConnectionManager.getConnection();
+            PreparedStatement ps = con.prepareStatement("SELECT DISTINCT accountrole FROM accounts");
+            ResultSet rs = ps.executeQuery();
+    
+            while (rs.next()) {
+                roles.add(rs.getString("accountrole"));
+            }
+    
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return roles;
+    }
 }

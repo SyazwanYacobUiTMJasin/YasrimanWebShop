@@ -29,6 +29,7 @@ com\masbro\yasriman\controller\PaymentController.class
 com\masbro\yasriman\emailapi\repository\UserRepository.class
 com\masbro\yasriman\api\service\PaymentService.class
 com\masbro\yasriman\dao\InventoryDAO.class
+com\masbro\yasriman\emailapi\controller\UserController$EmailResponse.class
 com\masbro\yasriman\dao\OrderDAO.class
 com\masbro\yasriman\api\controller\PaymentControllerAPI.class
 com\masbro\yasriman\model\accounts.class

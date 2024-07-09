@@ -290,7 +290,9 @@ public class AccountController extends HttpServlet {
             String accountrole = (String) session.getAttribute("accountrole");
             if ("Supervisor".equals(accountrole)) {
                 accounts accounts = AccountDAO.viewCustomerAccount(accountid);
+                List<String> allRoles = AccountDAO.getAllRoles();
                 modelAndView.addObject("accounts", accounts);
+                modelAndView.addObject("allRoles", allRoles);
                 modelAndView.setViewName("updateaccounts");
                 System.out.println("From dashboardupdate");
             } else {
