@@ -1,4 +1,4 @@
-package com.masbro.yasriman.api.service; 
+package com.masbro.yasriman.api.service;
 
 import com.masbro.yasriman.api.model.OrderAPI;
 import com.masbro.yasriman.api.repository.OrderRepository;
@@ -8,6 +8,7 @@ import jakarta.persistence.PersistenceContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,32 +24,45 @@ public class OrderService {
 
     public List<OrderAPI> getAllOrders() {
         entityManager.clear();
-        List<OrderAPI> orders = orderRepository.findAll();
-        System.out.println("Retrieved orders: " + orders); // Debugging statement
-        return orders;
+        return orderRepository.findAll();
     }
 
     public Optional<OrderAPI> getOrderById(int orderId) {
-        Optional<OrderAPI> order = orderRepository.findById(orderId);
-        System.out.println("Retrieved order by ID: " + order); // Debugging statement
-        return order;
+        return orderRepository.findById(orderId);
     }
 
+    @Transactional
     public OrderAPI saveOrder(OrderAPI order) {
-        OrderAPI savedOrder = orderRepository.save(order);
-        System.out.println("Saved order: " + savedOrder); // Debugging statement
-        return savedOrder;
+        return orderRepository.save(order);
     }
 
+    @Transactional
+    public Optional<OrderAPI> updateOrder(int orderId, OrderAPI updatedOrder) {
+        return orderRepository.findById(orderId)
+                .map(existingOrder -> {
+                    existingOrder.setOrderStatus(updatedOrder.getOrderStatus());
+                    return orderRepository.save(existingOrder);
+                });
+    }
+
+    @Transactional
     public boolean updateOrderStatus(int orderId, String orderStatus) {
-        Optional<OrderAPI> orderOpt = orderRepository.findById(orderId);
-        if (orderOpt.isPresent()) {
-            OrderAPI order = orderOpt.get();
-            order.setOrderStatus(orderStatus);
-            orderRepository.save(order);
-            System.out.println("Updated order status: " + order); // Debugging statement
-            return true;
-        }
-        return false;
+        return orderRepository.findById(orderId)
+                .map(order -> {
+                    order.setOrderStatus(orderStatus);
+                    orderRepository.save(order);
+                    return true;
+                })
+                .orElse(false);
+    }
+
+    @Transactional
+    public boolean deleteOrder(int orderId) {
+        return orderRepository.findById(orderId)
+                .map(order -> {
+                    orderRepository.delete(order);
+                    return true;
+                })
+                .orElse(false);
     }
 }

@@ -1,9 +1,10 @@
-package com.masbro.yasriman.api.controller; 
+package com.masbro.yasriman.api.controller;
 
 import com.masbro.yasriman.api.model.OrderAPI;
 import com.masbro.yasriman.api.service.OrderService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,8 +18,8 @@ public class OrderControllerAPI {
     private OrderService orderService;
 
     @GetMapping
-    public List<OrderAPI> getAllOrders() {
-        return orderService.getAllOrders();
+    public ResponseEntity<List<OrderAPI>> getAllOrders() {
+        return ResponseEntity.ok(orderService.getAllOrders());
     }
 
     @GetMapping("/{id}")
@@ -29,17 +30,21 @@ public class OrderControllerAPI {
     }
 
     @PostMapping
-    public OrderAPI createOrder(@RequestBody OrderAPI order) {
-        return orderService.saveOrder(order);
+    public ResponseEntity<OrderAPI> createOrder(@RequestBody OrderAPI order) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(orderService.saveOrder(order));
     }
 
     @PutMapping("/{id}/status")
     public ResponseEntity<String> updateOrderStatus(@PathVariable int id, @RequestParam String status) {
-        boolean updated = orderService.updateOrderStatus(id, status);
-        if (updated) {
-            return ResponseEntity.ok("Order status updated successfully");
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return orderService.updateOrderStatus(id, status)
+                ? ResponseEntity.ok("Order status updated successfully")
+                : ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteOrder(@PathVariable int id) {
+        return orderService.deleteOrder(id)
+                ? ResponseEntity.noContent().build()
+                : ResponseEntity.notFound().build();
     }
 }
