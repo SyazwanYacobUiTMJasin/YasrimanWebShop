@@ -19,8 +19,36 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/signup")
-    public String signUp(@RequestBody User user) throws MessagingException {
+    public EmailResponse signUp(@RequestBody User user) throws MessagingException {
         String emailContent =  userService.registerUser(user);
-        return emailContent;
+        return new EmailResponse(user.getEmail(), emailContent);
+    }
+
+    // Inner class for JSON response structure
+    private static class EmailResponse {
+        private String email;
+        private String emailContent;
+
+        public EmailResponse(String email, String emailContent) {
+            this.email = email;
+            this.emailContent = emailContent;
+        }
+
+        // Getters and setters (optional, depending on your needs)
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
+        }
+
+        public String getEmailContent() {
+            return emailContent;
+        }
+
+        public void setEmailContent(String emailContent) {
+            this.emailContent = emailContent;
+        }
     }
 }
