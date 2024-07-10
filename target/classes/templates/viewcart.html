@@ -21,7 +21,7 @@
     <div class="logintext">
         <div class="searchdiv">
             <img src="https://svgshare.com/i/177L.svg" alt="" />
-            <input type="text" placeholder="Search" name="search" autocomplete="off" />
+            <input type="text" placeholder="Search" name="search" autocomplete="off" id="searchInput"/>
         </div>
         <div th:if="${session.accountusername != null}">
             <a th:href="@{/viewcustomeraccount(uid=${session.loggedinaccountid},from=index)}">
@@ -93,5 +93,18 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="./js/viewcart.js"></script>
 <script src="./js/loading.js"></script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    document.getElementById('searchInput').addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            const query = event.target.value;
+            localStorage.setItem('searchQuery', query);
+            window.location.href = 'inventory?action=viewallproducts';
+        }
+    });
+    /*]]>*/
+    
+</script>
 </body>
 </html>
