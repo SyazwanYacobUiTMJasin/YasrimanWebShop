@@ -69,18 +69,23 @@ document.addEventListener('DOMContentLoaded', function () {
     const addToCartButtons = document.querySelectorAll('.add-to-cart');
 
     addToCartButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            const gridItem = button.closest('.grid-item');
-            const title = gridItem.querySelector('h3').textContent;
-            const price = parseFloat(gridItem.querySelector('.price').textContent.replace('RM', ''));
-            const imgSrc = gridItem.querySelector('img').src;
-            const inventoryID = gridItem.querySelector('.inventoryID').value;
-            const maxStock = parseInt(gridItem.querySelector('.stock').textContent.split(': ')[1]);
+        const gridItem = button.closest('.grid-item');
+        const maxStock = parseInt(gridItem.querySelector('.stock').textContent.split(': ')[1]);
+        
+        if (maxStock === 0) {
+            button.disabled = true;
+            button.style.opacity = 0.5;
+        } else {
+            button.addEventListener('click', function () {
+                const title = gridItem.querySelector('h3').textContent;
+                const price = parseFloat(gridItem.querySelector('.price').textContent.replace('RM', ''));
+                const imgSrc = gridItem.querySelector('img').src;
+                const inventoryID = gridItem.querySelector('.inventoryID').value;
 
-            addToCart({ title, price, imgSrc, inventoryID, maxStock });
-
-            updateButtonState(button, inventoryID);
-        });
+                addToCart({ title, price, imgSrc, inventoryID, maxStock });
+                updateButtonState(button, inventoryID);
+            });
+        }
     });
 
     function addToCart(item) {
@@ -95,8 +100,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
         } else {
-            item.quantity = 1;
-            cart.push(item);
+            if (item.maxStock > 0) {
+                item.quantity = 1;
+                cart.push(item);
+            } else {
+                alert('This item is out of stock.');
+                return;
+            }
         }
 
         localStorage.setItem('cart', JSON.stringify(cart));
@@ -124,9 +134,11 @@ document.addEventListener('DOMContentLoaded', function () {
             }, 1000);
         }
     }
-// Initial update of all buttons
+
+    // Initial update of all buttons
     addToCartButtons.forEach(button => {
         const inventoryID = button.closest('.grid-item').querySelector('.inventoryID').value;
         updateButtonState(null, inventoryID);
     });
 });
+
