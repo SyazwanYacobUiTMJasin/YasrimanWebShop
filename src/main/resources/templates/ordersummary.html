@@ -77,7 +77,7 @@
                 <tr th:each="item : ${orderItems}">
                     <td th:text="${item.inventoryName}"></td>
                     <td th:text="${item.orderQuantity}"></td>
-                    <td th:text="'RM ' + ${item.orderTotalPrice}"></td>
+                    <td th:text="'RM ' + ${#numbers.formatDecimal(item.orderTotalPrice, 2, 2)}"></td>
                 </tr>
             </tbody>
         </table>
