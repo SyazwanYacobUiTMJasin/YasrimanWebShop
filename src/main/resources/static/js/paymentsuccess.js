@@ -15,7 +15,8 @@ window.onload = function() {
     
         // Display the subtotal in the respective element
         document.getElementById('amountPaid').textContent = subtotal.toFixed(2);
+        localStorage.clear();
     });
 
     
-localStorage.clear();
+

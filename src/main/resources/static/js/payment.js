@@ -31,12 +31,34 @@ var popupContainer = document.getElementById("popupContainer");
       function closeEditModal() {
         popupContainer.style.display = "none";
       }
-      function confirmCancel() {
-        var userConfirmation = confirm("Are you sure you want to cancel the payment and go back to the cart?");
-        if (userConfirmation) {
-          window.location.href = 'cart';
-        }
-      }
+      // function confirmCancel() {
+      //   var userConfirmation = confirm("Are you sure you want to cancel the payment and go back to the cart?");
+      //   if (userConfirmation) {
+      //     window.location.href = 'cart';
+      //   }
+      // }
+      // In payment.js
+function confirmCancel() {
+  var userConfirmation = confirm("Are you sure you want to cancel the payment and go back to the cart?");
+  if (userConfirmation) {
+      // Clear the order details from the session
+      fetch('/order/clearOrderSession', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ userId: '<%= session.getAttribute("loggedinaccountid") %>' }) // Adjust this based on how you're storing the user ID
+      })
+      .then(response => {
+          if (response.ok) {
+              window.location.href = 'viewcart';
+          } else {
+              alert('Failed to clear order session');
+          }
+      });
+  }
+}
+
       
 document.addEventListener('DOMContentLoaded', function () {
         const payNowBtn = document.getElementById('payNowBtn');

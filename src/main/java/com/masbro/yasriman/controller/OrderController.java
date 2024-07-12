@@ -1,6 +1,7 @@
 package com.masbro.yasriman.controller; 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -158,31 +159,34 @@ public String showOrderDetails(HttpServletRequest request, HttpServletResponse r
                 return "redirect:/editcustomeraccount?uid="+accountId; // Redirect to an error page or handle appropriately
             }  else
             {
-                String cartDataJson = request.getParameter("cartData");
-                System.out.println("Received cart data: " + cartDataJson);
-                
-                if (cartDataJson == null || cartDataJson.isEmpty()) {
-                    session.setAttribute("errorMessage", "Cart data is missing or invalid");
-                    return "redirect:/error";
-                }
-                
-                try {
-                    // URL-decode the cart data
-                    String decodedCartData = URLDecoder.decode(cartDataJson, StandardCharsets.UTF_8.toString());
-                    System.out.println("Decoded cart data: " + decodedCartData);
+                if (session.getAttribute("orders") == null) {
+                    String cartDataJson = request.getParameter("cartData");
+                    System.out.println("Received cart data: " + cartDataJson);
                     
-                    // Process the decoded cart data
-                    processCartData(request, response, decodedCartData, accountId);
-                    return "redirect:/payment?action=viewform&uid=" + accountId;
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                    session.setAttribute("errorMessage", "Error processing cart data: " + ex.getMessage());
-                    return "redirect:/error";
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                    session.setAttribute("errorMessage", "Unexpected error: " + ex.getMessage());
-                    return "redirect:/error";
+                    if (cartDataJson == null || cartDataJson.isEmpty()) {
+                        session.setAttribute("errorMessage", "Cart data is missing or invalid");
+                        return "redirect:/error";
+                    }
+                    
+                    try {
+                        // URL-decode the cart data
+                        String decodedCartData = URLDecoder.decode(cartDataJson, StandardCharsets.UTF_8.toString());
+                        System.out.println("Decoded cart data: " + decodedCartData);
+                        
+                        // Process the decoded cart data
+                        processCartData(request, response, decodedCartData, accountId);
+                        return "redirect:/payment?action=viewform&uid=" + accountId;
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                        session.setAttribute("errorMessage", "Error processing cart data: " + ex.getMessage());
+                        return "redirect:/error";
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        session.setAttribute("errorMessage", "Unexpected error: " + ex.getMessage());
+                        return "redirect:/error";
+                    }
                 }
+                return "redirect:/payment?action=viewform&uid=" + accountId;
             }
         }
     }
@@ -319,5 +323,12 @@ public String showOrderDetails(HttpServletRequest request, HttpServletResponse r
     public String handleIOException(Exception ex, Model model) {
         model.addAttribute("errorMessage", ex.getMessage());
         return "error";
+    }
+
+    @PostMapping("/clearOrderSession")
+    @ResponseBody
+    public ResponseEntity<String> clearOrderSession(HttpSession session) {
+        session.removeAttribute("orders");
+        return ResponseEntity.ok("Order session cleared");
     }
 }
