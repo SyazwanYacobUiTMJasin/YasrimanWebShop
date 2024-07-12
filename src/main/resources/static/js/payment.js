@@ -51,7 +51,7 @@ function confirmCancel() {
       })
       .then(response => {
           if (response.ok) {
-              window.location.href = 'viewcart';
+              window.location.href = 'cart';
           } else {
               alert('Failed to clear order session');
           }
