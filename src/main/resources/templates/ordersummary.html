@@ -59,7 +59,7 @@
     <h2>Order Details</h2>
     <div class="details">
         <p>Order ID: <span th:text="${order.orderId}"></span></p>
-        <p>Order Date: <span th:text="${#dates.format(order.orderDateUtil, 'yyyy-MM-dd HH:mm:ss')}"></span></p>
+        <p>Order Date: <span th:text="${#temporals.format(order.orderDate, 'MMM d, yyyy h:mm a')}"></span></p>
         <p>Order Status: <span th:text="${order.orderStatus}"></span></p>
     </div>
 
