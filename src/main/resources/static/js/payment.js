@@ -17,6 +17,8 @@ document.addEventListener('DOMContentLoaded', function () {
               // Display the values in the respective elements
               document.getElementById('subtotal').textContent = subtotal.toFixed(2);
               document.getElementById('total').textContent = total.toFixed(2);
+
+              localStorage.setItem('subtotal', subtotal.toFixed(2));
           });
           
           
