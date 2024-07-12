@@ -155,7 +155,7 @@ public String showOrderDetails(HttpServletRequest request, HttpServletResponse r
                 accountCity == null || accountCity.isEmpty() ||
                 accountState == null || accountState.isEmpty() ||
                 accountPoscode <=0) {
-                session.setAttribute("errorMessage", "Please complete your address information");
+                session.setAttribute("errorMessage", "Please check you address make sure it is correct");
                 return "redirect:/editcustomeraccount?uid="+accountId; // Redirect to an error page or handle appropriately
             }  else
             {
