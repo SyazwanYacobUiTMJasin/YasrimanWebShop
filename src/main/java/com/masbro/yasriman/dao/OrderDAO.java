@@ -52,7 +52,8 @@ public class OrderDAO {
                     + "    ORDERS.orderdate, \r\n"
                     + "    ACCOUNTS.accountusername, \r\n"
                     + "    ORDERS.orderstatus, \r\n"
-                    + "    PAYMENT.paymentstatus";
+                    + "    PAYMENT.paymentstatus\r\n"
+                    + "ORDER BY 1 desc";
     private static final String SELECT_ORDER_ITEMS_BY_ORDER_ID = "SELECT " +
                     "inventory.inventoryname, " +
                     "inventory.inventoryimage, " +
