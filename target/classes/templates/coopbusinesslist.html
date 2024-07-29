@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Yasriman | Products</title>
+    <title>Yasriman | Coop Business List</title>
     <link rel="icon" th:href="@{https://i.ibb.co/F7PH3zS/logo.jpg}" type="image/png">
     <link rel="stylesheet" th:href="@{/css/product.css}"/>
     <link rel="stylesheet" th:href="@{/css/animation.css}"/>
@@ -62,7 +62,7 @@
         <div th:each="business : ${businesses}" class="list-item fade-in-up delay-1">
             <div class="business-layout-details">
                 <div class="business-row">
-                    <span>Owner Name: <strong th:text="${business.ownerName}"></strong></span>
+                    <span>Owner Name: <h3 th:text="${business.ownerName}"></h3></span>
                     <span>Business Type: <strong th:text="${business.businessType}"></strong></span>
                     <span>Owner Email: <strong th:text="${business.ownerEmail}"></strong></span>
                 </div>
