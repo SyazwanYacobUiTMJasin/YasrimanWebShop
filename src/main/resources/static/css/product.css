@@ -610,3 +610,18 @@ input[type="submit"]:hover{
   font-size: 16px;
   padding: 20px 30px;
 }
+
+.business-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  margin-bottom: 1rem;
+}
+
+.business-row span {
+  margin-right: 1rem;
+}
