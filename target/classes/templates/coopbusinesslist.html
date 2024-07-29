@@ -62,9 +62,9 @@
         <div th:each="business : ${businesses}" class="list-item fade-in-up delay-1">
             <div class="business-layout-details">
                 <div>
-                    <h3 th:text="${business.ownerName}">Owner Name</h3>
-                    <p th:text="${business.businessType}">Business Type</p>
-                    <p th:text="${business.ownerEmail}">Owner Email</p>
+                    Owner Name: <h3 th:text="${business.ownerName}"></h3>
+                    Business Type: <p th:text="${business.businessType}"></p>
+                    Owner Email: <p th:text="${business.ownerEmail}"></p>
                 </div>
                 <div>
                     <a th:href="@{'https://coop-management-2024-f4cb6cd5cd97.herokuapp.com/viewBusinessDetails?businessID=' + ${business.businessID}}">
