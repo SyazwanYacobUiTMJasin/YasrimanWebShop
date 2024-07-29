@@ -67,8 +67,8 @@
                     <span>Owner Email: <strong th:text="${business.ownerEmail}"></strong></span>
                 </div>
                 <div>
-                    <a th:href="@{'https://coop-management-2024-f4cb6cd5cd97.herokuapp.com/viewBusinessDetails?businessID=' + ${business.businessID}}">
-                        <button>View</button>
+                    <a>
+                        <button onclick="viewBusiness('${business.businessID}')">View</button>
                     </a>
                 </div>
             </div>
@@ -77,6 +77,16 @@
     <div id="noResults" style="display: none">No items match your search.</div>
 </div>
 
+<script>
+    function viewBusiness(businessID) {
+    const url = `https://coop-management-2024-f4cb6cd5cd97.herokuapp.com/viewBusinessDetails?businessID=${businessID}`;
+    const confirmation = confirm("This action will open a new tab. Do you want to proceed?");
+
+    if (confirmation) {
+        window.open(url, '_blank'); // Opens the URL in a new tab
+    }
+}
+</script>
 <script src="./js/product.js"></script>
 <script src="./js/loading.js"></script>
 
