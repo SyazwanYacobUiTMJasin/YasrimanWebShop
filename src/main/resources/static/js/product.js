@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     const searchInput = document.getElementById('searchInput');
-    const businessRows = document.querySelectorAll('.list-container');
+    const businessRows = document.querySelectorAll('.list-item');
     const noResults = document.getElementById('noResults');
 
     searchInput.addEventListener('keyup', function () {
@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let hasVisibleItems = false;
 
         businessRows.forEach(function (item) {
-            const ownerName = item.querySelector('span strong').textContent.toLowerCase();
+            const ownerName = item.querySelector('.business-row strong').textContent.toLowerCase();
 
             if (ownerName.indexOf(filter) > -1) {
                 item.style.display = '';
@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
 
 
 document.addEventListener('DOMContentLoaded', function () {
