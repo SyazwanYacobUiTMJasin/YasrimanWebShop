@@ -67,7 +67,7 @@
                     <span>Owner Email: <strong th:text="${business.ownerEmail}"></strong></span>
                 </div>
                 <div>
-                    <button onclick="viewBusiness('${business.businessID}')">View</button>
+                    <button onclick="viewBusiness(this)" data-business-id="${business.businessID}">View</button>
                 </div>
             </div>
         </div>
@@ -76,7 +76,9 @@
 </div>
 
 <script>
-    function viewBusiness(businessID) {
+    function viewBusiness(button) {
+    // Dapatkan ID perniagaan dari atribut data
+    const businessID = button.getAttribute('data-business-id');
     const url = `https://coop-management-2024-f4cb6cd5cd97.herokuapp.com/viewBusinessDetails?businessID=${encodeURIComponent(businessID)}`;
     const confirmation = confirm("This action will open a new tab. Do you want to proceed?");
 
@@ -84,6 +86,7 @@
         window.open(url, '_blank'); // Opens the URL in a new tab
     }
 }
+
 
 </script>
 <script src="./js/product.js"></script>
