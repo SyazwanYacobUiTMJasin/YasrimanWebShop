@@ -1,16 +1,16 @@
 document.addEventListener('DOMContentLoaded', function () {
     const searchInput = document.getElementById('searchInput');
-    const gridItems = document.querySelectorAll('.business-row');
+    const businessRows = document.querySelectorAll('.business-row');
     const noResults = document.getElementById('noResults');
 
     searchInput.addEventListener('keyup', function () {
         const filter = searchInput.value.toLowerCase();
         let hasVisibleItems = false;
 
-        gridItems.forEach(function (item) {
-            const title = item.querySelector('h3').textContent.toLowerCase();
+        businessRows.forEach(function (item) {
+            const ownerName = item.querySelector('span strong').textContent.toLowerCase();
 
-            if (title.indexOf(filter) > -1) {
+            if (ownerName.indexOf(filter) > -1) {
                 item.style.display = '';
                 hasVisibleItems = true;
             } else {
@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
 
 document.addEventListener('DOMContentLoaded', function () {
     const query = localStorage.getItem('searchQuery') || '';
