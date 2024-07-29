@@ -613,7 +613,7 @@ input[type="submit"]:hover{
 
 .business-row {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: flex-start;
   padding: 1rem;
   border: 1px solid #ccc;
@@ -622,6 +622,7 @@ input[type="submit"]:hover{
   margin-bottom: 1rem;
   flex-direction: column;
   gap: 10px;
+  width: 50%;
 }
 
 .business-row span {
