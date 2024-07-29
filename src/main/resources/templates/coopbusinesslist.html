@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Yasriman | Products</title>
+    <link rel="icon" th:href="@{https://i.ibb.co/F7PH3zS/logo.jpg}" type="image/png">
+    <link rel="stylesheet" th:href="@{/css/product.css}"/>
+    <link rel="stylesheet" th:href="@{/css/animation.css}"/>
+    <link rel="stylesheet" th:href="@{/css/loading.css}"/>
+    <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css}"/>
+</head>
+<body>
+<div id="loading-screen">
+    <video id="loading-video" autoplay loop muted>
+        <source th:src="@{/video/loadingscreen.mp4}" type="video/mp4">
+    </video>
+</div>
+<div class="navbarbg">
+    <a href="./index.html"><h2>YASRIMAN</h2></a>
+    <div class="logintext">
+        <div class="searchdiv">
+            <img src="https://svgshare.com/i/177L.svg" alt="" draggable="false"/>
+            <input id="searchInput" type="text" placeholder="Search" name="search" autocomplete="off"/>
+        </div>
+        <div th:if="${session.accountusername != null}">
+            <a th:href="@{/viewcustomeraccount(uid=${session.loggedinaccountid},from=index)}">
+                <span th:text="${session.accountusername}"></span>
+                <div class="loginicon">
+                    <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/fee6b20cb0abd925cc4a3bda7cf3fa3366c37bcc07b2da638108c5651aca2ad0?apiKey=8730b69884724863a1e8089b99726052&" class="img" draggable="false" />
+                </div>
+            </a>
+        </div>
+        <div th:unless="${session.accountusername != null}">
+            <a th:href="@{signup}">
+                Sign In/Sign Up
+                <div class="loginicon">
+                    <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/fee6b20cb0abd925cc4a3bda7cf3fa3366c37bcc07b2da638108c5651aca2ad0?apiKey=8730b69884724863a1e8089b99726052&" class="img" draggable="false" />
+                </div>
+            </a>
+        </div>
+    </div>
+    <div th:if="${session.accountrole == 'Staff' || session.accountrole == 'Supervisor'}">
+        <a th:href="@{/staffdashboard}">DASHBOARD</a>
+    </div>
+    <div class="navlinks">
+        <a href="/"  >HOME</a>
+        <a href="inventory?action=viewallproducts">PRODUCTS</a>
+        <a href="cart">CART</a>
+        <a th:href="@{/order(action=history, uid=${session.loggedinaccountid})}">ORDER HISTORY</a>
+        <a th:href="@{/coopbusinesslist}"  class="active">API Coop Businesses List</a>
+
+    </div>
+</div>
+
+<div class="gridallprod">
+    <h1>All Coop Businesses List</h1>
+    <div class="list-container">
+        <div th:if="${businesses.isEmpty()}">
+            <div id="noResults">No businesses currently available right now.</div>
+        </div>
+        <div th:each="business : ${businesses}" class="list-item fade-in-up delay-1">
+            <div class="business-layout-details">
+                <div>
+                    <h3 th:text="${business.ownerName}">Owner Name</h3>
+                    <p th:text="${business.businessType}">Business Type</p>
+                    <p th:text="${business.ownerEmail}">Owner Email</p>
+                </div>
+                <div>
+                    <a th:href="@{'https://coop-management-2024-f4cb6cd5cd97.herokuapp.com/viewBusinessDetails?businessID=' + ${business.businessID}}">
+                        <button>View</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="noResults" style="display: none">No items match your search.</div>
+</div>
+
+<script src="./js/product.js"></script>
+<script src="./js/loading.js"></script>
+
+</body>
+</html>

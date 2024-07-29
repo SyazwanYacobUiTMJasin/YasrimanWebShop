@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     const searchInput = document.getElementById('searchInput');
-    const gridItems = document.querySelectorAll('.grid-item');
+    const gridItems = document.querySelectorAll('.list-container');
     const noResults = document.getElementById('noResults');
 
     searchInput.addEventListener('keyup', function () {
