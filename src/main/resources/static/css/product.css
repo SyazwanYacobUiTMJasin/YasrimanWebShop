@@ -614,13 +614,14 @@ input[type="submit"]:hover{
 .business-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   padding: 1rem;
   border: 1px solid #ccc;
   border-radius: 5px;
   background-color: #f9f9f9;
   margin-bottom: 1rem;
   flex-direction: column;
+  gap: 10px;
 }
 
 .business-row span {
