@@ -21,7 +21,7 @@
     <div class="logintext">
         <div class="searchdiv">
             <img src="https://svgshare.com/i/177L.svg" alt="" draggable="false"/>
-            <input id="searchInput" type="text" placeholder="Search" name="search" autocomplete="off"/>
+            <input id="searchInput" type="text" placeholder="Search by owner name" name="search" autocomplete="off"/>
         </div>
         <div th:if="${session.accountusername != null}">
             <a th:href="@{/viewcustomeraccount(uid=${session.loggedinaccountid},from=index)}">
