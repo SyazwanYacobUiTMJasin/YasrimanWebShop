@@ -142,37 +142,38 @@ public String showOrderDetails(HttpServletRequest request, HttpServletResponse r
         String accountStreet = (String) session.getAttribute("accountstreet");
         String accountCity = (String) session.getAttribute("accountcity");
         String accountState = (String) session.getAttribute("accountstate");
-        int accountPoscode = (int) session.getAttribute("accountpostalcode");
+
+        // Use Integer instead of int to handle the possibility of a null value
+        Integer accountPoscode = (Integer) session.getAttribute("accountpostalcode");
+
         System.out.println(accountId + " FROM ORDER CONTROLLER CHECKSIGNINSTATUS");
-        
-        if (accountId == null || accountId.isEmpty() ) {
+
+        if (accountId == null || accountId.isEmpty()) {
             session.setAttribute("signinerror", "Please sign in first");
             return "redirect:/signin";
         } else {
-
-            // Check if any address field is empty
+            // Check if any address field is empty or postal code is null or invalid
             if (accountStreet == null || accountStreet.isEmpty() ||
                 accountCity == null || accountCity.isEmpty() ||
                 accountState == null || accountState.isEmpty() ||
-                accountPoscode <=0) {
-                session.setAttribute("errorMessage", "Please check you address make sure it is correct");
-                return "redirect:/editcustomeraccount?uid="+accountId; // Redirect to an error page or handle appropriately
-            }  else
-            {
+                accountPoscode == null || accountPoscode <= 0) {
+                session.setAttribute("errorMessage", "Please check your address and make sure it is correct");
+                return "redirect:/editcustomeraccount?uid=" + accountId; // Redirect to an error page or handle appropriately
+            } else {
                 if (session.getAttribute("orders") == null) {
                     String cartDataJson = request.getParameter("cartData");
                     System.out.println("Received cart data: " + cartDataJson);
-                    
+
                     if (cartDataJson == null || cartDataJson.isEmpty()) {
                         session.setAttribute("errorMessage", "Cart data is missing or invalid");
                         return "redirect:/error";
                     }
-                    
+
                     try {
                         // URL-decode the cart data
                         String decodedCartData = URLDecoder.decode(cartDataJson, StandardCharsets.UTF_8.toString());
                         System.out.println("Decoded cart data: " + decodedCartData);
-                        
+
                         // Process the decoded cart data
                         processCartData(request, response, decodedCartData, accountId);
                         return "redirect:/payment?action=viewform&uid=" + accountId;
@@ -190,6 +191,7 @@ public String showOrderDetails(HttpServletRequest request, HttpServletResponse r
             }
         }
     }
+
 
     private void processCartData(HttpServletRequest request, HttpServletResponse response,
                              String cartDataJson, String accountId) throws SQLException, ServletException, IOException {
