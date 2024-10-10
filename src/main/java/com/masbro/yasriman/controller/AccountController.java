@@ -20,8 +20,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.masbro.yasriman.dao.AccountDAO;
 import com.masbro.yasriman.dao.DashboardDAO;
-import com.masbro.yasriman.emailapi.controller.UserController;
-import com.masbro.yasriman.emailapi.entity.User;
+// import com.masbro.yasriman.emailapi.controller.UserController;
+// import com.masbro.yasriman.emailapi.entity.User;
 import com.masbro.yasriman.model.accounts;
 import com.masbro.yasriman.model.orders;
 
@@ -45,8 +45,8 @@ public class AccountController extends HttpServlet {
 
      private final AccountDAO AccountDAO;
 
-    @Autowired
-    private UserController userController;
+    // @Autowired
+    // private UserController userController;
 
     private final DashboardDAO DashboardDAO;
 
@@ -98,8 +98,8 @@ public class AccountController extends HttpServlet {
                 session.setAttribute("accountemail", accountemail);
                 session.setAttribute("accountrole", "Customer");
                 session.setAttribute("signinerror", "null");
-                User user = new User(accountfirstname, accountlastname, accountusername, accountemail, accountpassword, accountphonenum);
-                userController.signUp(user);
+                // User user = new User(accountfirstname, accountlastname, accountusername, accountemail, accountpassword, accountphonenum);
+                // userController.signUp(user);
                 return "redirect:/signin"; // Redirect to the signin form
             }
         } catch (SQLException e) {

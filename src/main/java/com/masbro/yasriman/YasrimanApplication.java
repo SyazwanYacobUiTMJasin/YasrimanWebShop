@@ -9,7 +9,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.masbro.yasriman.emailapi.service.EmailSenderService;
+// import com.masbro.yasriman.emailapi.service.EmailSenderService;
 
 @SpringBootApplication
 @Controller
