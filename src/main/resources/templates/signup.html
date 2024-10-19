@@ -1,68 +1,151 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Yasriman | Sign Up</title>
-    <link rel="icon" href="/images/logo.jpeg" type="image/png">
+    <link rel="icon" href="/images/logo.jpeg" type="image/png" />
     <link rel="stylesheet" href="./css/signup.css" />
-    <link rel="stylesheet" href="./css/animation.css">
-    <link rel="stylesheet" href="./css/loading.css">
-
-</head>
-<body>
+    <link rel="stylesheet" href="./css/animation.css" />
+    <link rel="stylesheet" href="./css/loading.css" />
+  </head>
+  <body>
     <div id="loading-screen">
-        <video id="loading-video" autoplay loop muted>
-          <source src="./video/loadingscreen.mp4" type="video/mp4">
-        </video>
-      </div>
+      <video id="loading-video" autoplay loop muted>
+        <source src="./video/loadingscreen.mp4" type="video/mp4" />
+      </video>
+    </div>
     <div class="all">
-        <div class="formcontainer fade-in-up delay-1">
-            <div class="imagedisplay">
-                <img src="/images/signupimage.png" alt="image" draggable="false" />
-            </div>
-            <div class="formcontent fade-in-up delay-1">
-                <h1>SIGN UP</h1>
-                <form th:action="@{/signup}" method="post" onsubmit="return validateForm()">
-                    <div class="firstline">
-                        <input type="text" id="firstname" name="firstname" placeholder="First Name" autocomplete="off" required />
-                        <br />
-                        <input type="text" id="lastname" name="lastname" placeholder="Last Name" autocomplete="off" required />
-                        <br />
-                    </div>
-                    <div class="secondline">
-                        <input type="text" id="username" name="username" placeholder="Username" autocomplete="off" required />
-                        <br />
-                        <p th:if="${session.emailerror != null}" style="color: red; font-weight: 500;" th:text="${session.emailerror}"></p>
-                        <input type="email" id="email" name="email" placeholder="Email" autocomplete="off" required />
-                        <br />
-                        <div class="passwordgroup">
-                            <input type="password" id="password" name="password" placeholder="Password" autocomplete="off" required />
-                            <br />
-                            <img class="eyeToggle" src="https://svgshare.com/i/176H.svg" draggable="false" alt="Show Password" onclick="togglePasswordVisibility('password')" />
-                        </div>
-                        <div class="passwordgroup">
-                            <input type="password" id="confirmpassword" name="confirmpassword" placeholder="Confirm Password" autocomplete="off" required />
-                            <br />
-                            <img class="eyeToggle" src="https://svgshare.com/i/176H.svg" draggable="false" alt="Show Password" onclick="togglePasswordVisibility('confirmpassword')" />
-                        </div>
-                        <input type="tel" id="phone" name="phone" placeholder="Phone Number" autocomplete="off" value="+60" required />
-                        <br />
-                    </div>
-                    <div class="signintext">
-                        <p>Already have an account?</p>
-                        <a th:href="@{/signin}">Sign In</a>
-                    </div>
-                    <div class="buttons">
-                        <input type="submit" value="Sign Up" />
-                    </div>
-                    <a th:href="@{/}" class="returnhome">Return Home</a>
-                </form>
-            </div>
+      <div class="formcontainer fade-in-up delay-1">
+        <div class="imagedisplay">
+          <img src="/images/signupimage.png" alt="image" draggable="false" />
         </div>
+        <div class="formcontent fade-in-up delay-1">
+          <h1>SIGN UP</h1>
+          <form
+            th:action="@{/signup}"
+            method="post"
+            onsubmit="return validateForm()"
+          >
+            <div class="firstline">
+              <input
+                type="text"
+                id="firstname"
+                name="firstname"
+                placeholder="First Name"
+                autocomplete="off"
+                required
+              />
+              <br />
+              <input
+                type="text"
+                id="lastname"
+                name="lastname"
+                placeholder="Last Name"
+                autocomplete="off"
+                required
+              />
+              <br />
+            </div>
+            <div class="secondline">
+              <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="Username"
+                autocomplete="off"
+                required
+              />
+              <br />
+              <p
+                th:if="${session.emailerror != null}"
+                style="color: red; font-weight: 500"
+                th:text="${session.emailerror}"
+              ></p>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Email"
+                autocomplete="off"
+                required
+              />
+              <br />
+              <div class="passwordgroup">
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder="Password"
+                  autocomplete="off"
+                  required
+                />
+                <br />
+                <img
+                  class="eyeToggle"
+                  src="https://svgshare.com/i/176H.svg"
+                  draggable="false"
+                  alt="Show Password"
+                  onclick="togglePasswordVisibility('password')"
+                />
+              </div>
+              <div class="passwordgroup">
+                <input
+                  type="password"
+                  id="confirmpassword"
+                  name="confirmpassword"
+                  placeholder="Confirm Password"
+                  autocomplete="off"
+                  required
+                />
+                <br />
+                <img
+                  class="eyeToggle"
+                  src="https://svgshare.com/i/176H.svg"
+                  draggable="false"
+                  alt="Show Password"
+                  onclick="togglePasswordVisibility('confirmpassword')"
+                />
+              </div>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                placeholder="Phone Number"
+                autocomplete="off"
+                value="+60"
+                required
+              />
+              <br />
+              <div class="accountrole">
+                <div>
+                    <input type="radio" id="Supervisor" name="role" value="Supervisor" required />
+                    <label for="Supervisor">Supervisor</label>
+                </div>
+                <div>
+                    <input type="radio" id="Staff" name="role" value="Staff" required />
+                    <label for="Staff">Staff</label>
+                </div>
+                <div>
+                    <input type="radio" id="Customer" name="role" value="Customer" required />
+                    <label for="Customer">Customer</label>
+                </div>
+            </div>
+            </div>
+            <div class="signintext">
+              <p>Already have an account?</p>
+              <a th:href="@{/signin}">Sign In</a>
+            </div>
+            <div class="buttons">
+              <input type="submit" value="Sign Up" />
+            </div>
+            <a th:href="@{/}" class="returnhome">Return Home</a>
+          </form>
+        </div>
+      </div>
     </div>
     <script src="./js/loading.js"></script>
-    
+
     <script src="./js/signup.js"></script>
-</body>
+  </body>
 </html>

@@ -20,13 +20,14 @@ public class accounts {
 	public accounts() {
 	}
 	
-	public accounts(String firstname, String lastname, String username, String email, String password, String phonenum) {
+	public accounts(String firstname, String lastname, String username, String email, String password, String phonenum,String role) {
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.username = username;
 		this.email = email;
 		this.password = password;
 		this.phonenum = phonenum;
+		this.role = role;
 	}
 	
 	 
@@ -179,4 +180,11 @@ public class accounts {
 	public void setPicture(byte[] picture) {
 		this.picture = picture;
 	}
+
+
+	
 }
+
+
+
+	

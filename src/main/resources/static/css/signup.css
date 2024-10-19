@@ -292,3 +292,11 @@ input[type="tel"]:focus {
     transform: scale(0.8);
   }
 }
+
+.accountrole {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}

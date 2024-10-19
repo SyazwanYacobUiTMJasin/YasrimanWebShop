@@ -36,7 +36,7 @@ public class AccountDAO {
     }
 
     private static final String CHECK_DISTINCT_EMAIL_SQL = "SELECT accountemail FROM accounts WHERE accountemail = ?";
-    private static final String INSERT_ACCOUNT_SQL = "INSERT INTO accounts(accountfirstname, accountlastname, accountusername, accountemail, accountpassword, accountphonenum) VALUES (?, ?, ?, ?, ?, ?)";
+    private static final String INSERT_ACCOUNT_SQL = "INSERT INTO accounts(accountfirstname, accountlastname, accountusername, accountemail, accountpassword, accountphonenum,accountrole) VALUES (?, ?, ?, ?, ?, ?,?)";
     private static final String CHECK_ACCOUNT_AUTH = "SELECT accountid, accountrole, accountusername FROM accounts WHERE accountemail=? AND accountpassword=?";
     private static final String FETCH_ACCOUNT_BY_ID = "SELECT accountid, accountrole, accountusername FROM accounts WHERE accountid=?";
     private static final String LIST_ALL_ACCOUNT = "SELECT * FROM accounts ORDER BY accountid";
@@ -71,6 +71,7 @@ public class AccountDAO {
             ps.setString(4, newAccount.getEmail());
             ps.setString(5, newAccount.getPassword());
             ps.setString(6, newAccount.getPhonenum());
+            ps.setString(7, newAccount.getRole());
             ps.executeUpdate();
         } catch (SQLException e) {
             printSQLException(e);
@@ -435,4 +436,6 @@ public class AccountDAO {
         }
         return roles;
     }
+
+   
 }

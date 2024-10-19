@@ -75,37 +75,40 @@ public class AccountController extends HttpServlet {
     }
     
     @PostMapping("/signup")
-    public String createAccount(@RequestParam("firstname") String accountfirstname,
-                                @RequestParam("lastname") String accountlastname,
-                                @RequestParam("username") String accountusername,
-                                @RequestParam("email") String accountemail,
-                                @RequestParam("password") String accountpassword,
-                                @RequestParam("phone") String accountphonenum,
-                                HttpSession session) throws SQLException, IOException, ServletException, MessagingException {
-
-        accounts newAccount = new accounts(accountfirstname, accountlastname, accountusername, accountemail, accountpassword, accountphonenum);
-
-        try {
-            if (AccountDAO.isEmailExists(accountemail)) {
-                session.setAttribute("emailerror", "Email already exists");
-                return "redirect:/signup"; // Redirect back to the signup form
-            } else {
-                AccountDAO.insertAccount(newAccount);
-                session.setAttribute("accountusername", accountusername);
-                session.setAttribute("accountfirstname", accountfirstname);
-                session.setAttribute("accountlastname", accountlastname);
-                session.setAttribute("accountphonenum", accountphonenum);
-                session.setAttribute("accountemail", accountemail);
-                session.setAttribute("accountrole", "Customer");
-                session.setAttribute("signinerror", "null");
-                User user = new User(accountfirstname, accountlastname, accountusername, accountemail, accountpassword, accountphonenum);
-                userController.signUp(user);
-                return "redirect:/signin"; // Redirect to the signin form
-            }
-        } catch (SQLException e) {
-            throw new ServletException(e);
+public String createAccount(@RequestParam("firstname") String accountfirstname,
+                            @RequestParam("lastname") String accountlastname,
+                            @RequestParam("username") String accountusername,
+                            @RequestParam("email") String accountemail,
+                            @RequestParam("password") String accountpassword,
+                            @RequestParam("phone") String accountphonenum,
+                            @RequestParam("role") String accountrole,
+                            HttpSession session) throws SQLException, IOException, ServletException, MessagingException {
+    
+    accounts newAccount = new accounts(accountfirstname, accountlastname, accountusername, accountemail, accountpassword, accountphonenum, accountrole);
+    
+    try {
+        if (AccountDAO.isEmailExists(accountemail)) {
+            session.setAttribute("emailerror", "Email already exists");
+            return "redirect:/signup"; // Redirect back to the signup form
+        } else {
+            AccountDAO.insertAccount(newAccount);
+            session.setAttribute("accountusername", accountusername);
+            session.setAttribute("accountfirstname", accountfirstname);
+            session.setAttribute("accountlastname", accountlastname);
+            session.setAttribute("accountphonenum", accountphonenum);
+            session.setAttribute("accountemail", accountemail);
+            session.setAttribute("accountrole", accountrole);
+            session.setAttribute("signinerror", "null");
+            
+            User user = new User(accountfirstname, accountlastname, accountusername, accountemail, accountpassword, accountphonenum, accountrole);
+            userController.signUp(user);
+            
+            return "redirect:/signin"; // Redirect to the signin form
         }
+    } catch (SQLException e) {
+        throw new ServletException(e);
     }
+}
 
     @GetMapping("/signin")
     private String signinform( HttpSession session){
@@ -486,4 +489,5 @@ public class AccountController extends HttpServlet {
             response.sendRedirect("listallaccounts");
         }
     }
+    
 }

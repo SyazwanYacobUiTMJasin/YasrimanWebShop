@@ -55,6 +55,7 @@ public class User {
 
     @Column(name = "accountpostalcode")
     private Integer postalcode;
+    
 
     @Lob
     @Transient
@@ -66,14 +67,14 @@ public class User {
     // Constructors
     public User() {}
 
-    public User(String firstname, String lastname, String username, String email, String password, String phonenum) {
+    public User(String firstname, String lastname, String username, String email, String password, String phonenum, String role) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.username = username;
         this.email = email;
         this.password = password;
         this.phonenum = phonenum;
-        this.role = "Customer"; // Default role
+        this.role = role; 
     }
 
     public User(int id, Integer supervisorid, String role, String username, String password, String email, String firstname, String lastname, String phonenum,
