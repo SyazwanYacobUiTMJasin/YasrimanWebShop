@@ -172,6 +172,7 @@ public class AccountDAO {
 				account.setCity(rs.getString("accountcity"));
 				account.setPostalcode(rs.getInt("accountpostalcode"));
 				account.setPicture(rs.getBytes("accountpicture"));
+				account.setStatus(rs.getString("accountstatus"));
 				accounts.add(account);
 			}
 			

@@ -1,23 +1,27 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yasriman | Dashboard</title>    
+    <title>Yasriman | Dashboard</title>
     <link rel="icon" href="/images/logo.jpeg" type="image/png">
     <link rel="stylesheet" href="./css/accounts.css">
     <link rel="stylesheet" href="./css/animation.css">
     <link rel="stylesheet" href="./css/loading.css">
 
 </head>
+
 <body th:if="${session.accountrole == 'Staff' || session.accountrole == 'Supervisor'}">
     <div id="loading-screen">
         <video id="loading-video" autoplay loop muted>
-          <source src="./video/loadingscreen.mp4" type="video/mp4">
+            <source src="./video/loadingscreen.mp4" type="video/mp4">
         </video>
-      </div>
-      <div class="navbarbg">
-        <a href="/"><h2>YASRIMAN</h2></a>
+    </div>
+    <div class="navbarbg">
+        <a href="/">
+            <h2>YASRIMAN</h2>
+        </a>
         <div class="navlinks">
             <a href="/">HOME</a>
         </div>
@@ -56,20 +60,24 @@
                             <td th:text="${account.role}"></td>
                             <td th:text="${account.firstname}"></td>
                             <td th:text="${account.lastname}"></td>
-                            <td><a class="btn btn-info edit-btn" th:href="@{viewcustomeraccount(uid=${account.id}, from='dashboard')}">View</a></td>
-                            <td><a th:onclick="'confirmUpdate(' + ${account.id} + ')'" class="btn btn-primary update-btn" th:href="@{viewcustomeraccount(uid=${account.id}, from='dashboardupdate')}">Update</a></td>
+                            <td><a class="btn btn-info edit-btn"
+                                    th:href="@{viewcustomeraccount(uid=${account.id}, from='dashboard')}">View</a></td>
+                            <td><a th:onclick="'confirmUpdate(' + ${account.id} + ')'"
+                                    class="btn btn-primary update-btn"
+                                    th:href="@{viewcustomeraccount(uid=${account.id}, from='dashboardupdate')}">Update</a>
+                            </td>
                             <td>
-                                <a class="btn btn-primary delete-btn" 
-                                   th:onclick="'confirmDelete(' + ${account.id} + ')'">
+                                <a class="btn btn-primary delete-btn"
+                                    th:onclick="'confirmDelete(' + ${account.id} + ')'">
                                     Delete
                                 </a>
                             </td>
                         </tr>
                     </tbody>
-                <!-- </table>
+                </table>
             </div>
+            <h1>Pending Accounts</h1>
             <div class="pendingtable" th:if="${session.accountrole == 'Supervisor'}">
-                <h1>Pending Accounts</h1>
                 <table border="1">
                     <thead>
                         <tr>
@@ -83,32 +91,36 @@
                     </thead>
                     <tbody>
                         <tr th:each="account : ${accounts}" class="fade-in-up delay-1">
-                            <td th:text="${account.id}"></td>
-                            <td th:text="${account.email}"></td>
-                            <td th:text="${account.firstname}"></td>
-                            <td th:text="${account.lastname}"></td>
-                            <td><a class="btn btn-info edit-btn" th:href="@{viewcustomeraccount(uid=${account.id}, from='dashboard')}">View</a></td>
-                            <td>
-                                <a class="btn btn-success approve-btn" 
-                                th:onclick="'confirmApprove(' + ${account.id} + ')'">
-                                 Yes
-                             </a>
-                            </td>
-                            <td>
-                                <a class="btn btn-danger reject-btn" 
-   th:onclick="'confirmReject(' + ${account.id} + ')'">
-    No
-</a>
-                            </td>
-                            </td>
+                            <div th:if="${account.status} == 'pending' and ${account.role} == 'Staff'">
+                                <td th:text="${account.id}"></td>
+                                <td th:text="${account.email}"></td>
+                                <td th:text="${account.firstname}"></td>
+                                <td th:text="${account.lastname}"></td>
+                                <td><a class="btn btn-info edit-btn"
+                                        th:href="@{viewcustomeraccount(uid=${account.id}, from='dashboard')}">View</a></td>
+                                <td>
+                                    <a class="btn btn-success update-btn"
+                                        th:onclick="'confirmApprove(' + ${account.id} + ')'">
+                                        Yes
+                                    </a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-danger delete-btn"
+                                        th:onclick="'confirmReject(' + ${account.id} + ')'">
+                                        No
+                                    </a>
+                                </td>
+                                </td>
+                            </div>
                         </tr>
                     </tbody>
-                </table> -->
+                </table>
             </div>
         </div>
-    </div> 
+    </div>
     <input type="hidden" id="userRole" th:value="${session.accountrole}">
     <script src="./js/accounts.js"></script>
     <script src="./js/loading.js"></script>
 </body>
+
 </html>

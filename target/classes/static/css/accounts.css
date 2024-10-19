@@ -346,11 +346,12 @@ table {
 }
 
 .tablediv {
-  max-height: 400px; /* Height to show approximately 6 rows */
+  max-height: 225px; /* Height to show approximately 6 rows */
   overflow-y: auto;
   border: 1px solid #ddd;
   border-radius: 4px;
   margin-top: 10px;
+  margin-bottom: 10px;
   background-color: white;
 }
 
@@ -403,4 +404,16 @@ tr:hover {
   th, td {
     padding: 6px; /* Smaller padding for mobile */
   }
+}
+
+.pendingtable h1{
+  padding: 10px 0;
+  margin-top: 10px;
+
+}
+
+.pendingtable{
+
+  max-height: 210px;
+  margin-top: 20px;
 }
