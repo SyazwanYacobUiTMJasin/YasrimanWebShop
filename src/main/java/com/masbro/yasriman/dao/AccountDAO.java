@@ -211,9 +211,10 @@ public class AccountDAO {
                 int  accountpostalcode = rs.getInt("accountpostalcode");
                 byte[] accountpicture = rs.getBytes("accountpicture");
                 
+                String accountstatus = rs.getString("accountstatus");
                 int supervisorId = rs.getInt("supervisorid");
                 String supervisor = supervisorId > 0 ? getSupervisorNameById(supervisorId) : "N/A";
-				accounts = new accounts(accountidsql, accountrole, accountusername, accountpassword, accountemail, accountfirstname, accountlastname, accountphonenum, accountstreet, accountstate, accountcity, accountpostalcode, accountpicture, supervisor);
+				accounts = new accounts(accountidsql, accountrole, accountusername, accountpassword, accountemail, accountfirstname, accountlastname, accountphonenum, accountstreet, accountstate, accountcity, accountpostalcode, accountpicture, supervisor, accountstatus);
             }
 
             con.close();
