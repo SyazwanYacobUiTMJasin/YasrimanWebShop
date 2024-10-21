@@ -362,10 +362,14 @@ table {
   background-color: white;
 }
 
+.fullsizetableaccount{
+  max-height: 480px;
+}
+
 th {
-  position: relative;
+  position: sticky;
   top: 0;
-  background-color: #d5c7b24f;
+  background-color: #d5c7b2;
   z-index: 1;
   padding: 12px 8px;
   text-align: center;

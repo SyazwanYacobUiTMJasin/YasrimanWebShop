@@ -41,7 +41,7 @@ public class AccountDAO {
     private static final String FETCH_ACCOUNT_BY_ID = "SELECT accountid, accountrole, accountusername FROM accounts WHERE accountid=?";
     private static final String LIST_ALL_ACCOUNT = "SELECT * FROM accounts ORDER BY accountid";
     private static final String VIEW_ONE_ACCOUNT = "SELECT * FROM accounts WHERE accountid=?";
-    private static final String UPDATE_CUSTOMER_ACCOUNT = "UPDATE accounts SET accountrole=?, accountusername=?, accountfirstname=?, accountlastname=?, accountpassword=?, accountemail=?, accountphonenum=?, accountstreet=?, accountstate=?, accountcity=?, accountpostalcode=?, supervisorid=? WHERE accountid=?";
+    private static final String UPDATE_CUSTOMER_ACCOUNT = "UPDATE accounts SET accountrole=?, accountusername=?, accountfirstname=?, accountlastname=?, accountpassword=?, accountemail=?, accountphonenum=?, accountstreet=?, accountstate=?, accountcity=?, accountpostalcode=?, supervisorid=?, accountstatus=? WHERE accountid=?";
     private static final String COMMIT_CHANGES = "COMMIT";
     public AccountDAO() {}
 
@@ -283,7 +283,7 @@ public class AccountDAO {
 	} 
 	
 	public accounts updateCustomerAccount(int accountid, String role, String username, String firstName, String lastName, String email,
-	        String password, String phone, String street, String state, String city, int postalCode, int supervisorId) throws SQLException {
+	        String password, String phone, String street, String state, String city, int postalCode, int supervisorId, String status) throws SQLException {
 		// TODO Auto-generated method stub
 		accounts accounts = null;
 		Connection con = null;
@@ -304,7 +304,8 @@ public class AccountDAO {
 	        ps.setString(10, city);      
 	        ps.setInt(11, postalCode); 
             ps.setInt(12, supervisorId); // Set the supervisor ID     
-	        ps.setInt(13, accountid);           
+	        ps.setString(13, status);           
+	        ps.setInt(14, accountid);           
                 
 	        int rowsUpdated = ps.executeUpdate();
             if (rowsUpdated > 0) {
@@ -321,6 +322,7 @@ public class AccountDAO {
                 accounts.setState(state);
                 accounts.setCity(city);
                 accounts.setPostalcode(postalCode); 
+                accounts.setStatus(status); 
             }
 
         } finally {

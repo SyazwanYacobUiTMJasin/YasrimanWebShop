@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -104,12 +105,12 @@ public class AccountController extends HttpServlet {
                 return "redirect:/signup";
             } else {
                 AccountDAO.insertAccount(newAccount);
-                session.setAttribute("accountusername", accountusername);
-                session.setAttribute("accountfirstname", accountfirstname);
-                session.setAttribute("accountlastname", accountlastname);
-                session.setAttribute("accountphonenum", accountphonenum);
-                session.setAttribute("accountemail", accountemail);
-                session.setAttribute("accountrole", accountrole);
+                // session.setAttribute("accountusername", accountusername);
+                // session.setAttribute("accountfirstname", accountfirstname);
+                // session.setAttribute("accountlastname", accountlastname);
+                // session.setAttribute("accountphonenum", accountphonenum);
+                // session.setAttribute("accountemail", accountemail);
+                // session.setAttribute("accountrole", accountrole);
                 session.setAttribute("signinerror", "null");
                 
                 User user = new User(accountfirstname, accountlastname, accountusername, accountemail, accountpassword, accountphonenum, accountrole);
@@ -196,7 +197,20 @@ public class AccountController extends HttpServlet {
 
         if ("Staff".equals(accountrole) || "Supervisor".equals(accountrole)) {
             List<accounts> accountsList = AccountDAO.selectAllUsers();
+
+             List<accounts> pendingStaffAccounts = accountsList.stream()
+            .filter(account -> "Pending".equals(account.getStatus()) && "Staff".equals(account.getRole()))
+            .collect(Collectors.toList()
+            );
+
+            if (pendingStaffAccounts.isEmpty()) {
+                modelAndView.addObject("noPendingStaffs", true);  // Flag for no pending accounts
+            } else {
+                modelAndView.addObject("accounts", pendingStaffAccounts);  // Send the filtered list
+            }
+            
             modelAndView.addObject("accounts", accountsList);
+            System.out.println("Accounts: " + accountsList); 
             modelAndView.addObject("loggedinaccountid", loggedinaccountid);
             modelAndView.setViewName("accounts");
             System.out.println("listallaccounts");
@@ -452,10 +466,11 @@ public class AccountController extends HttpServlet {
                 String accountstate = request.getParameter("state");
                 String accountcity = request.getParameter("city");
                 int accountpostalcode = Integer.parseInt(request.getParameter("postalcode"));
+                String accountstatus = request.getParameter("accountstatus");
 
                 accounts updatedAccount = AccountDAO.updateCustomerAccount(accountid, accountrole, accountusername,
                         accountfirstname, accountlastname, accountemail, accountpassword, accountphonenum,
-                        accountstreet, accountstate, accountcity, accountpostalcode, supervisorid);
+                        accountstreet, accountstate, accountcity, accountpostalcode, supervisorid, accountstatus);
 
                 String supervisorName = AccountDAO.getSupervisorNameById(supervisorid);
                 updatedAccount.setSupervisor(supervisorName);
@@ -513,7 +528,7 @@ public class AccountController extends HttpServlet {
     }
 
     // Approve the account
-@PostMapping("/approve/{id}")
+@GetMapping("/approve/{id}")
 public String approveAccount(@PathVariable("id") int accountId, RedirectAttributes redirectAttributes) throws SQLException {
     try {
         AccountDAO.updateAccountStatus(accountId, "Approved"); // Update the status to 'Approved'
