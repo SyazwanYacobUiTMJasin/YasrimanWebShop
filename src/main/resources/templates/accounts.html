@@ -122,16 +122,20 @@
                   >View</a>
                 </td>
                 <td th:if="${account.status} == 'Pending' and ${account.role} == 'Staff'">
-                  <a
-                    class="btn btn-primary update-btn"
-                    th:onclick="'confirmApprove(' + ${account.id} + ')'"
-                  >Approve</a>
+                  <a class="btn btn-primary update-btn approve-btn"
+                     th:data-id="${account.id}"
+                     th:data-username="${account.username}"
+                     th:data-email="${account.email}">
+                    Approve
+                  </a>
                 </td>
                 <td th:if="${account.status} == 'Pending' and ${account.role} == 'Staff'">
-                  <a
-                    class="btn btn-primary delete-btn"
-                    th:onclick="'confirmDeletePending(' + ${account.id} + ')'"
-                  >Reject</a>
+                  <a class="btn btn-primary delete-btn reject-btn"
+                     th:data-id="${account.id}"
+                     th:data-username="${account.username}"
+                     th:data-email="${account.email}">
+                     Reject
+                  </a>
                 </td>
               </tr>
             </tbody>

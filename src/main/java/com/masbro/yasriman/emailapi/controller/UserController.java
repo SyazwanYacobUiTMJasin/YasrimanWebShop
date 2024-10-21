@@ -23,6 +23,16 @@ public class UserController {
         String emailContent =  userService.registerUser(user);
         return new EmailResponse(user.getEmail(), emailContent);
     }
+    
+    public EmailResponse accountApproved(@RequestBody User user) throws MessagingException {
+        String emailContent =  userService.approveUser(user);
+        return new EmailResponse(user.getEmail(), emailContent);
+    }
+    
+    public EmailResponse accountRejected(@RequestBody User user) throws MessagingException {
+        String emailContent =  userService.rejectUser(user);
+        return new EmailResponse(user.getEmail(), emailContent);
+    }
 
     // Inner class for JSON response structure
     private static class EmailResponse {

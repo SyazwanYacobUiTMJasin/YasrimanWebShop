@@ -528,10 +528,12 @@ public class AccountController extends HttpServlet {
     }
 
     // Approve the account
-@GetMapping("/approve/{id}")
-public String approveAccount(@PathVariable("id") int accountId, RedirectAttributes redirectAttributes) throws SQLException {
+@GetMapping("/approve/{id}/{username}/{email}")
+public String approveAccount(@PathVariable("id") int accountId, @PathVariable("username") String accountUsername, @PathVariable("email") String accountEmail, RedirectAttributes redirectAttributes) throws SQLException, MessagingException {
     try {
         AccountDAO.updateAccountStatus(accountId, "Approved"); // Update the status to 'Approved'
+        User user = new User(accountUsername, accountEmail);
+        userController.accountApproved(user);
         redirectAttributes.addFlashAttribute("message", "Account approved successfully.");
     } catch (SQLException e) {
         e.printStackTrace();
@@ -541,10 +543,12 @@ public String approveAccount(@PathVariable("id") int accountId, RedirectAttribut
 }
 
 // Reject the account (delete)
-@PostMapping("/reject/{id}")
-public String rejectAccount(@PathVariable("id") int accountId, RedirectAttributes redirectAttributes) throws SQLException {
+@GetMapping("/reject/{id}/{username}/{email}")
+public String rejectAccount(@PathVariable("id") int accountId, @PathVariable("username") String accountUsername, @PathVariable("email") String accountEmail, RedirectAttributes redirectAttributes) throws SQLException, MessagingException {
     try {
         AccountDAO.deleteAccount(accountId); // Delete the account
+        User user = new User(accountUsername, accountEmail);
+        userController.accountRejected(user);
         redirectAttributes.addFlashAttribute("message", "Account rejected and deleted successfully.");
     } catch (SQLException e) {
         e.printStackTrace();

@@ -67,6 +67,12 @@ public class User {
     // Constructors
     public User() {}
 
+    public User(String username, String email)
+    {
+        this.username = username;
+        this.email = email;
+    }
+
     public User(String firstname, String lastname, String username, String email, String password, String phonenum, String role) {
         this.firstname = firstname;
         this.lastname = lastname;
