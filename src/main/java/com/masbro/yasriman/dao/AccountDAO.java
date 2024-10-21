@@ -36,14 +36,13 @@ public class AccountDAO {
     }
 
     private static final String CHECK_DISTINCT_EMAIL_SQL = "SELECT accountemail FROM accounts WHERE accountemail = ?";
-    private static final String INSERT_ACCOUNT_SQL = "INSERT INTO accounts(accountfirstname, accountlastname, accountusername, accountemail, accountpassword, accountphonenum,accountrole) VALUES (?, ?, ?, ?, ?, ?,?)";
-    private static final String CHECK_ACCOUNT_AUTH = "SELECT accountid, accountrole, accountusername FROM accounts WHERE accountemail=? AND accountpassword=?";
+    private static final String INSERT_ACCOUNT_SQL = "INSERT INTO accounts(accountfirstname, accountlastname, accountusername, accountemail, accountpassword, accountphonenum,accountrole,accountstatus) VALUES (?, ?, ?, ?, ?, ?,?,?)";
+    private static final String CHECK_ACCOUNT_AUTH = "SELECT accountid, accountrole, accountusername, accountstatus FROM accounts WHERE accountemail=? AND accountpassword=?";
     private static final String FETCH_ACCOUNT_BY_ID = "SELECT accountid, accountrole, accountusername FROM accounts WHERE accountid=?";
     private static final String LIST_ALL_ACCOUNT = "SELECT * FROM accounts ORDER BY accountid";
     private static final String VIEW_ONE_ACCOUNT = "SELECT * FROM accounts WHERE accountid=?";
     private static final String UPDATE_CUSTOMER_ACCOUNT = "UPDATE accounts SET accountrole=?, accountusername=?, accountfirstname=?, accountlastname=?, accountpassword=?, accountemail=?, accountphonenum=?, accountstreet=?, accountstate=?, accountcity=?, accountpostalcode=?, supervisorid=? WHERE accountid=?";
     private static final String COMMIT_CHANGES = "COMMIT";
-
     public AccountDAO() {}
 
     public boolean isEmailExists(String email) throws SQLException {
@@ -72,6 +71,7 @@ public class AccountDAO {
             ps.setString(5, newAccount.getPassword());
             ps.setString(6, newAccount.getPhonenum());
             ps.setString(7, newAccount.getRole());
+            ps.setString(8, newAccount.getStatus());
             ps.executeUpdate();
         } catch (SQLException e) {
             printSQLException(e);
@@ -90,6 +90,7 @@ public class AccountDAO {
                     account.setId(rs.getInt("accountid"));
                     account.setRole(rs.getString("accountrole"));
                     account.setUsername(rs.getString("accountusername"));
+                    account.setStatus(rs.getString("accountstatus"));
                 }
             }
         } catch (SQLException e) {
@@ -439,5 +440,18 @@ public class AccountDAO {
         return roles;
     }
 
-   
+    // Update account status
+public void updateAccountStatus(int accountId, String newStatus) throws SQLException {
+    String updateStatusSQL = "UPDATE accounts SET accountstatus = ? WHERE accountid = ?";
+    try (Connection con = ConnectionManager.getConnection();
+         PreparedStatement ps = con.prepareStatement(updateStatusSQL)) {
+        ps.setString(1, newStatus);
+        ps.setInt(2, accountId);
+        ps.executeUpdate();
+    } catch (SQLException e) {
+        e.printStackTrace();
+        throw e;
+    }
+}
+
 }

@@ -20,20 +20,8 @@ function confirmUpdate(accountId) {
     }
 }
 
-function confirmApprove (accountId){
-    var role = document.getElementById("userRole").value;
-    if (role === 'Supervisor'){
-        if (confirm("Are you sure you want to approve this account?")){
-            window.location.href = "approvecustomeraccount?uid=" + accountId;
-}
-    }
-}
-
-function confirmReject(accountId) {
-    var role = document.getElementById("userRole").value;
-    if (role === 'Supervisor') {
-        if (confirm("Are you sure you want to reject this account?")) {
-            window.location.href = "approveaccount?id=" + accountId + "&approval=no";
-        }
+function confirmAction(message, formId) {
+    if (confirm(message)) {
+        document.getElementById(formId).submit();
     }
 }

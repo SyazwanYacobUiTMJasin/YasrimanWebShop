@@ -21,7 +21,7 @@ public class accounts {
 	public accounts() {
 	}
 	
-	public accounts(String firstname, String lastname, String username, String email, String password, String phonenum,String role) {
+	public accounts(String firstname, String lastname, String username, String email, String password, String phonenum,String role,String status) {
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.username = username;
@@ -29,6 +29,7 @@ public class accounts {
 		this.password = password;
 		this.phonenum = phonenum;
 		this.role = role;
+		this.status = status;
 	}
 	
 	 

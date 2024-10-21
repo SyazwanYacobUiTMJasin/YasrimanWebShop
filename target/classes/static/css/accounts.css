@@ -417,3 +417,39 @@ tr:hover {
   max-height: 210px;
   margin-top: 20px;
 }
+
+    .approve-btn {
+        background-color:  #1a4d2e;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 14px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .reject-btn {
+        background-color:  rgb(142, 0, 0);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-weight: 14px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .approve-btn:hover {
+        background-color: #218838;
+    }
+
+    .reject-btn:hover {
+        background-color: #c82333;
+    }

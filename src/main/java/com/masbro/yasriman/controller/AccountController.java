@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -38,6 +39,8 @@ import jakarta.servlet.http.Part;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 @Controller
@@ -75,40 +78,50 @@ public class AccountController extends HttpServlet {
     }
     
     @PostMapping("/signup")
-public String createAccount(@RequestParam("firstname") String accountfirstname,
-                            @RequestParam("lastname") String accountlastname,
-                            @RequestParam("username") String accountusername,
-                            @RequestParam("email") String accountemail,
-                            @RequestParam("password") String accountpassword,
-                            @RequestParam("phone") String accountphonenum,
-                            @RequestParam("role") String accountrole,
-                            HttpSession session) throws SQLException, IOException, ServletException, MessagingException {
-    
-    accounts newAccount = new accounts(accountfirstname, accountlastname, accountusername, accountemail, accountpassword, accountphonenum, accountrole);
-    
-    try {
-        if (AccountDAO.isEmailExists(accountemail)) {
-            session.setAttribute("emailerror", "Email already exists");
-            return "redirect:/signup"; // Redirect back to the signup form
+    public String createAccount(@RequestParam("firstname") String accountfirstname,
+                                @RequestParam("lastname") String accountlastname,
+                                @RequestParam("username") String accountusername,
+                                @RequestParam("email") String accountemail,
+                                @RequestParam("password") String accountpassword,
+                                @RequestParam("phone") String accountphonenum,
+                                @RequestParam("role") String accountrole,
+                                HttpSession session) throws SQLException, IOException, ServletException, MessagingException {
+        
+        String accountStatus;
+        if ("Staff".equalsIgnoreCase(accountrole)) {
+            accountStatus = "Pending";
+        } else if ("Customer".equalsIgnoreCase(accountrole)) {
+            accountStatus = "Approved";
         } else {
-            AccountDAO.insertAccount(newAccount);
-            session.setAttribute("accountusername", accountusername);
-            session.setAttribute("accountfirstname", accountfirstname);
-            session.setAttribute("accountlastname", accountlastname);
-            session.setAttribute("accountphonenum", accountphonenum);
-            session.setAttribute("accountemail", accountemail);
-            session.setAttribute("accountrole", accountrole);
-            session.setAttribute("signinerror", "null");
-            
-            User user = new User(accountfirstname, accountlastname, accountusername, accountemail, accountpassword, accountphonenum, accountrole);
-            userController.signUp(user);
-            
-            return "redirect:/signin"; // Redirect to the signin form
+            accountStatus = "Pending";  
         }
-    } catch (SQLException e) {
-        throw new ServletException(e);
+    
+        accounts newAccount = new accounts(accountfirstname, accountlastname, accountusername, accountemail, accountpassword, accountphonenum, accountrole, accountStatus);
+    
+        try {
+            if (AccountDAO.isEmailExists(accountemail)) {
+                session.setAttribute("emailerror", "Email already exists");
+                return "redirect:/signup";
+            } else {
+                AccountDAO.insertAccount(newAccount);
+                session.setAttribute("accountusername", accountusername);
+                session.setAttribute("accountfirstname", accountfirstname);
+                session.setAttribute("accountlastname", accountlastname);
+                session.setAttribute("accountphonenum", accountphonenum);
+                session.setAttribute("accountemail", accountemail);
+                session.setAttribute("accountrole", accountrole);
+                session.setAttribute("signinerror", "null");
+                
+                User user = new User(accountfirstname, accountlastname, accountusername, accountemail, accountpassword, accountphonenum, accountrole);
+                userController.signUp(user);
+                
+                return "redirect:/signin";
+            }
+        } catch (SQLException e) {
+            throw new ServletException(e);
+        }
     }
-}
+    
 
     @GetMapping("/signin")
     private String signinform( HttpSession session){
@@ -121,10 +134,15 @@ public String createAccount(@RequestParam("firstname") String accountfirstname,
                                 @RequestParam("password") String password,
                                 HttpSession session,
                                 RedirectAttributes redirectAttributes) throws ServletException, IOException {
-
+    
         try {
             accounts account = AccountDAO.authenticateAccount(email, password);
             if (account != null) {
+                if ("Staff".equalsIgnoreCase(account.getRole()) && "Pending".equalsIgnoreCase(account.getStatus())) {
+                    session.setAttribute("signinerror", "Your account is pending approval.");
+                    return "redirect:/signin"; 
+                }
+    
                 session.setAttribute("loggedinaccountid", account.getId());
                 session.setAttribute("accountrole", account.getRole());
                 session.setAttribute("accountusername", account.getUsername());
@@ -139,15 +157,17 @@ public String createAccount(@RequestParam("firstname") String accountfirstname,
                 session.setAttribute("accountpostalcode", account.getPostalcode());
                 session.setAttribute("accountpicture", account.getPicture());
                 session.setAttribute("signinerror", "null");
-                return "redirect:/"; // Redirect to the home page
+    
+                return "redirect:/"; 
             } else {
                 session.setAttribute("signinerror", "Invalid email or password");
-                return "redirect:/signin"; // Redirect back to the signin form
+                return "redirect:/signin"; 
             }
         } catch (SQLException e) {
             throw new ServletException(e);
         }
     }
+    
 
     @GetMapping("/staffdashboard")
     public String staffdashboard(HttpServletRequest request, Model model) {
@@ -456,6 +476,8 @@ public String createAccount(@RequestParam("firstname") String accountfirstname,
         return modelAndView;
     }
 
+
+
     @GetMapping("/account/{id}/picture")
     public ResponseEntity<byte[]> getAccountPicture(@PathVariable("id") int accountId) {
         try {
@@ -489,5 +511,34 @@ public String createAccount(@RequestParam("firstname") String accountfirstname,
             response.sendRedirect("listallaccounts");
         }
     }
+
+    // Approve the account
+@PostMapping("/approve/{id}")
+public String approveAccount(@PathVariable("id") int accountId, RedirectAttributes redirectAttributes) throws SQLException {
+    try {
+        AccountDAO.updateAccountStatus(accountId, "Approved"); // Update the status to 'Approved'
+        redirectAttributes.addFlashAttribute("message", "Account approved successfully.");
+    } catch (SQLException e) {
+        e.printStackTrace();
+        redirectAttributes.addFlashAttribute("error", "Error occurred while approving the account.");
+    }
+    return "redirect:/listallaccounts"; // Redirect to the pending accounts page
+}
+
+// Reject the account (delete)
+@PostMapping("/reject/{id}")
+public String rejectAccount(@PathVariable("id") int accountId, RedirectAttributes redirectAttributes) throws SQLException {
+    try {
+        AccountDAO.deleteAccount(accountId); // Delete the account
+        redirectAttributes.addFlashAttribute("message", "Account rejected and deleted successfully.");
+    } catch (SQLException e) {
+        e.printStackTrace();
+        redirectAttributes.addFlashAttribute("error", "Error occurred while rejecting the account.");
+    }
+    return "redirect:/listallaccounts"; // Redirect to the pending accounts page
+}
+
+
+
     
 }
