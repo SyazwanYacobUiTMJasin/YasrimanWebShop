@@ -54,18 +54,7 @@
 	                </tr>
                     <tr>
                         <td>Role:</td>
-                        <td>
-                            <select name="role">
-                                <!-- Display the current role as the selected option -->
-                                <option th:value="${accounts.role}" th:selected="true" th:text="${accounts.role}"></option>
-                                <!-- List other roles as options -->
-                                <option th:each="role : ${allRoles}" 
-                                        th:if="${role != accounts.role}" 
-                                        th:value="${role}" 
-                                        th:text="${role}">
-                                </option>
-                            </select>                            
-                        </td>
+                            <td><input type="text" name="role" th:value="${accounts.role}" size="50" readonly></td>
                     </tr>
                     <tr>
                         <td>Username:</td>
