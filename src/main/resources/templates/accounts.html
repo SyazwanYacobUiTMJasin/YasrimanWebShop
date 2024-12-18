@@ -56,9 +56,9 @@
             </thead>
             <tbody>
               <tr th:each="account : ${accounts}" class="fade-in-up delay-1">
-                <!-- <div
+                <div
                   th:if="${account.status} == 'Approved'"
-                > -->
+                >
                 <td th:text="${account.id}"></td>
                 <td th:text="${account.role}"></td>
                 <td th:text="${account.firstname}"></td>
@@ -86,7 +86,7 @@
                     Delete
                   </a>
                 </td>
-              <!-- </div> -->
+              </div>
               </tr>
             </tbody>
           </table>

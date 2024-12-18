@@ -30,7 +30,8 @@
             <form id="profile-form"
                   th:action="@{editcustomeraccount(uid=${accounts.id})}"
                   method="post"
-                  enctype="multipart/form-data">
+                  enctype="multipart/form-data"
+                  onsubmit="return validateUpdateForm()">
                 <div style="display: none;">
                     <input type="text" name="uid" th:value="${accounts.id}" readonly/>
                     <input type="text" name="id" th:value="${loggedinaccountid}" readonly/>
@@ -38,7 +39,7 @@
 
                 <label for="profilepic">Profile Picture:</label>
                 <img th:src="@{'/account/' + ${accounts.id} + '/picture'}" alt="profile picture" name="profilepic" draggable="false"/>
-                <input type="file" id="profilepic" name="profilepic"/>
+                <input type="file" id="profilepic" name="profilepic" accept=".png, .jpg, .jpeg, .gif"/>
 
                 <label for="username">Username:</label>
                 <input type="text"
@@ -61,14 +62,26 @@
                                required
                         />
                         <label for="phone">Phone Number:</label>
-                        <input type="tel"
-                               id="phone"
-                               name="phone"
-                               placeholder="Enter your phone number"
-                               th:value="${accounts.phonenum}"
-                               autocomplete="off"
-                               required
-                        />
+                        <div class="teldiv">
+                            <input
+                              type="tel" 
+                              autocomplete="off"
+                              value="+60"
+                              disabled
+                              required
+                              class="telcountry"
+                            />
+                            <input
+                              type="tel"
+                              id="phone"
+                              name="phone"
+                              placeholder="Phone Number"
+                              th:value="${accounts.phonenum}"
+                              autocomplete="off"
+                              required
+                              maxlength="10"
+                              class="telnum"
+                            /></div>
                     </div>
                     <div class="phonenumngender group">
                         <label for="lastname">Last Name:</label>
@@ -130,7 +143,10 @@
             </form>
         </div>
     </div>
+    <script src="./js/updateaccounts.js"></script>
+    
     <script src="./js/loading.js"></script>
+
 
 </body>
 </html>

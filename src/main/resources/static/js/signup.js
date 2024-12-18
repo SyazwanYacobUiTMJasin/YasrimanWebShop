@@ -56,7 +56,7 @@ function validateForm() {
     const usernameRegex = /^[a-zA-Z0-9_]{3,30}$/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,255}$/;
-    const malaysiaPhoneRegex = /^\+60\d{9,10}$/;
+    const malaysiaPhoneRegex = /^\d{9,10}$/;
   
     if (!nameRegex.test(firstName)) {
       alert("First name must be between 3 and 10 characters long and contain only letters.");
@@ -89,7 +89,7 @@ function validateForm() {
     }
   
     if (!malaysiaPhoneRegex.test(phone)) {
-      alert("Please enter a valid Malaysia phone number (e.g., +60123456789).");
+      alert("Please enter a valid Malaysia phone number (e.g., +60-123456789).");
       return false;
     }
   

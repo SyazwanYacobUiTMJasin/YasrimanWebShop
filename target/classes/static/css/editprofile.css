@@ -221,6 +221,18 @@
 	    outline: none;
 	    border: none;
 	 }
+	 .teldiv{
+		display: flex;
+	  }
+	  
+	  .teldiv .telcountry{
+		width: 45px;
+		border: 2px solid #1a4d2e;
+	  }
+	  
+	  .teldiv .telnum{
+		width: 100%;
+	  }
 	
 	 form button:hover{
 	    background-color: #d5c7b2;

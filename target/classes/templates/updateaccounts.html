@@ -39,7 +39,7 @@
                 <h1 th:text="'Update ' + ${accounts.username} + '\'s Account'"></h1>
                 <a class="btn btn-info edit-btn" th:href="@{/listallaccounts}">Back</a>
             </div>
-            <form th:action="@{updatecustomeraccount(uid=${accounts.id})}" method="post" class="formcontent">
+            <form th:action="@{updatecustomeraccount(uid=${accounts.id})}" method="post" class="formcontent" onsubmit="validateUpdateForm()">
                 <table border="1">
                     <tr>
                         <th colspan="2">Update Account Details</th>
@@ -58,43 +58,116 @@
                     </tr>
                     <tr>
                         <td>Username:</td>
-                        <td><input type="text" name="username" th:value="${accounts.username}" size="50"></td>
+                        <td><input type="text"
+                            id="username"
+                            name="username"
+                            placeholder="Username"
+                            th:value="${accounts.username}"
+                            autocomplete="off"
+                            required
+                     /></td>
                     </tr>
                     <tr>
                         <td>First Name:</td>
-                        <td><input type="text" name="firstname" th:value="${accounts.firstname}" size="50"></td>
+                        <td><input type="text"
+                            id="firstname"
+                            name="firstname"
+                            placeholder="First name"
+                            th:value="${accounts.firstname}"
+                            autocomplete="off"
+                            required
+                     /></td>
                     </tr>
                     <tr>
                         <td>Last Name:</td>
-                        <td><input type="text" name="lastname" th:value="${accounts.lastname}" size="50"></td>
+                        <td> <input type="text"
+                            id="lastname"
+                            name="lastname"
+                            placeholder="Last name"
+                            th:value="${accounts.lastname}"
+                            autocomplete="off"
+                            required
+                     /></td>
                     </tr>
                     <tr>
                         <td>Email:</td>
-                        <td><input type="email" name="email" th:value="${accounts.email}" size="50"></td>
+                        <td><input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Email"
+                            th:value="${accounts.email}"
+                            autocomplete="off"
+                            readonly
+                          /></td>
                     </tr>
                     <tr>
                         <td>Password:</td>
-                        <td><input type="password" name="password" th:value="${accounts.password}" size="50"></td>
+                        <td>  <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Password"
+                            th:value="${accounts.password}"
+                            autocomplete="off"
+                            readonly
+                          /></td>
                     </tr>
                     <tr>
                         <td>Phone Number:</td>
-                        <td><input type="text" name="phonenum" th:value="${accounts.phonenum}" size="50"></td>
+                        <td> <input type="text"
+                            id="lastname"
+                            name="lastname"
+                            placeholder="Last name"
+                            th:value="${accounts.phonenum}"
+                            autocomplete="off"
+                            required
+                     />
+                </td>
                     </tr>
                     <tr>
                         <td>Street:</td>
-                        <td><input type="text" name="street" th:value="${accounts.street}" size="50"></td>
+                        <td> <input type="text"
+                            id="street"
+                            name="street"
+                            placeholder="Street name"
+                            th:value="${accounts.street}"
+                            autocomplete="off"
+                            required
+                     /></td>
                     </tr>
                     <tr>
                         <td>State:</td>
-                        <td><input type="text" name="state" th:value="${accounts.state}" size="50"></td>
+                        <td><input type="text"
+                            id="state"
+                            name="state"
+                            placeholder="State"
+                            th:value="${accounts.state}"
+                            autocomplete="off"
+                            required
+                     /></td>
                     </tr>
                     <tr>
                         <td>City:</td>
-                        <td><input type="text" name="city" th:value="${accounts.city}" size="50"></td>
+                        <td><input type="text"
+                            id="city"
+                            name="city"
+                            placeholder="City"
+                            th:value="${accounts.city}"
+                            autocomplete="off"
+                            required
+                     /></td>
                     </tr>
                     <tr>
                         <td>Postal Code:</td>
-                        <td><input type="text" name="postalcode" th:value="${accounts.postalcode}" size="50"></td>
+                        <td><input type="text"
+                            id="postalcode"
+                            name="postalcode"
+                            placeholder="Postal code"
+                            th:value="${accounts.postalcode}"
+                            autocomplete="off"
+                            required
+                     /></td>
                     </tr>
                     <tr>
                         <td>Account Status:</td>
@@ -109,6 +182,7 @@
             </form>
         </div>
     </div>
+    <script src="./js/updateaccounts.js"></script>
     <script src="./js/loading.js"></script>
 
 </body>

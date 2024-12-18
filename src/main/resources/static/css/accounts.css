@@ -422,7 +422,7 @@ tr:hover {
   margin-top: 20px;
 }
 
-    .approve-btn {
+    /* .approve-btn {
         background-color:  #1a4d2e;
         color: white;
         border: none;
@@ -448,12 +448,12 @@ tr:hover {
         margin: 4px 2px;
         cursor: pointer;
         border-radius: 5px;
-    }
+    } */
 
-    .approve-btn:hover {
+    .update-btn:hover {
         background-color: #218838;
     }
 
-    .reject-btn:hover {
+    .delete-btn:hover {
         background-color: #c82333;
     }
