@@ -111,17 +111,17 @@
                 <td colspan="6" id="noResults">No pending staffs account.</td>
               </tr>
               <tr th:each="account : ${accounts}" class="fade-in-up delay-1">
-                <td th:if="${account.status} == 'Pending' and ${account.role} == 'Staff'" th:text="${account.id}"></td>
-                <td th:if="${account.status} == 'Pending' and ${account.role} == 'Staff'" th:text="${account.email}"></td>
-                <td th:if="${account.status} == 'Pending' and ${account.role} == 'Staff'" th:text="${account.firstname}"></td>
-                <td th:if="${account.status} == 'Pending' and ${account.role} == 'Staff'" th:text="${account.lastname}"></td>
-                <td th:if="${account.status} == 'Pending' and ${account.role} == 'Staff'">
+                <td th:if="${account.status} == 'Pending'" th:text="${account.id}"></td>
+                <td th:if="${account.status} == 'Pending'" th:text="${account.email}"></td>
+                <td th:if="${account.status} == 'Pending'" th:text="${account.firstname}"></td>
+                <td th:if="${account.status} == 'Pending'" th:text="${account.lastname}"></td>
+                <td th:if="${account.status} == 'Pending'">
                   <a
                     class="btn btn-info edit-btn"
                     th:href="@{viewcustomeraccount(uid=${account.id}, from='dashboard')}"
                   >View</a>
                 </td>
-                <td th:if="${account.status} == 'Pending' and ${account.role} == 'Staff'">
+                <td th:if="${account.status} == 'Pending' ">
                   <a class="btn btn-primary update-btn approve-btn"
                      th:data-id="${account.id}"
                      th:data-username="${account.username}"
@@ -129,7 +129,7 @@
                     Approve
                   </a>
                 </td>
-                <td th:if="${account.status} == 'Pending' and ${account.role} == 'Staff'">
+                <td th:if="${account.status} == 'Pending' ">
                   <a class="btn btn-primary delete-btn reject-btn"
                      th:data-id="${account.id}"
                      th:data-username="${account.username}"

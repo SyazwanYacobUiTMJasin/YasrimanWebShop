@@ -201,7 +201,7 @@ public class AccountController extends HttpServlet {
             List<accounts> accountsList = AccountDAO.selectAllUsers();
 
              List<accounts> pendingStaffAccounts = accountsList.stream()
-            .filter(account -> "Pending".equals(account.getStatus()) && "Staff".equals(account.getRole()))
+            .filter(account -> "Pending".equals(account.getStatus()))
             .collect(Collectors.toList()
             );
 
