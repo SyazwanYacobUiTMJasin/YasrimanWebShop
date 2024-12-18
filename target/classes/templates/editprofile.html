@@ -37,6 +37,7 @@
                 </div>
 
                 <label for="profilepic">Profile Picture:</label>
+                <img th:src="@{'/account/' + ${accounts.id} + '/picture'}" alt="profile picture" name="profilepic" draggable="false"/>
                 <input type="file" id="profilepic" name="profilepic"/>
 
                 <label for="username">Username:</label>

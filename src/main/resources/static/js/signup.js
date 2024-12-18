@@ -1,3 +1,11 @@
+
+document.getElementById('submit-btn').addEventListener('click', 
+  function(event) {
+  
+      event.preventDefault();
+      validateForm();
+});
+
 function validateForm() {
     const firstName = document.getElementById("firstname").value.trim();
     const lastName = document.getElementById("lastname").value.trim();
@@ -7,6 +15,42 @@ function validateForm() {
     const confirmPassword = document.getElementById("confirmpassword").value;
     const phone = document.getElementById("phone").value.trim();
     
+    // Check for empty fields first
+      if (firstName === "") {
+        alert("First name cannot be empty.");
+        return false;
+    }
+
+    if (lastName === "") {
+        alert("Last name cannot be empty.");
+        return false;
+    }
+
+    if (username === "") {
+        alert("Username cannot be empty.");
+        return false;
+    }
+
+    if (email === "") {
+        alert("Email cannot be empty.");
+        return false;
+    }
+
+    if (password === "") {
+        alert("Password cannot be empty.");
+        return false;
+    }
+
+    if (confirmPassword === "") {
+        alert("Confirm password cannot be empty.");
+        return false;
+    }
+
+    if (phone === "") {
+        alert("Phone number cannot be empty.");
+        return false;
+    }
+
     // Regular expressions for validation
     const nameRegex = /^[a-zA-Z]{3,10}$/;
     const usernameRegex = /^[a-zA-Z0-9_]{3,30}$/;
