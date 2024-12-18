@@ -1,12 +1,15 @@
 
 document.getElementById('submit-btn').addEventListener('click', 
   function(event) {
-  
-      event.preventDefault();
-      validateForm();
+      
+      if(!validateForm())
+      {
+        event.preventDefault();
+      } 
 });
 
 function validateForm() {
+  // event.preventDefault();
     const firstName = document.getElementById("firstname").value.trim();
     const lastName = document.getElementById("lastname").value.trim();
     const username = document.getElementById("username").value.trim();
