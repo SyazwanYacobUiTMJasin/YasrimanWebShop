@@ -107,15 +107,25 @@
                   onclick="togglePasswordVisibility('confirmpassword')"
                 />
               </div>
+              <div class="teldiv">
+              <input
+                type="tel" 
+                autocomplete="off"
+                value="+60"
+                disabled
+                required
+                class="telcountry"
+              />
               <input
                 type="tel"
                 id="phone"
                 name="phone"
                 placeholder="Phone Number"
                 autocomplete="off"
-                value="+60"
                 required
-              />
+                maxlength="10"
+                class="telnum"
+              /></div>
               <br />
               <div class="accountrole">
                 <div>

@@ -35,7 +35,7 @@ function validateForm() {
     }
   
     if (!passwordRegex.test(password)) {
-      alert("Password must be between 8 and 255 characters long and contain at least one uppercase letter, one lowercase letter, and one number.");
+      alert("Password must be between 8 and 15 characters long and contain at least one uppercase letter, one lowercase letter, and one number.");
       return false;
     }
   
