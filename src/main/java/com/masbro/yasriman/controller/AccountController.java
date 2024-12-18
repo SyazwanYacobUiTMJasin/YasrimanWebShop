@@ -139,7 +139,9 @@ public class AccountController extends HttpServlet {
         try {
             accounts account = AccountDAO.authenticateAccount(email, password);
             if (account != null) {
-                if ("Staff".equalsIgnoreCase(account.getRole()) && "Pending".equalsIgnoreCase(account.getStatus())) {
+                if (("Staff".equalsIgnoreCase(account.getRole()) && "Pending".equalsIgnoreCase(account.getStatus())) || 
+                    ("Supervisor".equalsIgnoreCase(account.getRole()) && "Pending".equalsIgnoreCase(account.getStatus()))
+                    ) {
                     session.setAttribute("signinerror", "Your account is pending approval.");
                     return "redirect:/signin"; 
                 }
