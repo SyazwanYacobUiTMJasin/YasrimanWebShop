@@ -24,7 +24,7 @@
                     <div class="secondline">
                         <input type="email" id="email" name="email" placeholder="Email" autocomplete="off" required /><br />
                         <div class="passwordgroup">
-                            <input type="password" id="password" name="password" placeholder="Password" autocomplete="off" required /><br />
+                            <input type="password" id="password" name="password" placeholder="Password" autocomplete="off" required maxlength="15"/><br />
                             <img class="eyeToggle" src="./images/eyeslash.svg" draggable="false" alt="Show Password" onclick="togglePasswordVisibility('password', this)" />
                         </div>
                     </div>
@@ -33,7 +33,7 @@
                         <a th:href="@{/signup}">Sign Up</a>
                     </div>
                     <div class="buttons">
-                        <input type="submit" value="Sign In" />
+                        <input type="submit" value="Sign In" id="submit-btn"/>
                     </div>
                     <a th:href="@{/}" class="returnhome">Return Home</a>
                 </form>

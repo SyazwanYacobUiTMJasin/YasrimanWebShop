@@ -32,18 +32,44 @@ function togglePasswordVisibility(inputId, eyeIcon) {
     }
 }
 
+document.getElementById('submit-btn').addEventListener('click', 
+    function(event) {
+        
+        if(!validateForm())
+        {
+          event.preventDefault();
+        } 
+  });
+
 function validateForm() {
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value;
     
+    if (email === "") {
+        alert("Email cannot be empty.");
+        return false;
+    }
+
+    if (password === "") {
+        alert("Password cannot be empty.");
+        return false;
+    }
+    
     // Regular expression for email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,255}$/;
+    
   
     if (!emailRegex.test(email)) {
       alert("Please enter a valid email address.");
       return false;
     }
   
+    if (!passwordRegex.test(password)) {
+        alert("Password must be between 8 and 15 characters long and contain at least one uppercase letter, one lowercase letter, and one number.");
+        return false;
+      }
+      
     if (password.length < 8) {
       alert("Password must be at least 8 characters long.");
       return false;
