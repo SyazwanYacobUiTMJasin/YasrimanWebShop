@@ -5,7 +5,7 @@ function validateUpdateForm() {
     const username = document.querySelector('input[name="username"]').value.trim();
     const firstName = document.querySelector('input[name="firstname"]').value.trim();
     const lastName = document.querySelector('input[name="lastname"]').value.trim();
-    const phone = document.querySelector('input[name="phone"]').value.trim();
+    const phone = document.querySelector('input[name="phonenum"]').value.trim();
     const street = document.querySelector('input[name="street"]').value.trim();
     const state = document.querySelector('input[name="state"]').value.trim();
     const city = document.querySelector('input[name="city"]').value.trim();
@@ -61,6 +61,8 @@ function validateUpdateForm() {
 
     return true;
 }
+
+
 
 
 

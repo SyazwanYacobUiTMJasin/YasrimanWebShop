@@ -39,7 +39,7 @@
                 <h1 th:text="'Update ' + ${accounts.username} + '\'s Account'"></h1>
                 <a class="btn btn-info edit-btn" th:href="@{/listallaccounts}">Back</a>
             </div>
-            <form th:action="@{updatecustomeraccount(uid=${accounts.id})}" method="post" class="formcontent" onsubmit="validateUpdateForm()">
+            <form th:action="@{updatecustomeraccount(uid=${accounts.id})}" method="post" class="formcontent" onsubmit="return validateUpdateForm()">
                 <table border="1">
                     <tr>
                         <th colspan="2">Update Account Details</th>
@@ -116,9 +116,9 @@
                     <tr>
                         <td>Phone Number:</td>
                         <td> <input type="text"
-                            id="lastname"
-                            name="lastname"
-                            placeholder="Last name"
+                            id="phonenum"
+                            name="phonenum"
+                            placeholder="Phone Number"
                             th:value="${accounts.phonenum}"
                             autocomplete="off"
                             required

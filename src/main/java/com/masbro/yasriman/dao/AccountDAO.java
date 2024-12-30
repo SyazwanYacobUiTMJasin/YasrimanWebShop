@@ -377,6 +377,7 @@ public class AccountDAO {
         PreparedStatement psDeletePayments = null;
         PreparedStatement psDeleteInventoryManage = null;
         PreparedStatement psDeleteAccount = null;
+        PreparedStatement psUpdatePicture = null;
 
         try {
             connection = ConnectionManager.getConnection();
@@ -401,6 +402,8 @@ public class AccountDAO {
             psDeleteAccount = connection.prepareStatement(DELETE_ACCOUNT_SQL);
             psDeleteAccount.setInt(1, accountid);
             int rowDeleted = psDeleteAccount.executeUpdate();
+
+            
 
             connection.commit(); // Commit transaction
             return rowDeleted > 0;
@@ -455,5 +458,7 @@ public void updateAccountStatus(int accountId, String newStatus) throws SQLExcep
         throw e;
     }
 }
+
+
 
 }
