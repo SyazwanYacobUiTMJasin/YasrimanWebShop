@@ -1,112 +1,220 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Yasriman | View Account Details</title>
-    <link rel="icon" href="/images/logo.jpeg" type="image/png">
-    <link rel="stylesheet" href="./css/accounts.css">
-    <link rel="stylesheet" href="./css/animation.css">
-    <link rel="stylesheet" href="./css/loading.css">
-
-</head>
-<body th:if="${session.accountrole == 'Staff' || session.accountrole == 'Supervisor'}">
+    <link rel="icon" href="/images/logo.jpeg" type="image/png" />
+    <link rel="stylesheet" href="./css/accounts.css" />
+    <link rel="stylesheet" href="./css/animation.css" />
+    <link rel="stylesheet" href="./css/loading.css" />
+  </head>
+  <body
+    th:if="${session.accountrole == 'Staff' || session.accountrole == 'Supervisor'}"
+  >
     <div id="loading-screen">
-        <video id="loading-video" autoplay loop muted>
-          <source src="./video/loadingscreen.mp4" type="video/mp4">
-        </video>
+      <video id="loading-video" autoplay loop muted>
+        <source src="./video/loadingscreen.mp4" type="video/mp4" />
+      </video>
+    </div>
+    <div class="navbarbg">
+      <a href="/"><h2>YASRIMAN</h2></a>
+      <div class="navlinks">
+        <a href="/">HOME</a>
       </div>
-      <div class="navbarbg">
-        <a href="/"><h2>YASRIMAN</h2></a>
-        <div class="navlinks">
-            <a href="/">HOME</a>
-        </div>
     </div>
     <div id="hero">
-        <div id="sidebar">
-            <b>NAV LINKS</b>
-            <!-- Sidebar Navigation Links -->
-            <ul>
-                <br>
-                <li><a th:href="@{/staffdashboard}">Dashboard</a></li>
-                <li><a th:href="@{/listallaccounts}">Accounts</a></li>
-                <li><a th:href="@{/inventory}">Inventory</a></li>
-                <li><a th:href="@{/order?action=view}">Orders</a></li>
-                <!-- Add more navigation links as needed -->
-            </ul>
-        </div>
+      <div id="sidebar">
+        <b>NAV LINKS</b>
+        <!-- Sidebar Navigation Links -->
+        <ul>
+          <br />
+          <li><a th:href="@{/staffdashboard}">Dashboard</a></li>
+          <li><a th:href="@{/listallaccounts}">Accounts</a></li>
+          <li><a th:href="@{/inventory}">Inventory</a></li>
+          <li><a th:href="@{/order?action=view}">Orders</a></li>
+          <!-- Add more navigation links as needed -->
+        </ul>
+      </div>
 
-        <div class="main fade-in-up delay-1">
-            <div class="topbar">
-                <h1 th:text="${accounts.username}">'s account</h1>
-                <a class="btn btn-info edit-btn" th:href="@{/listallaccounts}">Back</a>
-            </div>
-            <form action="#" class="formcontent">
-                <table border="1">
-                    <tr>
-                        <th colspan="2">Account Details</th>
-                    </tr>
-                    <tr>
-                        <td>ID:</td>
-                        <td><input type="text" name="id" th:value="${accounts.id}" readonly /></td>
-                    </tr>
-                    <tr>
-                        <td>Supervisor: </td>
-                        <td><input type="text" name="supervisor" th:value="${accounts.supervisor}" readonly/></td>
-                    </tr>
-                    <tr>
-                        <td>Role:</td>
-                        <td><input type="text" name="role" th:value="${accounts.role}" readonly /></td>
-                    </tr>
-                    <tr>
-                        <td>Username:</td>
-                        <td><input type="text" name="username" th:value="${accounts.username}" readonly /></td>
-                    </tr>
-                    <tr>
-                        <td>Email:</td>
-                        <td><input type="email" name="email" th:value="${accounts.email}" readonly /></td>
-                    </tr>
-                    <tr>
-                        <td>Password:</td>
-                        <td><input type="password" name="password" th:value="${accounts.password}" readonly /></td>
-                    </tr>
-                    <tr>
-                        <td>First Name:</td>
-                        <td><input type="text" name="firstname" th:value="${accounts.firstname}" readonly /></td>
-                    </tr>
-                    <tr>
-                        <td>Last Name:</td>
-                        <td><input type="text" name="lastname" th:value="${accounts.lastname}" readonly /></td>
-                    </tr>
-                    <tr>
-                        <td>Phone Number:</td>
-                        <td><input type="tel" name="phonenum" th:value="${accounts.phonenum}" readonly /></td>
-                    </tr>
-                    <tr>
-                        <td>Street:</td>
-                        <td><input type="text" name="street" th:value="${accounts.street}" readonly /></td>
-                    </tr>
-                    <tr>
-                        <td>State:</td>
-                        <td><input type="text" name="state" th:value="${accounts.state}" readonly /></td>
-                    </tr>
-                    <tr>
-                        <td>City:</td>
-                        <td><input type="text" name="city" th:value="${accounts.city}" readonly /></td>
-                    </tr>
-                    <tr>
-                        <td>Postal Code:</td>
-                        <td><input type="text" name="postalcode" th:value="${accounts.postalcode}" readonly /></td>
-                    </tr>
-                    <tr>
-                        <td>Account Status:</td>
-                        <td><input type="text" name="accountstatus" th:value="${accounts.status}" readonly /></td>
-                    </tr>
-                </table>
-            </form>
+      <div class="main fade-in-up delay-1">
+        <div class="topbar">
+          <h1 th:text="${accounts.username}">'s account</h1>
+          <a class="btn btn-info edit-btn" th:href="@{/listallaccounts}"
+            >Back</a
+          >
         </div>
+        <form action="#" class="formcontent">
+          <table border="1">
+            <tr>
+              <th colspan="2">Account Details</th>
+            </tr>
+            <tr>
+              <td>ID:</td>
+              <td>
+                <input
+                  type="text"
+                  name="id"
+                  th:value="${accounts.id}"
+                  readonly
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>Supervisor:</td>
+              <td>
+                <input
+                  type="text"
+                  name="supervisor"
+                  th:value="${accounts.supervisor}"
+                  readonly
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>Role:</td>
+              <td>
+                <input
+                  type="text"
+                  name="role"
+                  th:value="${accounts.role}"
+                  readonly
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>Username:</td>
+              <td>
+                <input
+                  type="text"
+                  name="username"
+                  th:value="${accounts.username}"
+                  readonly
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>Email:</td>
+              <td>
+                <input
+                  type="email"
+                  name="email"
+                  th:value="${accounts.email}"
+                  readonly
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>Password:</td>
+              <td>
+                <input
+                  type="password"
+                  name="password"
+                  th:value="${accounts.password}"
+                  readonly
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>First Name:</td>
+              <td>
+                <input
+                  type="text"
+                  name="firstname"
+                  th:value="${accounts.firstname}"
+                  readonly
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>Last Name:</td>
+              <td>
+                <input
+                  type="text"
+                  name="lastname"
+                  th:value="${accounts.lastname}"
+                  readonly
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>Phone Number:</td>
+              <td class="phonecontainer">
+                <input
+                  type="tel"
+                  id="malaysiacode"
+                  name="malaysiacode"
+                  placeholder="malaysiacode"
+                  value="+60"  
+                readonly
+                /> 
+                <input
+                  type="tel"
+                  name="phonenum"
+                  th:value="${accounts.phonenum}"
+                  readonly
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>Street:</td>
+              <td>
+                <input
+                  type="text"
+                  name="street"
+                  th:value="${accounts.street}"
+                  readonly
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>State:</td>
+              <td>
+                <input
+                  type="text"
+                  name="state"
+                  th:value="${accounts.state}"
+                  readonly
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>City:</td>
+              <td>
+                <input
+                  type="text"
+                  name="city"
+                  th:value="${accounts.city}"
+                  readonly
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>Postal Code:</td>
+              <td>
+                <input
+                  type="text"
+                  name="postalcode"
+                  th:value="${accounts.postalcode}"
+                  readonly
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>Account Status:</td>
+              <td>
+                <input
+                  type="text"
+                  name="accountstatus"
+                  th:value="${accounts.status}"
+                  readonly
+                />
+              </td>
+            </tr>
+          </table>
+        </form>
+      </div>
     </div>
     <script src="./js/loading.js"></script>
-
-</body>
+  </body>
 </html>
