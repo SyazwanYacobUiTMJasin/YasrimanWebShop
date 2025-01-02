@@ -235,15 +235,26 @@ public class AccountDAO {
             con = ConnectionManager.getConnection();
             String sql;
 
-            if (picture != null) {
+            // if (picture != null) {
+            //     sql = "UPDATE accounts SET accountfirstname=?, accountlastname=?, accountusername=?, accountphonenum=?, accountstreet=?, accountstate=?, accountcity=?, accountpostalcode=?, accountpicture=? WHERE accountid=?";
+            //     ps = con.prepareStatement(sql);
+            //     ps.setBytes(9, picture);
+            //     ps.setInt(10, accountid);
+            // } else {
+            //     sql = "UPDATE accounts SET accountfirstname=?, accountlastname=?, accountusername=?, accountphonenum=?, accountstreet=?, accountstate=?, accountcity=?, accountpostalcode=? WHERE accountid=?";
+            //     ps = con.prepareStatement(sql);
+            //     ps.setInt(9, accountid);
+            // }
+
+            if (picture == null) {
+                sql = "UPDATE accounts SET accountfirstname=?, accountlastname=?, accountusername=?, accountphonenum=?, accountstreet=?, accountstate=?, accountcity=?, accountpostalcode=?, accountpicture=NULL WHERE accountid=?";
+                ps = con.prepareStatement(sql);
+                ps.setInt(9, accountid);
+            } else {
                 sql = "UPDATE accounts SET accountfirstname=?, accountlastname=?, accountusername=?, accountphonenum=?, accountstreet=?, accountstate=?, accountcity=?, accountpostalcode=?, accountpicture=? WHERE accountid=?";
                 ps = con.prepareStatement(sql);
                 ps.setBytes(9, picture);
                 ps.setInt(10, accountid);
-            } else {
-                sql = "UPDATE accounts SET accountfirstname=?, accountlastname=?, accountusername=?, accountphonenum=?, accountstreet=?, accountstate=?, accountcity=?, accountpostalcode=? WHERE accountid=?";
-                ps = con.prepareStatement(sql);
-                ps.setInt(9, accountid);
             }
 
             ps.setString(1, firstName);

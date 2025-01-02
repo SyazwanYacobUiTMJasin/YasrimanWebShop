@@ -388,7 +388,9 @@ public class AccountController extends HttpServlet {
         @RequestParam("city") String city,
         @RequestParam("postalcode") int postalcode,
         @RequestParam("phone") String phone,
-        @RequestParam("uid") int uid) {
+        @RequestParam("uid") int uid,
+        @RequestParam(value = "removeProfilePic", required = false) String removeProfilePic
+        ) {
 
         System.out.println("Inside editcustomeraccount()");
         HttpSession session = request.getSession();
@@ -398,14 +400,18 @@ public class AccountController extends HttpServlet {
         if (loggedinaccountid != null && loggedinaccountid.equals(uid)) {
             try {
                 byte[] picture = null;
-                try {
-                    if (!file.isEmpty()) {
-                        picture = file.getBytes();
+                // Check if we should remove the profile picture
+                if ("true".equals(removeProfilePic)) {
+                    picture = null; // Set picture to null to remove it
+                } else {
+                    try {
+                        if (!file.isEmpty()) {
+                            picture = file.getBytes();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
+                } 
                 // Update account details
                 accounts updatedAccount = AccountDAO.editCustomerAccount(uid, firstname, lastname, username, phone, street, state, city, postalcode, picture);
 

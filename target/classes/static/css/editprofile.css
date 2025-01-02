@@ -237,7 +237,23 @@
 	 form button:hover{
 	    background-color: #d5c7b2;
 	 }
+
+	 #removeProfilePic{
+		background-color: rgb(142, 0, 0);
+		width: fit-content; 
+	 }
+	 #removeProfilePic:hover{
+		background-color: #c82333;
+		width: fit-content; 
+	 }
 	 
+	 .profileimagecontainer{
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: end;
+		width: 100%;
+	 }
 	 @media(max-width: 1391px)
  {
 	 .hero

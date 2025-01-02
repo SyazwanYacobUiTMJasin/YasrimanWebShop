@@ -38,9 +38,11 @@
                 </div>
 
                 <label for="profilepic">Profile Picture:</label>
+                <div class="profileimagecontainer">
                 <img th:src="@{'/account/' + ${accounts.id} + '/picture'}" alt="profile picture" name="profilepic" draggable="false"/>
-                <input type="file" id="profilepic" name="profilepic" accept=".png, .jpg, .jpeg, .gif"/>
-
+                <button type="button" id="removeProfilePic">Remove Profile Picture</button>
+            </div>
+            <input type="file" id="profilepic" name="profilepic" accept=".png, .jpg, .jpeg, .gif"/>
                 <label for="username">Username:</label>
                 <input type="text"
                        id="username"
@@ -146,7 +148,44 @@
     <script src="./js/updateaccounts.js"></script>
     
     <script src="./js/loading.js"></script>
+    <script> 
+    document.addEventListener('DOMContentLoaded', function() {
+    const profilePicInput = document.getElementById('profilepic');
+    const removeProfilePicBtn = document.getElementById('removeProfilePic');
+    const profilePicImg = document.querySelector('img[name="profilepic"]');
+    let profilePicRemoved = false;
 
+    // Update preview when file is selected
+    profilePicInput.addEventListener('change', function(e) {
+        if (e.target.files && e.target.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                profilePicImg.src = e.target.result;
+                profilePicRemoved = false;
+            };
+            reader.readAsDataURL(e.target.files[0]);
+        }
+    });
+
+    // Handle remove button click
+    removeProfilePicBtn.addEventListener('click', function() {
+        profilePicImg.src = '/images/default-profile.png'; // Set to default image
+        profilePicInput.value = ''; // Clear file input
+        profilePicRemoved = true;
+    });
+
+    // Add hidden field to form on submit if picture was removed
+    document.getElementById('profile-form').addEventListener('submit', function(e) {
+        if (profilePicRemoved) {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'removeProfilePic';
+            input.value = 'true';
+            this.appendChild(input);
+        }
+    });
+});
+</script>
 
 </body>
 </html>
