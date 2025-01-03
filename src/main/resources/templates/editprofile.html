@@ -167,11 +167,14 @@
         }
     });
 
-    // Handle remove button click
-    removeProfilePicBtn.addEventListener('click', function() {
-        profilePicImg.src = '/images/default-profile.png'; // Set to default image
-        profilePicInput.value = ''; // Clear file input
-        profilePicRemoved = true;
+       // Handle remove button click
+       removeProfilePicBtn.addEventListener('click', function() {
+        // Add confirmation message
+        if (confirm('Are you sure you want to remove your profile picture?')) {
+            profilePicImg.src = '/images/default-profile.png'; // Set to default image
+            profilePicInput.value = ''; // Clear file input
+            profilePicRemoved = true;
+        }
     });
 
     // Add hidden field to form on submit if picture was removed
