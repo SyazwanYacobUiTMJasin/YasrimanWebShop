@@ -36,7 +36,7 @@
             </div>
 
             <div class="edit-container">
-                <form th:action="@{/inventory?action=insert}" method="post" enctype="multipart/form-data">
+                <form th:action="@{/inventory?action=insert}" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
                     <table>
                         <tr>
                             <th>Type</th>
@@ -49,7 +49,7 @@
                         </tr>
                         <tr>
                             <th>Image</th>
-                            <td><input type="file" name="image" accept=".png, .jpg, .jpeg, .gif"></td>
+                            <td><input type="file" name="image" accept=".png, .jpg, .jpeg, .gif" required></td>
                         </tr>
                         <tr>
                             <th>Name</th>
@@ -74,15 +74,15 @@
                         </tr>
                         <tr>
                             <th>Quantity In</th>
-                            <td><input type="number" name="quantityIn" value="1"></td>
+                            <td><input type="number" name="quantityIn" value="1" min ="0"></td>
                         </tr>
                         <tr id="plantManualRow" style="display: none;">
                             <th>Plant Manual</th>
-                            <td><input type="text" name="plantManual"></td>
+                            <td><input type="text" name="plantManual" id="plantManual"></td>
                         </tr>
                         <tr id="toolCategoryRow" style="display: none;">
                             <th>Tool Category</th>
-                            <td><input type="text" name="toolCategory"></td>
+                            <td><input type="text" name="toolCategory" id="toolCategory"></td>
                         </tr>
                     </table>
                     <div class="actions">
@@ -102,6 +102,25 @@
 
         // Initial call to set visibility
         toggleRoleFields();
+
+        // Validation function
+        function validateForm() {
+            var role = document.getElementById("role").value;
+            var plantManual = document.getElementById("plantManual").value.trim();
+            var toolCategory = document.getElementById("toolCategory").value.trim();
+
+            if (role === "plant" && plantManual === "") {
+                alert("Plant Manual is required for Plant type.");
+                return false; // Prevent form submission
+            }
+
+            if (role === "tool" && toolCategory === "") {
+                alert("Tool Category is required for Tool type.");
+                return false; // Prevent form submission
+            }
+
+            return true; // Allow form submission
+        }
     </script>
 </body>
 
