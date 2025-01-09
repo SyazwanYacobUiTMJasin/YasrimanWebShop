@@ -1,194 +1,229 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Yasriman | Profile</title>
     <link rel="stylesheet" href="./css/editprofile.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" />
-    <link rel="icon" href="/images/logo.jpeg" type="image/png">
-    <link rel="stylesheet" href="./css/animation.css">
-    <link rel="stylesheet" href="./css/loading.css">
-
-</head>
-<body>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+    />
+    <link rel="icon" href="/images/logo.jpeg" type="image/png" />
+    <link rel="stylesheet" href="./css/animation.css" />
+    <link rel="stylesheet" href="./css/loading.css" />
+  </head>
+  <body>
     <div id="loading-screen">
-        <video id="loading-video" autoplay loop muted>
-          <source src="./video/loadingscreen.mp4" type="video/mp4">
-        </video>
-      </div>
+      <video id="loading-video" autoplay loop muted>
+        <source src="./video/loadingscreen.mp4" type="video/mp4" />
+      </video>
+    </div>
     <div class="navbarbg">
-        <a href="/"><h2>YASRIMAN</h2></a>
-        
-        <div class="navlinks">
-            <a href="/">HOME</a>
-        </div>
+      <a href="/"><h2>YASRIMAN</h2></a>
+
+      <div class="navlinks">
+        <a href="/">HOME</a>
+      </div>
     </div>
     <div class="hero fade-in-up delay-1">
-        <h1>Edit Profile</h1>
-        <div class="formdiv">
-            <form id="profile-form"
-                  th:action="@{editcustomeraccount(uid=${accounts.id})}"
-                  method="post"
-                  enctype="multipart/form-data"
-                  onsubmit="return validateUpdateForm()">
-                <div style="display: none;">
-                    <input type="text" name="uid" th:value="${accounts.id}" readonly/>
-                    <input type="text" name="id" th:value="${loggedinaccountid}" readonly/>
-                </div>
+      <h1>Edit Profile</h1>
+      <div class="formdiv">
+        <form
+          id="profile-form"
+          th:action="@{editcustomeraccount(uid=${accounts.id})}"
+          method="post"
+          enctype="multipart/form-data"
+          onsubmit="return validateUpdateForm()"
+        >
+          <div style="display: none">
+            <input type="text" name="uid" th:value="${accounts.id}" readonly />
+            <input
+              type="text"
+              name="id"
+              th:value="${loggedinaccountid}"
+              readonly
+            />
+          </div>
 
-                <label for="profilepic">Profile Picture:</label>
-                <div class="profileimagecontainer">
-                <img th:src="@{'/account/' + ${accounts.id} + '/picture'}" alt="profile picture" name="profilepic" draggable="false"/>
-                <button type="button" id="removeProfilePic">Remove Profile Picture</button>
-            </div>
-            <input type="file" id="profilepic" name="profilepic" accept=".png, .jpg, .jpeg, .gif"/>
-                <label for="username">Username:</label>
-                <input type="text"
-                       id="username"
-                       name="username"
-                       placeholder="Enter your username"
-                       th:value="${accounts.username}"
-                       autocomplete="off"
-                       required
+          <label for="profilepic">Profile Picture:</label>
+          <div class="profileimagecontainer">
+            <img
+              th:src="*{accounts.picture != null ? '/account/' + accounts.id + '/picture' : '/images/profile-pic-placeholder.jpg'}"
+              alt="profile picture"
+              name="profilepic"
+              draggable="false"
+            />
+            <button type="button" id="removeProfilePic">
+              Remove Profile Picture
+            </button>
+          </div>
+          <input
+            type="file"
+            id="profilepic"
+            name="profilepic"
+            accept=".png, .jpg, .jpeg, .gif"
+          />
+          <label for="username">Username:</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Enter your username"
+            th:value="${accounts.username}"
+            autocomplete="off"
+            required
+          />
+          <div class="maingroup">
+            <div class="fnlname group">
+              <label for="firstname">First Name:</label>
+              <input
+                type="text"
+                id="firstname"
+                name="firstname"
+                placeholder="Enter your first name"
+                th:value="${accounts.firstname}"
+                autocomplete="off"
+                required
+              />
+              <label for="phone">Phone Number:</label>
+              <div class="teldiv">
+                <input
+                  type="tel"
+                  autocomplete="off"
+                  value="+60"
+                  disabled
+                  required
+                  class="telcountry"
                 />
-                <div class="maingroup">
-                    <div class="fnlname group">
-                        <label for="firstname">First Name:</label>
-                        <input type="text"
-                               id="firstname"
-                               name="firstname"
-                               placeholder="Enter your first name"
-                               th:value="${accounts.firstname}"
-                               autocomplete="off"
-                               required
-                        />
-                        <label for="phone">Phone Number:</label>
-                        <div class="teldiv">
-                            <input
-                              type="tel" 
-                              autocomplete="off"
-                              value="+60"
-                              disabled
-                              required
-                              class="telcountry"
-                            />
-                            <input
-                              type="tel"
-                              id="phone"
-                              name="phone"
-                              placeholder="Phone Number"
-                              th:value="${accounts.phonenum}"
-                              autocomplete="off"
-                              required
-                              maxlength="10"
-                              class="telnum"
-                            /></div>
-                    </div>
-                    <div class="phonenumngender group">
-                        <label for="lastname">Last Name:</label>
-                        <input type="text"
-                               id="lastname"
-                               name="lastname"
-                               placeholder="Enter your last name"
-                               th:value="${accounts.lastname}"
-                               autocomplete="off"
-                               required
-                        />
-                        <label for="street">Street:</label>
-                        <input type="text"
-                               id="street"
-                               name="street"
-                               placeholder="Enter your street name"
-                               th:value="${accounts.street}"
-                               autocomplete="off"
-                               required
-                        />
-                    </div>
-                </div>
-                <div class="statecitypostal group1">
-                    <label for="state">State:</label>
-                    <input type="text"
-                           id="state"
-                           name="state"
-                           placeholder="Enter your state"
-                           th:value="${accounts.state}"
-                           autocomplete="off"
-                           required
-                    />
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  placeholder="Phone Number"
+                  th:value="${accounts.phonenum}"
+                  autocomplete="off"
+                  required
+                  maxlength="10"
+                  class="telnum"
+                />
+              </div>
+            </div>
+            <div class="phonenumngender group">
+              <label for="lastname">Last Name:</label>
+              <input
+                type="text"
+                id="lastname"
+                name="lastname"
+                placeholder="Enter your last name"
+                th:value="${accounts.lastname}"
+                autocomplete="off"
+                required
+              />
+              <label for="street">Street:</label>
+              <input
+                type="text"
+                id="street"
+                name="street"
+                placeholder="Enter your street name"
+                th:value="${accounts.street}"
+                autocomplete="off"
+                required
+              />
+            </div>
+          </div>
+          <div class="statecitypostal group1">
+            <label for="state">State:</label>
+            <input
+              type="text"
+              id="state"
+              name="state"
+              placeholder="Enter your state"
+              th:value="${accounts.state}"
+              autocomplete="off"
+              required
+            />
 
-                    <label for="city">City:</label>
-                    <input type="text"
-                           id="city"
-                           name="city"
-                           placeholder="Enter your city"
-                           th:value="${accounts.city}"
-                           autocomplete="off"
-                           required
-                    />
+            <label for="city">City:</label>
+            <input
+              type="text"
+              id="city"
+              name="city"
+              placeholder="Enter your city"
+              th:value="${accounts.city}"
+              autocomplete="off"
+              required
+            />
 
-                    <label for="postalcode">Postal Code:</label>
-                    <input type="text"
-                           id="postalcode"
-                           name="postalcode"
-                           placeholder="Enter your postal code"
-                           th:value="${accounts.postalcode}"
-                           autocomplete="off"
-                           required
-                    />
-                </div>
-                <p th:if="${postalcodeerror}" style="color:red;"
-                   th:text="${postalcodeerror}"></p>
-                   <p th:text="${session.errorMessage}" style="color:red;"></p>
+            <label for="postalcode">Postal Code:</label>
+            <input
+              type="text"
+              id="postalcode"
+              name="postalcode"
+              placeholder="Enter your postal code"
+              th:value="${accounts.postalcode}"
+              autocomplete="off"
+              required
+            />
+          </div>
+          <p
+            th:if="${postalcodeerror}"
+            style="color: red"
+            th:text="${postalcodeerror}"
+          ></p>
+          <p th:text="${session.errorMessage}" style="color: red"></p>
 
-                <button type="submit" class="submitbutton">Save Changes</button>
-            </form>
-        </div>
+          <button type="submit" class="submitbutton">Save Changes</button>
+        </form>
+      </div>
     </div>
     <script src="./js/updateaccounts.js"></script>
-    
-    <script src="./js/loading.js"></script>
-    <script> 
-    document.addEventListener('DOMContentLoaded', function() {
-    const profilePicInput = document.getElementById('profilepic');
-    const removeProfilePicBtn = document.getElementById('removeProfilePic');
-    const profilePicImg = document.querySelector('img[name="profilepic"]');
-    let profilePicRemoved = false;
 
-    // Update preview when file is selected
-    profilePicInput.addEventListener('change', function(e) {
-        if (e.target.files && e.target.files[0]) {
+    <script src="./js/loading.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const profilePicInput = document.getElementById("profilepic");
+        const removeProfilePicBtn = document.getElementById("removeProfilePic");
+        const profilePicImg = document.querySelector('img[name="profilepic"]');
+        let profilePicRemoved = false;
+
+        // Update preview when file is selected
+        profilePicInput.addEventListener("change", function (e) {
+          if (e.target.files && e.target.files[0]) {
             const reader = new FileReader();
-            reader.onload = function(e) {
-                profilePicImg.src = e.target.result;
-                profilePicRemoved = false;
+            reader.onload = function (e) {
+              profilePicImg.src = e.target.result;
+              profilePicRemoved = false;
             };
             reader.readAsDataURL(e.target.files[0]);
-        }
-    });
+          }
+        });
 
-       // Handle remove button click
-       removeProfilePicBtn.addEventListener('click', function() {
-        // Add confirmation message
-        if (confirm('Are you sure you want to remove your profile picture?')) {
-            profilePicImg.src = '/images/default-profile.png'; // Set to default image
-            profilePicInput.value = ''; // Clear file input
+        // Handle remove button click
+        removeProfilePicBtn.addEventListener("click", function () {
+          // Add confirmation message
+          if (
+            confirm("Are you sure you want to remove your profile picture?")
+          ) {
+            profilePicImg.src = "/images/profile-pic-placeholder.jpg"; // Set to default image
+            profilePicInput.value = ""; // Clear file input
             profilePicRemoved = true;
-        }
-    });
+          }
+        });
 
-    // Add hidden field to form on submit if picture was removed
-    document.getElementById('profile-form').addEventListener('submit', function(e) {
-        if (profilePicRemoved) {
-            const input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = 'removeProfilePic';
-            input.value = 'true';
-            this.appendChild(input);
-        }
-    });
-});
-</script>
-
-</body>
+        // Add hidden field to form on submit if picture was removed
+        document
+          .getElementById("profile-form")
+          .addEventListener("submit", function (e) {
+            if (profilePicRemoved) {
+              const input = document.createElement("input");
+              input.type = "hidden";
+              input.name = "removeProfilePic";
+              input.value = "true";
+              this.appendChild(input);
+            }
+          });
+      });
+    </script>
+  </body>
 </html>

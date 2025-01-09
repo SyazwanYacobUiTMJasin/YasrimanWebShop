@@ -1,168 +1,200 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Yasriman | Profile</title>
-    <link rel="icon" href="/images/logo.jpeg" type="image/png">
+    <link rel="icon" href="/images/logo.jpeg" type="image/png" />
     <link rel="stylesheet" href="./css/viewprofile.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" /> 
-    <link rel="stylesheet" href="./css/animation.css">
-    <link rel="stylesheet" href="./css/loading.css">
-
-</head>
-<body>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="./css/animation.css" />
+    <link rel="stylesheet" href="./css/loading.css" />
+  </head>
+  <body>
     <div id="loading-screen">
-        <video id="loading-video" autoplay loop muted>
-            <source th:src="@{/video/loadingscreen.mp4}" type="video/mp4">
-        </video>
+      <video id="loading-video" autoplay loop muted>
+        <source th:src="@{/video/loadingscreen.mp4}" type="video/mp4" />
+      </video>
     </div>
     <div class="navbarbg">
-        <h2>YASRIMAN</h2>
-        <div class="logintext">
-            <div class="searchdiv">
-                <img src="https://svgshare.com/i/177L.svg" alt="" />
-                <input type="text" placeholder="Search" name="search" autocomplete="off" />
-            </div>
-            <div th:if="${session.accountusername != null}">
-                <a th:href="@{/viewcustomeraccount(uid=${session.loggedinaccountid},from=index)}">
-                    <span th:text="${session.accountusername}"></span>
-                    <div class="loginicon">
-                        <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/fee6b20cb0abd925cc4a3bda7cf3fa3366c37bcc07b2da638108c5651aca2ad0?apiKey=8730b69884724863a1e8089b99726052&" class="img" draggable="false" />
-                    </div>
-                </a>
-            </div>
-            <div th:unless="${session.accountusername != null}">
-                <a th:href="@{signup}">
-                    Sign In/Sign Up
-                    <div class="loginicon">
-                        <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/fee6b20cb0abd925cc4a3bda7cf3fa3366c37bcc07b2da638108c5651aca2ad0?apiKey=8730b69884724863a1e8089b99726052&" class="img" draggable="false" />
-                    </div>
-                </a>
-            </div>
+      <h2>YASRIMAN</h2>
+      <div class="logintext">
+        <div class="searchdiv">
+          <img src="https://svgshare.com/i/177L.svg" alt="" />
+          <input
+            type="text"
+            placeholder="Search"
+            name="search"
+            autocomplete="off"
+          />
         </div>
-        <div class="navlinks">
-            <a href="/" >HOME</a>
-            <a href="inventory?action=viewallproducts" >PRODUCTS</a>
-            <a href="cart" class="active">CART</a>
-            <a th:href="@{/order(action=history, uid=${session.loggedinaccountid})}">ORDER HISTORY</a>
+        <div th:if="${session.accountusername != null}">
+          <a
+            th:href="@{/viewcustomeraccount(uid=${session.loggedinaccountid},from=index)}"
+          >
+            <span th:text="${session.accountusername}"></span>
+            <div class="loginicon">
+              <img
+                loading="lazy"
+                src="https://cdn.builder.io/api/v1/image/assets/TEMP/fee6b20cb0abd925cc4a3bda7cf3fa3366c37bcc07b2da638108c5651aca2ad0?apiKey=8730b69884724863a1e8089b99726052&"
+                class="img"
+                draggable="false"
+              />
+            </div>
+          </a>
         </div>
+        <div th:unless="${session.accountusername != null}">
+          <a th:href="@{signup}">
+            Sign In/Sign Up
+            <div class="loginicon">
+              <img
+                loading="lazy"
+                src="https://cdn.builder.io/api/v1/image/assets/TEMP/fee6b20cb0abd925cc4a3bda7cf3fa3366c37bcc07b2da638108c5651aca2ad0?apiKey=8730b69884724863a1e8089b99726052&"
+                class="img"
+                draggable="false"
+              />
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="navlinks">
+        <a href="/">HOME</a>
+        <a href="inventory?action=viewallproducts">PRODUCTS</a>
+        <a href="cart" class="active">CART</a>
+        <a th:href="@{/order(action=history, uid=${session.loggedinaccountid})}"
+          >ORDER HISTORY</a
+        >
+        <a th:href="@{/coopbusinesslist}">API Coop Businesses List</a>
+
+      </div>
     </div>
     <div class="hero fade-in-up delay-1">
-        <h1>View Profile</h1>
-        <div class="formdiv">
-            <form id="profile-form" action="#" method="POST" enctype="multipart/form-data">
-                <label for="profilepic">Profile Picture:</label>
-                <img th:src="@{'/account/' + ${accounts.id} + '/picture'}" alt="profile picture" name="profilepic" draggable="false"/>
-    
-                <label for="username">Username:</label>
-                <input
-                    type="text"
-                    id="username"
-                    name="username"
-                    placeholder="Your Username"
-                    th:value="${accounts.username}"
-                    readonly
-                    autocomplete="off"
-                />
-                <div class="maingroup">
-                    <div class="fnlname group">
-                        <label for="firstname">First Name:</label>
-                        <input
-                            type="text"
-                            id="firstname"
-                            name="firstname"
-                            placeholder="Your First Name"
-                            th:value="${accounts.firstname}"
-                            readonly
-                            autocomplete="off"
-                        />
-                        <label for="phone">Phone Number:</label>
-                        <input
-                            type="tel"
-                            id="phone"
-                            name="phone"
-                            placeholder="Your Phone Number"
-                            th:value="${accounts.phonenum}"
-                            readonly
-                            autocomplete="off"
-                        />
-                    </div>
-                    <div class="phonenumngender group">
-                        <label for="lastname">Last Name:</label>
-                        <input
-                            type="text"
-                            id="lastname"
-                            name="lastname"
-                            placeholder="Your Last Name"
-                            th:value="${accounts.lastname}"
-                            readonly
-                            autocomplete="off"
-                        />
-    
-                        <label for="street">Street:</label>
-                        <input
-                            type="text"
-                            id="street"
-                            name="street"
-                            placeholder="Street Name"
-                            th:value="${accounts.street}"
-                            readonly
-                            autocomplete="off"
-                        />
-                    </div>
-                </div>
-                <div class="statecitypostal group1">
-                    <label for="state">State:</label>
-                    <input
-                        type="text"
-                        id="state"
-                        name="state"
-                        placeholder="State Name"
-                        th:value="${accounts.state}"
-                        readonly
-                        autocomplete="off"
-                    />
-    
-                    <label for="city">City:</label>
-                    <input
-                        type="text"
-                        id="city"
-                        name="city"
-                        placeholder="City Name"
-                        th:value="${accounts.city}"
-                        readonly
-                        autocomplete="off"
-                    />
-    
-                    <label for="postalcode">Postal Code:</label>
-                    <input
-                        type="text"
-                        id="postalcode"
-                        name="postalcode"
-                        placeholder="Postal Code"
-                        th:value="${accounts.postalcode}"
-                        readonly
-                        autocomplete="off"
-                    />
-                </div>
-            </form>
-        </div>
-        <div class="buttons">
-	    	<a th:href="@{/signout}">
-	                <button type="button" class="signoutbutton">Sign out</button>
-	        </a>
-	    	<a th:href="@{editcustomeraccount(uid=${accounts.id})}">
-	                <button type="button" class="submitbutton">Edit Profile</button>
-	        </a>
-	    </div>
+      <h1>View Profile</h1>
+      <div class="formdiv">
+        <form
+          id="profile-form"
+          action="#"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          <label for="profilepic">Profile Picture:</label>
+          <img
+            th:src="*{accounts.picture != null ? '/account/' + accounts.id + '/picture' : '/images/profile-pic-placeholder.jpg'}"
+            alt="profile picture"
+            name="profilepic"
+            draggable="false"
+          />
+
+          <label for="username">Username:</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Your Username"
+            th:value="${accounts.username}"
+            readonly
+            autocomplete="off"
+          />
+          <div class="maingroup">
+            <div class="fnlname group">
+              <label for="firstname">First Name:</label>
+              <input
+                type="text"
+                id="firstname"
+                name="firstname"
+                placeholder="Your First Name"
+                th:value="${accounts.firstname}"
+                readonly
+                autocomplete="off"
+              />
+              <label for="phone">Phone Number:</label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                placeholder="Your Phone Number"
+                th:value="${accounts.phonenum}"
+                readonly
+                autocomplete="off"
+              />
+            </div>
+            <div class="phonenumngender group">
+              <label for="lastname">Last Name:</label>
+              <input
+                type="text"
+                id="lastname"
+                name="lastname"
+                placeholder="Your Last Name"
+                th:value="${accounts.lastname}"
+                readonly
+                autocomplete="off"
+              />
+
+              <label for="street">Street:</label>
+              <input
+                type="text"
+                id="street"
+                name="street"
+                placeholder="Street Name"
+                th:value="${accounts.street}"
+                readonly
+                autocomplete="off"
+              />
+            </div>
+          </div>
+          <div class="statecitypostal group1">
+            <label for="state">State:</label>
+            <input
+              type="text"
+              id="state"
+              name="state"
+              placeholder="State Name"
+              th:value="${accounts.state}"
+              readonly
+              autocomplete="off"
+            />
+
+            <label for="city">City:</label>
+            <input
+              type="text"
+              id="city"
+              name="city"
+              placeholder="City Name"
+              th:value="${accounts.city}"
+              readonly
+              autocomplete="off"
+            />
+
+            <label for="postalcode">Postal Code:</label>
+            <input
+              type="text"
+              id="postalcode"
+              name="postalcode"
+              placeholder="Postal Code"
+              th:value="${accounts.postalcode}"
+              readonly
+              autocomplete="off"
+            />
+          </div>
+        </form>
+      </div>
+      <div class="buttons">
+        <a th:href="@{/signout}">
+          <button type="button" class="signoutbutton">Sign out</button>
+        </a>
+        <a th:href="@{editcustomeraccount(uid=${accounts.id})}">
+          <button type="button" class="submitbutton">Edit Profile</button>
+        </a>
+      </div>
     </div>
-    
+
     <script>
-        // Disable the select element for gender
-        document.getElementById("gender").disabled = true;
+      // Disable the select element for gender
+      document.getElementById("gender").disabled = true;
     </script>
     <script src="./js/loading.js"></script>
-
-</body>
+  </body>
 </html>
