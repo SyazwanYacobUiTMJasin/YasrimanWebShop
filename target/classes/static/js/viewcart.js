@@ -56,14 +56,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function updateQuantity(item, newQuantity) {
         newQuantity = parseInt(newQuantity, 10);
+    
+        // Prevent negative or zero quantities
+        if (newQuantity < 1) {
+            alert("Quantity cannot be less than 1.");
+            newQuantity = 1; // Reset to minimum quantity
+        }
+    
         if (newQuantity > item.maxStock) {
             alert(`Maximum stock (${item.maxStock}) reached for this item.`);
             newQuantity = item.maxStock;
         }
+    
         item.quantity = newQuantity;
         localStorage.setItem('cart', JSON.stringify(cart));
         renderCart();
     }
+    
 
     function removeItem(item) {
         cart = cart.filter(cartItem => cartItem.title !== item.title);
