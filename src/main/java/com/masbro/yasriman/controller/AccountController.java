@@ -97,7 +97,7 @@ public class AccountController extends HttpServlet {
             accountStatus = "Pending";  
         }
     
-        accounts newAccount = new accounts(accountfirstname, accountlastname, accountusername, accountemail, accountpassword, "+60" + accountphonenum, accountrole, accountStatus);
+        accounts newAccount = new accounts(accountfirstname, accountlastname, accountusername, accountemail, accountpassword, accountphonenum, accountrole, accountStatus);
     
         try {
             if (AccountDAO.isEmailExists(accountemail)) {
@@ -113,7 +113,7 @@ public class AccountController extends HttpServlet {
                 // session.setAttribute("accountrole", accountrole);
                 session.setAttribute("signinerror", "null");
                 
-                User user = new User(accountfirstname, accountlastname, accountusername, accountemail, accountpassword, "+60" + accountphonenum, accountrole);
+                User user = new User(accountfirstname, accountlastname, accountusername, accountemail, accountpassword, accountphonenum, accountrole);
                 userController.signUp(user);
                 
                 return "redirect:/signin";

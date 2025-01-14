@@ -63,7 +63,7 @@
       <div class="navlinks">
         <a href="/">HOME</a>
         <a href="inventory?action=viewallproducts">PRODUCTS</a>
-        <a href="cart" class="active">CART</a>
+        <a href="cart" >CART</a>
         <a th:href="@{/order(action=history, uid=${session.loggedinaccountid})}"
           >ORDER HISTORY</a
         >
@@ -111,6 +111,15 @@
                 autocomplete="off"
               />
               <label for="phone">Phone Number:</label>
+              <div class="teldiv">
+              <input
+                  type="tel"
+                  autocomplete="off"
+                  value="+60"
+                  disabled
+                  required
+                  class="telcountry"
+                />
               <input
                 type="tel"
                 id="phone"
@@ -119,7 +128,9 @@
                 th:value="${accounts.phonenum}"
                 readonly
                 autocomplete="off"
+                class="telnum"
               />
+            </div>  
             </div>
             <div class="phonenumngender group">
               <label for="lastname">Last Name:</label>
