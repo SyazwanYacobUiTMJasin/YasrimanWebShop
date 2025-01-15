@@ -2,10 +2,11 @@ package com.masbro.yasriman.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.SQLException;
+import java.sql.SQLException; 
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -311,7 +312,7 @@ public class AccountController extends HttpServlet {
                     modelAndView.addObject("error", "Internal server error");
                 }
             } else {
-                session.setAttribute("errorMessage", "You are not allowed to go here!!!");
+                session.setAttribute("errorMessage", "null");
                 modelAndView.setViewName("redirect:/error");
             }
         } else if ("dashboard".equals(from)) {
@@ -389,6 +390,7 @@ public class AccountController extends HttpServlet {
         @RequestParam("postalcode") int postalcode,
         @RequestParam("phone") String phone,
         @RequestParam("uid") int uid,
+        @RequestParam("profilePictureBlob") String profilePictureBlob,
         @RequestParam(value = "removeProfilePic", required = false) String removeProfilePic
         ) {
 
@@ -407,6 +409,9 @@ public class AccountController extends HttpServlet {
                     try {
                         if (!file.isEmpty()) {
                             picture = file.getBytes();
+                        }
+                        else if (profilePictureBlob != null && !profilePictureBlob.isEmpty()) {
+                            picture = Base64.decodeBase64(profilePictureBlob);
                         }
                     } catch (IOException e) {
                         e.printStackTrace();

@@ -1,5 +1,7 @@
 package com.masbro.yasriman.dao;
 
+import static org.mockito.ArgumentMatchers.byteThat;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -470,6 +472,21 @@ public void updateAccountStatus(int accountId, String newStatus) throws SQLExcep
     }
 }
 
+public byte[] getAccountPicture(int accountId) throws SQLException {
+    byte[] picture = null;
+    try (Connection con = ConnectionManager.getConnection();
+         PreparedStatement ps = con.prepareStatement(FETCH_ACCOUNT_BY_ID)) {
+        ps.setInt(1, accountId);
+        try (ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                picture = rs.getBytes("accountpicture");
+            }
+        }
+    } catch (SQLException e) {
+        printSQLException(e);
+    }
+    return picture;
+}
 
 
 }

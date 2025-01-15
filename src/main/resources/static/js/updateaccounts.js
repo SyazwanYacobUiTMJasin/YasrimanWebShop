@@ -7,9 +7,17 @@ document.addEventListener("DOMContentLoaded", function () {
         event.preventDefault(); // Stop form submission if validation fails
       }
     });
-  });document.getElementById('submit-btn').addEventListener('click', function(event) {
+  });
+  
+  document.getElementById('submit-btn').addEventListener('click', function(event) {
     if (!validateForm()) {
         event.preventDefault();
+    } 
+});
+
+  document.getElementById('cancel-btn').addEventListener('click', function(event) {
+    if (confirm("Are you sure you want to cancel?")) {
+        window.location.href = "/";
     } 
 });
 
@@ -113,7 +121,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         if (!postalCodeRegex.test(postalCode)) {
-            alert("Postal code must be 5 digits long.");
+            alert("Postal code must be 5 digits long and contain only numbers.");
             return false;
         }
         

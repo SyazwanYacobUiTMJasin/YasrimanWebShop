@@ -92,7 +92,7 @@ function validateForm() {
     }
   
     if (!malaysiaPhoneRegex.test(phone)) {
-      alert("Please enter a valid Malaysia phone number (e.g., +60-123456789).");
+      alert("Please enter a valid Malaysia phone number (e.g., +60123456789).");
       return false;
     }
   

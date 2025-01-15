@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Yasriman | Profile</title>
+    <title>Yasriman | Edit Profile</title>
     <link rel="stylesheet" href="./css/editprofile.css" />
     <link
       rel="stylesheet"
@@ -33,7 +33,7 @@
           id="profile-form"
           th:action="@{editcustomeraccount(uid=${accounts.id})}"
           method="post"
-          enctype="multipart/form-data"  
+          enctype="multipart/form-data"
         >
           <div style="display: none">
             <input type="text" name="uid" th:value="${accounts.id}" readonly />
@@ -43,6 +43,11 @@
               th:value="${loggedinaccountid}"
               readonly
             />
+            <input
+            type="hidden"
+            name="profilePictureBlob"
+            th:value="${T(org.apache.commons.codec.binary.Base64).encodeBase64String(accounts.picture)}"
+          />
           </div>
 
           <label for="profilepic">Profile Picture:</label>
@@ -102,7 +107,7 @@
                   placeholder="Phone Number"
                   th:value="${accounts.phonenum}"
                   autocomplete="off"
-                  required 
+                  required
                   class="telnum"
                 />
               </div>
@@ -169,10 +174,13 @@
             style="color: red"
             th:text="${postalcodeerror}"
           ></p>
-          <p th:text="${session.errorMessage}" style="color: red"></p>
-
-          <button type="submit" class="submitbutton" id="submit-btn">Save Changes</button>
-
+          <!-- <p th:text="${session.errorMessage}" style="color: red"></p> -->
+          <div class="buttons">
+            <button class="backbutton" th:href="@{/}"  id="cancel-btn">Cancel</button>
+            <button type="submit" class="submitbutton" id="submit-btn">
+              Save Changes
+            </button>
+          </div>
         </form>
       </div>
     </div>

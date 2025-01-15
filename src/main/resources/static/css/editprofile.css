@@ -254,6 +254,24 @@
 		align-items: end;
 		width: 100%;
 	 }
+
+	 form .buttons{
+		display: flex;
+		width: 50%;
+		align-items: flex-end;
+		justify-content: center;
+		margin: 0 auto;
+	 }
+
+	 .backbutton{
+		background-color: #651c1c;
+	    color: #f5efe6;
+	    padding: 10px 20px;
+	    cursor: pointer;
+	    margin-top: 20px;
+	    outline: none;
+	    border: none;
+	 }
 	 @media(max-width: 1391px)
  {
 	 .hero
