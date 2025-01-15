@@ -69,11 +69,11 @@
                     <th>Status</th>
                     <td th:text="${inventory.inventoryStatus}"></td>
                 </tr>
-                <tr th:if="${inventory.inventoryRole == 'plant'}">
+                <tr th:if="${inventory.inventoryRole == 'Plant'}">
                     <th>Plant Manual</th>
                     <td th:text="${inventory.plantManual}"></td>
                 </tr>
-                <tr th:if="${inventory.inventoryRole == 'tool'}">
+                <tr th:if="${inventory.inventoryRole == 'Tool'}">
                     <th>Tool Category</th>
                     <td th:text="${inventory.toolCategory}"></td>
                 </tr>
