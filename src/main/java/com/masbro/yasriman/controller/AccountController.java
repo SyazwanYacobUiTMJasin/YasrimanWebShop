@@ -233,6 +233,8 @@ public class AccountController extends HttpServlet {
         HttpSession session = request.getSession();
         Integer loggedinaccountid = (Integer) session.getAttribute("loggedinaccountid");
         ModelAndView modelAndView = new ModelAndView();
+        session.setAttribute("errorMessage", "");
+
 
         if ("edit".equals(from)) {
             if (loggedinaccountid != null && loggedinaccountid.equals(accountid)) {
@@ -358,10 +360,11 @@ public class AccountController extends HttpServlet {
             HttpServletRequest request,
             HttpServletResponse response,
             @RequestParam("uid") int accountid) throws IOException {
+                
 
         HttpSession session = request.getSession();
         Integer loggedinaccountid = (Integer) session.getAttribute("loggedinaccountid");
-        ModelAndView modelAndView = new ModelAndView();
+        ModelAndView modelAndView = new ModelAndView(); 
 
         if (loggedinaccountid != null && loggedinaccountid.equals(accountid)) {
             accounts accounts = AccountDAO.viewCustomerAccount(accountid);

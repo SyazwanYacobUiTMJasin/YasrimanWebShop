@@ -179,10 +179,10 @@ public class InventoryController {
         }
 
         Inventory inventory;
-        if ("plant".equals(inventoryRole)) {
+        if ("Plant".equals(inventoryRole)) {
             inventory = new Plant();
             ((Plant) inventory).setPlantManual(plantManual);
-        } else if ("tool".equals(inventoryRole)) {
+        } else if ("Tool".equals(inventoryRole)) {
             inventory = new Tool();
             ((Tool) inventory).setToolCategory(toolCategory);
         } else {

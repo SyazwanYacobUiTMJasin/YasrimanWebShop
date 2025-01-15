@@ -42,8 +42,8 @@
                             <th>Type</th>
                             <td>
                                 <select name="role" id="role" onchange="toggleRoleFields()">
-                                    <option value="plant">Plant</option>
-                                    <option value="tool">Tool</option>
+                                    <option value="Plant">Plant</option>
+                                    <option value="Tool">Tool</option>
                                 </select>
                             </td>
                         </tr>
@@ -96,8 +96,8 @@
     <script>
         function toggleRoleFields() {
             var role = document.getElementById("role").value;
-            document.getElementById("plantManualRow").style.display = (role === "plant") ? "" : "none";
-            document.getElementById("toolCategoryRow").style.display = (role === "tool") ? "" : "none";
+            document.getElementById("plantManualRow").style.display = (role === "Plant") ? "" : "none";
+            document.getElementById("toolCategoryRow").style.display = (role === "Tool") ? "" : "none";
         }
 
         // Initial call to set visibility
@@ -109,12 +109,12 @@
             var plantManual = document.getElementById("plantManual").value.trim();
             var toolCategory = document.getElementById("toolCategory").value.trim();
 
-            if (role === "plant" && plantManual === "") {
+            if (role === "Plant" && plantManual === "") {
                 alert("Plant Manual is required for Plant type.");
                 return false; // Prevent form submission
             }
 
-            if (role === "tool" && toolCategory === "") {
+            if (role === "Tool" && toolCategory === "") {
                 alert("Tool Category is required for Tool type.");
                 return false; // Prevent form submission
             }

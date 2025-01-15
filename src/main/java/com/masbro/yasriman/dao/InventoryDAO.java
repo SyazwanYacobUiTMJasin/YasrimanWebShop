@@ -208,10 +208,10 @@ public class InventoryDAO {
 
             if (resultSet.next()) {
                 String role = resultSet.getString("INVENTORYROLE");
-                if ("plant".equals(role)) {
+                if ("Plant".equals(role)) {
                     inventory = new Plant();
                     ((Plant) inventory).setPlantManual(resultSet.getString("PLANTMANUAL"));
-                } else if ("tool".equals(role)) {
+                } else if ("Tool".equals(role)) {
                     inventory = new Tool();
                     ((Tool) inventory).setToolCategory(resultSet.getString("TOOLCATEGORY"));
                 } else {
@@ -322,10 +322,10 @@ public class InventoryDAO {
             while (resultSet.next()) {
                 String role = resultSet.getString("INVENTORYROLE");
                 Inventory inventory;
-                if ("plant".equals(role)) {
+                if ("Plant".equals(role)) {
                     inventory = new Plant();
                     ((Plant) inventory).setPlantManual(getPlantManual(resultSet.getInt("INVENTORYID")));
-                } else if ("tool".equals(role)) {
+                } else if ("Tool".equals(role)) {
                     inventory = new Tool();
                     ((Tool) inventory).setToolCategory(getToolCategory(resultSet.getInt("INVENTORYID")));
                 } else {
@@ -370,16 +370,16 @@ public class InventoryDAO {
         try {
             connection = ConnectionManager.getConnection();
             preparedStatement = connection.prepareStatement(SELECT_ALL_INVENTORY_BY_ROLE);
-            preparedStatement.setString(1, "plant");
+            preparedStatement.setString(1, "Plant");
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
                 String role = resultSet.getString("INVENTORYROLE");
                 Inventory inventory;
-                if ("plant".equals(role)) {
+                if ("Plant".equals(role)) {
                     inventory = new Plant();
                     ((Plant) inventory).setPlantManual(getPlantManual(resultSet.getInt("INVENTORYID")));
-                } else if ("tool".equals(role)) {
+                } else if ("Tool".equals(role)) {
                     inventory = new Tool();
                     ((Tool) inventory).setToolCategory(getToolCategory(resultSet.getInt("INVENTORYID")));
                 } else {
@@ -422,16 +422,16 @@ public class InventoryDAO {
         try {
             connection = ConnectionManager.getConnection();
             preparedStatement = connection.prepareStatement(SELECT_ALL_INVENTORY_BY_ROLE);
-            preparedStatement.setString(1, "tool");
+            preparedStatement.setString(1, "Tool");
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
                 String role = resultSet.getString("INVENTORYROLE");
                 Inventory inventory;
-                if ("plant".equals(role)) {
+                if ("Plant".equals(role)) {
                     inventory = new Plant();
                     ((Plant) inventory).setPlantManual(getPlantManual(resultSet.getInt("INVENTORYID")));
-                } else if ("tool".equals(role)) {
+                } else if ("Tool".equals(role)) {
                     inventory = new Tool();
                     ((Tool) inventory).setToolCategory(getToolCategory(resultSet.getInt("INVENTORYID")));
                 } else {

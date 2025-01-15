@@ -60,14 +60,14 @@
                 <td>
                   <select name="role" id="role" onchange="toggleRoleFields()">
                     <option
-                      value="plant"
-                      th:selected="${inventory.inventoryRole == 'plant'}"
+                      value="Plant"
+                      th:selected="${inventory.inventoryRole == 'Plant'}"
                     >
                       Plant
                     </option>
                     <option
-                      value="tool"
-                      th:selected="${inventory.inventoryRole == 'tool'}"
+                      value="Tool"
+                      th:selected="${inventory.inventoryRole == 'Tool'}"
                     >
                       Tool
                     </option>
@@ -165,18 +165,18 @@
                 <th>Quantity In</th>
                 <td><input type="number" name="quantityIn" th:value="${inventory.inventoryQuantityExisting}" min="0"></td>
               </tr>
-              <tr id="plantManualRow" th:style="${inventory.inventoryRole == 'plant'} ? '' : 'display:none'">
+              <tr id="plantManualRow" th:style="${inventory.inventoryRole == 'Plant'} ? '' : 'display:none'">
                 <th>Plant Manual</th>
                 <td>
-                  <input type="text" name="plantManual" 
-                         th:value="${inventory.inventoryRole == 'plant'} ? ${inventory.plantManual} : ''"/>
+                  <input  type="text" name="plantManual" id="plantManual" 
+                         th:value="${inventory.inventoryRole == 'Plant'} ? ${inventory.plantManual} : ''"/>
                 </td>
               </tr>
-              <tr id="toolCategoryRow" th:style="${inventory.inventoryRole == 'tool'} ? '' : 'display:none'">
+              <tr id="toolCategoryRow" th:style="${inventory.inventoryRole == 'Tool'} ? '' : 'display:none'">
                 <th>Tool Category</th>
                 <td>
-                  <input type="text" name="toolCategory" 
-                         th:value="${inventory.inventoryRole == 'tool'} ? ${inventory.toolCategory} : ''"/>
+                  <input type="text" name="toolCategory" id="toolCategory" 
+                         th:value="${inventory.inventoryRole == 'Tool'} ? ${inventory.toolCategory} : ''"/>
                 </td>
               </tr>
               <tr>
@@ -201,9 +201,9 @@
       function toggleRoleFields() {
         var role = document.getElementById("role").value;
         document.getElementById("plantManualRow").style.display =
-          role === "plant" ? "" : "none";
+          role === "Plant" ? "" : "none";
         document.getElementById("toolCategoryRow").style.display =
-          role === "tool" ? "" : "none";
+          role === "Tool" ? "" : "none";
       }
     
       // Initial call to set visibility
@@ -215,12 +215,12 @@
         var plantManual = document.getElementById("plantManual").value.trim();
         var toolCategory = document.getElementById("toolCategory").value.trim();
     
-        if (role === "plant" && plantManual === "") {
+        if (role === "Plant" && plantManual === "") {
           alert("Plant Manual is required for Plant type.");
           return false; // Prevent form submission
         }
     
-        if (role === "tool" && toolCategory === "") {
+        if (role === "Tool" && toolCategory === "") {
           alert("Tool Category is required for Tool type.");
           return false; // Prevent form submission
         }
