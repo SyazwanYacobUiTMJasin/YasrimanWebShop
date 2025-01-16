@@ -76,11 +76,11 @@
                         <li class="productdesc"><b>Product Description</b></li>
                         <li th:text="${inventory.inventoryDesc}">Product Description</li>
                     </div>
-                    <div th:if="${inventory.inventoryRole == 'plant'}">
+                    <div th:if="${inventory.inventoryRole == 'Plant'}">
                         <li class="productdesc"><b>Plant Manual</b></li>
                         <li th:text="${plantManual}">Plant Manual</li>
                     </div>
-                    <div th:if="${inventory.inventoryRole == 'tool'}">
+                    <div th:if="${inventory.inventoryRole == 'Tool'}">
                         <li class="productdesc"><b>Tool Category</b></li>
                         <li th:text="${toolCategory}">Tool Category</li>
                     </div>
